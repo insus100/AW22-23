@@ -1,0 +1,23 @@
+* {margin:0; padding:0}
+.morada{
+    background-color: rgb(203, 126, 255);
+    border-color: rgb(101, 0, 168);
+}
+.verde{
+    background-color: rgb(101, 255, 114);
+    border-color: rgb(0, 141, 12);
+}
+.title{
+    text-align: center;
+}
+div{
+    border-style: solid;
+    margin: 0.7em;
+    padding: 0.7em;
+}
+.font1{
+    font-family:sans-serif;
+}
+.font2{
+    font-family: cursive;
+}
