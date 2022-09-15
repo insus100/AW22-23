@@ -1,0 +1,45 @@
+* {
+    margin: 5px;
+}
+.titulo1 {
+    background-color: aqua;
+    border-style: solid;
+    text-align: center;
+    padding: 1em;
+}
+
+.pie {
+    background-color: aquamarine;
+    border-style: solid;
+    position: relative;
+    text-align: center;
+    bottom: 0;
+    width: 91em;
+    height: 2.5rem;
+}
+
+.bloque {
+    display: inline-block;
+    vertical-align: top;
+}
+
+.contenido {
+    background-color: rgb(225, 255, 0);
+    border-style: solid;
+    margin: auto;
+    text-align: center;
+    width: 71em;
+    padding-bottom: 35rem; /* tamaño del footer */
+    display: inline-block;
+    vertical-align: top;
+    position: absolute;
+}
+
+.opciones {
+    background-color: beige;
+    border-style: solid;
+    padding-bottom: 31.7rem;
+    margin-left: 0.7em;
+    width: 19em;
+    display: inline-block;
+}
