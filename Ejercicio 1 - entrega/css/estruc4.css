@@ -8,6 +8,11 @@
     padding: 1em;
 }
 
+.logo {
+    border-style: solid;
+    position: absolute;
+}
+
 .pie {
     background-color: aquamarine;
     border-style: solid;
@@ -56,9 +61,4 @@
     border-style: solid;
     width: 24vw;
     height: 20em;
-}
-
-.logo {
-    border-style: solid;
-    position: absolute;
 }
