@@ -33,6 +33,17 @@
 .bar {
     background-color: green;
     border-style: solid;
+    display: flex;
+    flex-direction: row;
+}
+
+.navbar {
+    width: 95vw;
+}
+
+.login {
+    border-style: solid;
+    left: 50%;
 }
 
 .bloque {
@@ -44,28 +55,32 @@
 .opciones {
     background-color: beige;
     border-style: solid;
-    padding-bottom: 31.7rem;
-    margin-left: 0.7em;
     width: 25vw;
+    display: flex;
+    flex-direction: column;
 }
 
-.contenido {
-    background-color: rgb(225, 255, 0);
+.busqueda {
+    padding: 5%;
+    text-align: center;
     border-style: solid;
-    width: 50vw;
-    padding-bottom: 35rem; /* tamaño del footer */
+}
 
+.noticias {
+    text-align: center;
+    border-style: solid;
+    height: 90%;
 }
 
 .articulos {
     /*background-color: rgb(13, 255, 0);*/
     /*border-style: solid;*/
-    width: 25vw;
+    width: 75vw;
 }
 
 .articulo {
     background-color: rgb(255, 0, 0);
     border-style: solid;
-    width: 24vw;
+    width: 74vw;
     height: 20em;
 }
