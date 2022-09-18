@@ -14,7 +14,7 @@
     position: relative;
     text-align: center;
     bottom: 0;
-    width: 91em;
+    width: 98vw;
     height: 2.5rem;
 }
 
@@ -28,7 +28,7 @@
     border-style: solid;
     margin: auto;
     text-align: center;
-    width: 71em;
+    width: 71vw;
     padding-bottom: 35rem; /* tamaño del footer */
     display: inline-block;
     vertical-align: top;
@@ -40,6 +40,6 @@
     border-style: solid;
     padding-bottom: 31.7rem;
     margin-left: 0.7em;
-    width: 19em;
+    width: 25vw;
     display: inline-block;
 }
