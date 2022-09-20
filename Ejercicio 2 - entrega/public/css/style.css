@@ -12,9 +12,17 @@ td {
     vertical-align: middle;
 }
 
-.tableTitle {
+.title {
+    background-color: #b71234;
     text-align: center;
-    border-style: solid;
+    padding: 1em;
+}
+
+.navbar {
+    margin-top: 1em;
+    margin-bottom: 1em;
+    padding-top: 1em;
+    padding-bottom: 1em;
 }
 
 .logos{
@@ -25,11 +33,33 @@ td {
 .rojo {
     color:red;
 }
+.gris {
+    color: #bfbfbf;
+}
+.navnegro {
+    padding: 0.5em;
+    background-color: black;
+}
 
 .resaltado {
     background:lightgray;
 }
 
+.resaltadoNegro {
+    background: black;
+    padding: 1em;
+    color: white;
+    text-decoration: none; /*quitar subrayado*/
+}
+
+.cafTable{
+    background-color: #bfbfbf;
+}
+
 #tc {
     font-style: italic;
+}
+
+.tableHead {
+    padding: 1em;
 }
