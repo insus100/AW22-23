@@ -1,12 +1,35 @@
-.titulo {
-
+th, td {
+    border: 1px solid black;
 }
 
-table, th, td {
-    border: 1px solid black;
+img {
+    margin:0.2em;
+    background-color: black;
 }
 
 td {
     text-align: center;
     vertical-align: middle;
+}
+
+.tableTitle {
+    text-align: center;
+    border-style: solid;
+}
+
+.logos{
+    display: flex;
+    flex-direction: row;
+}
+
+.rojo {
+    color:red;
+}
+
+.resaltado {
+    background:lightgray;
+}
+
+#tc {
+    font-style: italic;
 }
