@@ -1,0 +1,12 @@
+
+.morada{
+    background-color: rgb(203, 126, 255);
+    border-color: rgb(101, 0, 168);
+}
+.verde{
+    background-color: rgb(101, 255, 114);
+    border-color: rgb(0, 141, 12);
+}
+.morada:hover, .verde:hover {
+    background-color: red;
+}

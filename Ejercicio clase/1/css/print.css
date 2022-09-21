@@ -1,0 +1,21 @@
+.morada{
+    background-color: rgb(255, 255, 255);
+    border-color: rgb(0, 0, 0);
+}
+.verde{
+    background-color: rgb(255, 255, 255);
+    border-color: rgb(0, 0, 0);
+}
+.morada:hover, .verde:hover {
+    background-color: rgb(255, 255, 255);
+}
+
+div {
+    border-style: solid;
+    margin: 0.7em;
+    padding: 0.7em;
+}
+
+.copy {
+    display: flex;
+}

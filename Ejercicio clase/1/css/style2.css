@@ -1,0 +1,22 @@
+* {margin:0; padding:0}
+.head {
+    text-align: center;
+}
+
+.title{
+    text-align: center;
+}
+div{
+    border-style: solid;
+    margin: 0.7em;
+    padding: 0.7em;
+}
+.font1{
+    font-family:sans-serif;
+}
+.font2{
+    font-family: cursive;
+}
+.copy {
+    display: none;
+}

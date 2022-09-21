@@ -1,0 +1,31 @@
+* {margin:0; padding:0}
+.head {
+    text-align: center;
+}
+
+.title{
+    text-align: center;
+}
+.caja {
+    display: flex;
+    flex-direction: row;
+}
+
+.opcion{
+    border-style: solid;
+    margin: 0.7em;
+    padding: 0.7em;
+}
+
+.opcion:hover {
+    background-color: red;
+}
+
+.font1{
+    font-family:sans-serif;
+    cursor: default;
+}
+.font2{
+    font-family: cursive;
+    cursor: default;
+}
