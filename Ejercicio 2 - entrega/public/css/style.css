@@ -1,5 +1,5 @@
 th, td {
-    border: 1px solid black;
+    /*border: 1px solid black;*/ /* no se necesita en el resultado final */
 }
 
 img {
@@ -52,14 +52,46 @@ td {
     text-decoration: none; /*quitar subrayado*/
 }
 
-.cafTable{
-    background-color: #bfbfbf;
-}
-
 #tc {
     font-style: italic;
+    background-color: white;
+    table-layout: fixed;/* para que ocupe el div entero */
+    width: 100%;/* para que ocupe el div entero */
+}
+
+.table { /* esto es un div que contiene a la tabla */
+    background-color: #bfbfbf;
+    display: table;
+    padding: 0.1em;
+    text-align: center;
+    width: 23em;
 }
 
 .tableHead {
     padding: 1em;
+}
+
+.tablaGrey  {
+    background-color: #bfbfbf;
+}
+
+.tablaYellow1 {
+    background-color: #daa520;
+}
+.tablaYellow2 {
+    background-color: #ffd700;
+}
+
+.tablaPurple1 {
+    background-color: #da70d6;
+}
+.tablaPurple2 {
+    background-color: #dda0dd;
+}
+
+.tablaGreen1 {
+    background-color: #9acd32;
+}
+.tablaGreen2 {
+    background-color: #adff2f;
 }
