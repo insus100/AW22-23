@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang = "es">
+    <head>
+        <title>Ej3</title>
+        <meta charset = "utf-8"/>
+        <link rel="stylesheet" href="Ejer3.css"/>
+    </head>
+    <body>
+        <header><div class="head"><h1>Suscripción a Revista</h1></div></header>
+        <form>
+            <div class="container">
+                <div class="header"><h3>Datos personales</h3></div>
+                <div class="row">
+                    <div></div>
+                    <div class="padding">
+                        <label for="nombre">Nombre:</label>
+                        <input type="text" id="nombre" name="name">
+                    </div>
+                    <div class="padding">
+                        <label for="apellido1">Primer Apellido:</label>
+                        <input type="text" id="apellido1" name="name">
+                    </div>
+                    <div class="padding">
+                        <label for="apellido2">Segundo Apellido:</label>
+                        <input type="text" id="apellido2" name="name">
+                    </div>
+                </div>
+
+                <div class="column">
+                    <label for="direccion">Dirección:</label>
+                    <input type="text" placeholder="Calle o plaza, número y piso" id="direccion" name="name">
+
+                    <label for="email">E-Mail:</label>
+                    <input type="email" placeholder="ejemplo@ucm.es" id="email" name="name">
+
+                    <label for="password">Password:</label>
+                    <input type="password" id="password" name="name">
+                </div>
+                <div class="column">
+                    <p>Sexo</p>
+                    <br>
+                    <input type="radio" id="varon" name="sexo" value="Varón">
+                    <label for="varon">Varón</label>
+                    <input type="radio" id="mujer" name="sexo" value="Mujer">
+                    <label for="mujer">Mujer</label>
+                </div>
+            </div>
+
+            <!-- ------------------------------------------  -->
+            
+            <div class="container">
+                <div class="header"><h3>Nivel de estudios e intereses</h3></div>
+
+                <div class="column">
+                    <label for="estudios">Nivel de estudios:</label>
+                    <select name="estudios" id="estudios">
+                        <option value="1">Certificado escolar</option>
+                        <option value="2">Bachillerato</option>
+                        <option value="3">Grado medio</option>
+                        <option value="4">Grado universitario</option>
+                    </select>
+
+                    <p>Recibir artículos sobre los siguientes temas:</p>
+                    <br>
+                    <div class="column">
+                        <input type="checkbox" id="musica" name="musica" value="Música">
+                        <label for="musica">Música</label>
+
+                        <input type="checkbox" id="deportes" name="deportes" value="Deportes">
+                        <label for="deportes">Deportes</label>
+
+                        <input type="checkbox" id="cine" name="cine" value="Cine">
+                        <label for="cine">Cine</label>
+
+                        <input type="checkbox" id="libros" name="libros" value="Libros">
+                        <label for="libros">Libros</label>
+
+                        <input type="checkbox" id="ciencia" name="ciencia" value="Ciencia">
+                        <label for="ciencia">Ciencia</label>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </body>
+</html>
