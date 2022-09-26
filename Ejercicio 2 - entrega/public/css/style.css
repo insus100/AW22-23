@@ -7,11 +7,6 @@ img {
     background-color: black;
 }
 
-td {
-    text-align: center;
-    vertical-align: middle;
-}
-
 .title {
     background-color: #b71234;
     text-align: center;
@@ -51,11 +46,10 @@ td {
     color: white;
     text-decoration: none; /*quitar subrayado*/
 }
-
 #tc {
     font-style: italic;
     background-color: white;
-    table-layout: fixed;/* para que ocupe el div entero */
+    table-layout: auto;/* para que ocupe el div entero */
     width: 100%;/* para que ocupe el div entero */
 }
 
@@ -77,6 +71,7 @@ td {
 
 .tablaYellow1 {
     background-color: #daa520;
+    width: auto;
 }
 .tablaYellow2 {
     background-color: #ffd700;
