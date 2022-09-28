@@ -114,3 +114,18 @@ label {
     padding: 0.4em;
     /*border-style: solid;*/
 }
+
+.font1{
+    font-family: sans-serif;
+    font-size: larger;
+}
+
+.font2{
+    font-family: sans-serif;
+    font-size: larger;
+}
+
+.font3{
+    font-family: sans-serif;
+    font-size: large;
+}

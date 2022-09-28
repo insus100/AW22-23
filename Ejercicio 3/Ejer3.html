@@ -6,11 +6,11 @@
         <link rel="stylesheet" href="Ejer3.css"/>
     </head>
     <body>
-        <header><div class="head"><h1>Suscripción a Revista</h1></div></header>
+        <header><div class="head font1"><h1>Suscripción a Revista</h1></div></header>
         <form>
             <div class="container">
-                <div class="header"><h3>Datos personales</h3></div>
-                <div class="row">
+                <div class="header font2"><h3>Datos personales</h3></div>
+                <div class="row font3">
                     <div></div>
                     <div class="padding">
                         <label for="nombre">Nombre:</label>
@@ -26,7 +26,7 @@
                     </div>
                 </div>
 
-                <div class="column">
+                <div class="column font3">
                     <label for="direccion">Dirección:</label>
                     <input type="text" placeholder="Calle o plaza, número y piso" id="direccion" name="name">
 
@@ -36,8 +36,8 @@
                     <label for="password">Password:</label>
                     <input type="password" id="password" name="name">
                 </div>
-                <div class="column">
-                    <p>Sexo</p>
+                <div class="column font3">
+                    <p>Sexo:</p>
                     <br>
                     <input type="radio" id="varon" name="sexo" value="Varón">
                     <label for="varon">Varón</label>
@@ -49,19 +49,20 @@
             <!-- ------------------------------------------  -->
             
             <div class="container">
-                <div class="header"><h3>Nivel de estudios e intereses</h3></div>
+                <div class="header font2"><h3>Nivel de estudios e intereses</h3></div>
 
-                <div>
+                <div class="font3">
                     <label for="estudios">Nivel de estudios:</label>
                     <select name="estudios" id="estudios">
                         <option value="1">Certificado escolar</option>
-                        <option value="2">Bachillerato</option>
                         <option value="3">Grado medio</option>
+                        <option value="2">Bachillerato</option>
+                        <option value="2">Grado superior</option>
                         <option value="4">Grado universitario</option>
                     </select>
 
                     <p>Recibir artículos sobre los siguientes temas:</p>
-                    <br>
+                    
                     <div class="column">
                         <input type="checkbox" id="musica" name="musica" value="Música">
                         <label for="musica">Música</label>
@@ -83,9 +84,9 @@
 
             <!-- ------------------------------------------  -->
             <div class="container">
-                <div class="header"><h3>Datos sobre la revista</h3></div>
+                <div class="header font2"><h3>Datos sobre la revista</h3></div>
 
-                <div>
+                <div class="font3">
                     <label for="estudios">Frecuencia con la que se recibirá la revista:</label>
                     <select name="estudios" id="estudios">
                         <option value="1">Diaria</option>
@@ -100,8 +101,8 @@
                 </div>
             </div>
             <!-- ------------------------------------------  -->
-            <input class="buttonsize" class="" type="reset">
-            <input class="buttonsize" type="submit" value="Enviar">
+            <input class="buttonsize font3" class="" type="reset">
+            <input class="buttonsize font3" type="submit" value="Enviar">
         </form>
     </body>
 </html>
