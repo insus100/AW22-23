@@ -51,7 +51,7 @@
             <div class="container">
                 <div class="header"><h3>Nivel de estudios e intereses</h3></div>
 
-                <div class="column">
+                <div>
                     <label for="estudios">Nivel de estudios:</label>
                     <select name="estudios" id="estudios">
                         <option value="1">Certificado escolar</option>
@@ -80,6 +80,28 @@
                     </div>
                 </div>
             </div>
+
+            <!-- ------------------------------------------  -->
+            <div class="container">
+                <div class="header"><h3>Datos sobre la revista</h3></div>
+
+                <div>
+                    <label for="estudios">Frecuencia con la que se recibirá la revista:</label>
+                    <select name="estudios" id="estudios">
+                        <option value="1">Diaria</option>
+                        <option value="2">Semanal</option>
+                        <option value="3">Mensual</option>
+                        <option value="4">Anual</option>
+                    </select>
+                    <p>Puedes mandar tu artículo sobre cualquier tema de los que tratamos. Nosotros lo valoremos para que pueda ser publicado.</p>
+                    <input class="file-upload" id="fileupload" name="myfile" type="file" />
+                    <p>Si deseas mandar simplemente una opinión o comentario escríbelo aquí</p>
+                    <textarea id="resena" name="resena" rows="4" cols="50"></textarea>
+                </div>
+            </div>
+            <!-- ------------------------------------------  -->
+            <input class="buttonsize" class="" type="reset">
+            <input class="buttonsize" type="submit" value="Enviar">
         </form>
     </body>
 </html>

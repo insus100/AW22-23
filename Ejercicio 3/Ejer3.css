@@ -1,3 +1,6 @@
+body {
+    background-image: linear-gradient(to right, rgb(0, 221, 255), rgb(195, 0, 255));
+}
 h1 {
     margin-top: 0;
 }
@@ -11,7 +14,7 @@ ul {
 form {
     margin: 0 auto; 
     padding: 1em;
-    border: 1px solid #CCC;
+    border: 0.2em solid rgb(0, 0, 0);
     border-radius: 1em;
 }
 
@@ -24,7 +27,7 @@ label span {
     text-align: right;
 }
 
-input, textarea {
+input {
     font: 1em sans-serif;
     /*width: 250px;*/
     width: 11em;
@@ -62,8 +65,13 @@ label {
   position: relative;
 }
 
+.head {
+    text-align: center;
+}
+
 .container {
-    border: 1px solid #000;
+    border: 0.1em solid #000;
+    border-radius: 1em;
     padding: 1em;
 }
 
@@ -80,6 +88,22 @@ label {
     display:grid;
     grid-template-columns: max-content max-content;
     grid-gap:5px;
+}
+
+.column-flex {
+    display: block;
+}
+
+.file-upload {
+    width: 21em;
+    display: block;
+}
+
+.buttonsize {
+    margin-top: 1em;
+    margin-right: 1em;
+    width: 15em;
+    height: 2em;
 }
 
 .container>div>label {
