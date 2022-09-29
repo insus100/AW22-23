@@ -1,0 +1,85 @@
+.header{
+
+}
+
+.img{
+    width: 8em;
+    height: 8em;
+}
+
+.align-left{
+    float: left;
+}
+
+.align-right{
+    float: right;
+}
+
+.block{
+    display: block;
+}
+
+.center{
+    text-align: center;
+}
+
+.no-dots{
+    list-style: none;
+}
+
+.header-style{
+    height: 8em;
+}
+
+.margintop{
+    margin-top: 2.5em;
+}
+
+.border{
+    border-style: solid;
+}
+
+.task{
+    border-style: solid;
+    padding: 0.4em;
+    margin-top: 0.4em;
+    text-align: left;
+    width: 30em;
+}
+
+.inline{
+    display: inline;
+}
+
+.marginright{
+    margin-right: 1em;
+}
+
+.flexcenter{
+    display: flex;
+    justify-content: center;
+}
+
+.buttonstyle{
+    padding: 0.4em;
+    margin-top: 0.5em;
+    text-align: left;
+    width: 8em;
+    text-align: center;
+}
+
+.buttonred{
+    background-color: rgb(255, 142, 142);
+}
+
+.buttongreen{
+    background-color: rgb(146, 255, 142);
+}
+
+.buttontextred{
+    color: red;
+}
+
+.borderradius{
+    border-radius: 0.4em;
+}
