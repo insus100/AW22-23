@@ -65,6 +65,10 @@ label {
   position: relative;
 }
 
+select {
+    font-size: large;
+}
+
 .head {
     text-align: center;
 }
