@@ -41,7 +41,10 @@
 
 .task{
     border-style: solid;
-    padding: 0.4em;
+    border-width: 0.15em;
+    border-color: rgb(0, 129, 151);
+    background-color: rgb(108, 198, 214);
+    padding: 0.5em;
     margin-top: 0.4em;
     text-align: left;
     width: 30em;
@@ -80,6 +83,12 @@
     color: red;
 }
 
+.buttontextgreen{
+    color: green
+}
+
 .borderradius{
+    border-width: 0.1em;
     border-radius: 0.4em;
+    padding: 0.2em;
 }
