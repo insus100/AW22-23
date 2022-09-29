@@ -14,36 +14,36 @@
                 <div class="row font3">
                     <div></div>
                     <div class="padding">
-                        <label for="nombre">Nombre:</label>
+                        <label class="label-align-right" for="nombre">Nombre:</label>
                         <input type="text" id="nombre" name="name">
                     </div>
                     <div class="padding">
-                        <label for="apellido1">Primer Apellido:</label>
+                        <label class="label-align-right" for="apellido1">Primer Apellido:</label>
                         <input type="text" id="apellido1" name="name">
                     </div>
                     <div class="padding">
-                        <label for="apellido2">Segundo Apellido:</label>
+                        <label class="label-align-right" for="apellido2">Segundo Apellido:</label>
                         <input type="text" id="apellido2" name="name">
                     </div>
                 </div>
 
                 <div class="column font3">
-                    <label for="direccion">Dirección:</label>
+                    <label class="label-align-right" for="direccion">Dirección:</label>
                     <input type="text" placeholder="Calle o plaza, número y piso" id="direccion" name="name">
 
-                    <label for="email">E-Mail:</label>
+                    <label class="label-align-right" for="email">E-Mail:</label>
                     <input type="email" placeholder="ejemplo@ucm.es" id="email" name="name">
 
-                    <label for="password">Password:</label>
+                    <label class="label-align-right" for="password">Password:</label>
                     <input type="password" id="password" name="name">
                 </div>
                 <div class="column font3">
                     <p>Sexo:</p>
                     <br>
-                    <input type="radio" id="varon" name="sexo" value="Varón">
-                    <label for="varon">Varón</label>
+                    <input type="radio" id="varon" name="sexo" value="Hombre">
+                    <label class="label-align-left" for="varon">Hombre</label>
                     <input type="radio" id="mujer" name="sexo" value="Mujer">
-                    <label for="mujer">Mujer</label>
+                    <label class="label-align-left" for="mujer">Mujer</label>
                 </div>
             </div>
 
@@ -98,12 +98,12 @@
                     <p>Puedes mandar tu artículo sobre cualquier tema de los que tratamos. Nosotros lo valoremos para que pueda ser publicado.</p>
                     <input class="file-upload" id="fileupload" name="myfile" type="file" />
                     <p>Si deseas mandar simplemente una opinión o comentario escríbelo aquí</p>
-                    <textarea id="resena" name="resena" rows="4" cols="50"></textarea>
+                    <textarea class="opiniontext" id="resena" name="resena" rows="4" cols="50"></textarea>
                 </div>
             </div>
             <!-- ------------------------------------------  -->
             <input class="buttonsize font3" class="" type="reset">
-            <input class="buttonsize font3" type="submit" value="Enviar">
+            <input class="buttonsize font3 align-right" type="submit" value="Enviar">
         </form>
     </body>
 </html>

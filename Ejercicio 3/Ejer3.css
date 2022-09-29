@@ -108,10 +108,15 @@ select {
     margin-right: 1em;
     width: 15em;
     height: 2em;
+    display: inline;
 }
 
-.container>div>label {
+.label-align-right {
     text-align:right;
+}
+
+.label-align-left {
+    text-align: left;
 }
 
 .padding{
@@ -132,4 +137,14 @@ select {
 .font3{
     font-family: sans-serif;
     font-size: large;
+}
+
+.opiniontext {
+    width: 97%;
+    line-height: 10%;
+}
+
+.align-right {
+   display: inline;
+   float: right;
 }
