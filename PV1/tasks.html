@@ -3,11 +3,12 @@
     <head>
         <meta charset = "utf-8"/>
         <link rel="stylesheet" href="tasksScreen.css">
+        <link rel="stylesheet" href="tasksPrint.css" media="print">
         <title>PV1</title>
     </head>
     <body>
         <header>
-            <div class="block header-style">
+            <div class="block header-style" id="header">
                 <img class="img1 align-left" src="logo.png">
                 
                 <div class="align-right center marginright">
@@ -53,6 +54,22 @@
             </ul>
 
         </div>
+        <div style="height: 200vh;"></div>
+        <script>
+            window.onscroll=function(){
+                scroll();
+            }
+            var header=document.getElementById("header");
+            var sticky=header.offsetTop;
 
+            function scroll(){
+                if(window.pageYOffset>sticky){
+                    header.classList.add("sticky");
+                }
+                else{
+                    header.classList.remove("sticky");
+                }
+            }
+        </script>
     </body>
 </html>

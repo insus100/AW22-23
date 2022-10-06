@@ -1,0 +1,32 @@
+.img1{
+    filter: grayscale(100%);
+}
+
+.task{
+    border-color: black;
+    background-color: white;
+}
+
+.buttonred{
+    background-color: black;
+}
+
+.buttongreen{
+    background-color: black;
+}
+
+.buttonblue{
+    background-color: black;
+}
+
+.buttontextred{
+    color: black;
+}
+
+.buttontextgreen{
+    color: black;
+}
+
+.tagstyle{
+    background-color: white;
+}

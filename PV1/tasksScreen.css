@@ -38,6 +38,8 @@
 
 .header-style{
     height: 8em;
+    background-color: white;
+    border-bottom: 1px solid black;
 }
 
 .margintop{
@@ -111,3 +113,11 @@
 .borderradius{
     border-radius: 0.4em;
 }
+
+.sticky{
+    position: fixed;
+    top: 0;
+    width: 100%;
+}
+
+
