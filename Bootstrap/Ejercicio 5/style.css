@@ -9,3 +9,15 @@ body{
 .font2{
     color: #00A082FF;;
 }
+
+.size1{
+    font-size: 5em;
+}
+
+.size2{
+    font-size: 4em;
+}
+
+img:hover {
+    cursor: pointer;
+}
