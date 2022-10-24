@@ -12,6 +12,9 @@ class Figura {
         this._color = color;
     }
 
+    get color() {
+        return this._color;
+    }
     /**
      * @param {string} c 
      */
@@ -56,4 +59,6 @@ class Circulo extends Elipse {
 
 
 const circulo = new Circulo(0, 0, 23);
-console.log(circulo.pintar());
+const figura = new Figura(0, 0);
+circulo.pintar();
+figura.pintar();
