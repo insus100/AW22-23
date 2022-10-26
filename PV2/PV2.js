@@ -1,3 +1,8 @@
+/**
+ * Santiago Marcitllach Arias
+ * Íñigo Velasco Sánchez
+ */
+
 let listaTareas = [
     {text:"Preparar prácticas AW", tags:["universidad","awt"]}, 
     {text: "Mirar fechas congreso", done: true, tags:[]}, 
