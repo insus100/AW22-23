@@ -50,6 +50,18 @@ class Elipse extends Figura {
 class Circulo extends Elipse {
     constructor(x, y, r) {
         super(x, y, r, r);
+        this._r = r;
+    }
+
+    /**
+     * @param {number} r
+     */
+    set r(r) {
+        this._r = this.rh = this.rv = r;
+    }
+
+    get r() {
+        return this._r;
     }
 
     pintar() {
