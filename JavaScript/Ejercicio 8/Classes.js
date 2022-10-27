@@ -73,4 +73,5 @@ class Circulo extends Elipse {
 const circulo = new Circulo(0, 0, 23);
 const figura = new Figura(0, 0);
 circulo.pintar();
+console.log("_______________")
 figura.pintar();

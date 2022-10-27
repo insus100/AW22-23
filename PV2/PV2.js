@@ -1,3 +1,4 @@
+"use strict";
 /**
  * Santiago Marcitllach Arias
  * Íñigo Velasco Sánchez
