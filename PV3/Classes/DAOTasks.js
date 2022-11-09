@@ -9,9 +9,9 @@ class DAOTasks {
         this.pool.getConnection((err, connection) => {
             if(err) callback(new Error("Error de conexión a la base de datos"));
             else {
-                connection.query(`SELECT idUser FROM aw_tareas_usuarios WHERE email=${email}`,
+                connection.query(`SELECT idUser FROM aw_tareas_usuarios WHERE email='${email}'`,
                 (err, rows) => {
-                    if(err) callback(new Error("Error de acceso a la base de datos"));
+                    if(err) callback(new Error("Error de acceso a la base de datos " + err));
                     else {
                         if (rows.length === 0) callback(new Error("No existe el usuario"));
                         else {
@@ -36,19 +36,19 @@ class DAOTasks {
                             connection.query(`SELECT idUser, aw_tareas_tareas.idTareas, hecho, aw_tareas_tareas.texto, aw_tareas_etiquetas.texto as etiqueta FROM aw_tareas_user_tarea JOIN aw_tareas_tareas ON aw_tareas_user_tarea.idTarea = aw_tareas_tareas.idTareas JOIN aw_tareas_tareas_etiquetas ON aw_tareas_tareas.idTareas = aw_tareas_tareas_etiquetas.idTarea JOIN aw_tareas_etiquetas ON aw_tareas_etiquetas.idEtiqueta = aw_tareas_tareas_etiquetas.idEtiqueta WHERE aw_tareas_user_tarea.idUser = ${idUser}`,
                             (err, rows) => {
                                 connection.release();
-                                if(err) callback(new Error("Error de acceso a la base de datos"));
+                                if(err) callback(new Error("Error de acceso a la base de datos11 " + err));
                                 else {
                                     let tasks = [];
                                     rows.forEach((tarea) => {
-                                        if(tasks[tarea.idTarea] === undefined){
-                                            tasks[tarea.idTarea] = {
-                                                idTareas: tarea.idTarea,
+                                        if(tasks[tarea.idTareas] === undefined){
+                                            tasks[tarea.idTareas] = {
+                                                idTareas: tarea.idTareas,
                                                 hecho: tarea.hecho,
                                                 texto: tarea.texto,
                                                 tags: [tarea.etiqueta]
                                             };
                                         }
-                                        else tasks[tarea.idTarea].tags.push(tarea.etiqueta); 
+                                        else tasks[tarea.idTareas].tags.push(tarea.etiqueta); 
                                     });
                                     tasks = tasks.filter(t => t !== undefined);//quitar objetos vacios del array;
                                     callback(null, tasks);
@@ -65,16 +65,16 @@ class DAOTasks {
         this.pool.getConnection((err, connection) => {
             if(err) callback(new Error("Error de conexión a la base de datos"));
             else{
-                connection.query(`INSERT INTO aw_tareas_tareas VALUES (${task.text})`, 
+                connection.query(`INSERT INTO aw_tareas_tareas (texto) VALUES ('${task.text}')`, 
                 (err, result) => {
                     connection.release(); //TODO REVISAR
-                    if(err) callback(new Error("Error de acceso a la base de datos"));
+                    if(err) callback(new Error("Error de acceso a la base de datos1 " + err));
                     else {
                         const taskId = result.insertId;
                         task.tags.forEach((t) => {
-                            connection.query(`INSERT INTO aw_tareas_tareas_etiquetas VALUES (${taskId}), (${t.idEtiqueta})`, 
+                            connection.query(`INSERT INTO aw_tareas_tareas_etiquetas VALUES (${taskId}, ${t})`, 
                             (err, result) => {
-                                if(err) callback(new Error("Error de acceso a la base de datos"));
+                                if(err) callback(new Error("Error de acceso a la base de datos2 " + err));
                             });
                         });
 
@@ -82,10 +82,10 @@ class DAOTasks {
                             this.getUserIdFromEmail(email, (err, idUser) => {
                                 if(err) console.log(err);
                                 else {
-                                    connection.query(`INSERT INTO aw_tareas_user_tareas VALUES (${idUser}), (${taskId})`,
+                                    connection.query(`INSERT INTO aw_tareas_user_tarea (idUser, idTarea) VALUES (${idUser}, ${taskId})`,
                                     (err, result) => {
                                         connection.release();
-                                        if(err) callback(new Error("Error de acceso a la base de datos"));
+                                        if(err) callback(new Error("Error de acceso a la base de datos3 " + err));
                                     });
                                 }
                             });
@@ -100,7 +100,7 @@ class DAOTasks {
         this.pool.getConnection((err, connection) => {
             if(err) callback(new Error("Error de conexión a la base de datos"));
             else{
-                connection.query(`UPDATE aw_tareas_user_tareas SET hecho=1 WHERE idTarea = ${idTask}`, 
+                connection.query(`UPDATE aw_tareas_user_tarea SET hecho=1 WHERE idTarea = ${idTask}`, 
                 (err, result) => {
                     connection.release();
                     if(err) callback(new Error("Error de acceso a la base de datos"));
@@ -116,7 +116,7 @@ class DAOTasks {
                 this.getUserIdFromEmail(email, (err, idUser) => {
                     if(err) console.log(err);
                     else {
-                        connection.query(`DELETE FROM aw_tareas_user_tareas WHERE hecho=1 AND idUser=${idUser}`,
+                        connection.query(`DELETE FROM aw_tareas_user_tarea WHERE hecho=1 AND idUser=${idUser}`,
                         (err, result) => {
                             connection.release();
                             if(err) callback(new Error("Error de acceso a la base de datos"));

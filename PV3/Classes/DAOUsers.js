@@ -24,7 +24,7 @@ class DAOUsers {
         this.pool.getConnection((err, connection) => {
             if(err) callback(new Error("Error de conexión a la base de datos"));
             else {
-                connection.query(`SELECT img FROM aw_tareas_usuarios WHERE email=${email}`,
+                connection.query(`SELECT img FROM aw_tareas_usuarios WHERE email='${email}'`,
                 (err, rows) => {
                     connection.release();
                     if(err) callback(new Error("Error de acceso a la base de datos"));
