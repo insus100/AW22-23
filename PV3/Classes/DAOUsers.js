@@ -1,3 +1,4 @@
+"use strict"
 class DAOUsers {
     constructor(pool) {
         this.pool = pool;
