@@ -50,7 +50,7 @@ class DAOTasks {
                                         }
                                         else tasks[tarea.idTarea].tags.push(tarea.etiqueta); 
                                     });
-                                    tasks = tasks.filter(t => t != undefined);//quitar objetos vacios del array;
+                                    tasks = tasks.filter(t => t !== undefined);//quitar objetos vacios del array;
                                     callback(null, tasks);
                                 }
                             })

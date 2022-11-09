@@ -2,8 +2,8 @@
 
 const mysql = require("mysql");
 const config = require("./config");
-const DAOUsers = require("./Classes/DAOUsers");
-const DAOTasks = require("./Classes/DAOTasks");
+const { DAOUsers } = require("./Classes/DAOUsers");
+const { DAOTasks } = require("./Classes/DAOTasks");
 
 // Crear el pool de conexiones
 const pool = mysql.createPool({
@@ -12,9 +12,17 @@ const pool = mysql.createPool({
     password: config.password,
     database: config.database
 });
+console.log(`MySQL server connected: host:${config.host}`);
 
-let daoUser = new DAOUsers(pool);
-let daoTask = new DAOTasks(pool);
+const daoUser = new DAOUsers(pool);
+const daoTask = new DAOTasks(pool);
 
 // Definición de las funciones callback
+
+daoTask.getAllTasks('aitor.tilla@ucm.es', (err, tasks) => {
+    if(err) console.log(err);
+    else {
+        console.log(JSON.stringify(tasks));
+    }
+})
 // Uso de los métodos de las clases DAOUsers y DAOTasks

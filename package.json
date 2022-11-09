@@ -1,0 +1,22 @@
+{
+  "name": "aw22-23",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/insus100/AW22-23.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/insus100/AW22-23/issues"
+  },
+  "homepage": "https://github.com/insus100/AW22-23#readme",
+  "dependencies": {
+    "mysql": "^2.18.1"
+  }
+}
