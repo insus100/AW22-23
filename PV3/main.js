@@ -55,4 +55,4 @@ daoTask.markTaskDone(3, onMarkTaskDone);
 daoTask.deleteCompleted('aitor.tilla@ucm.es', onDeleteCompleted);
 
 daoUser.isUserCorrect('aitor.tilla@ucm.es', 'aitor', onIsUserCorrect);
-daoUser.getUserImageName('bill.puertas@ucm.es', onGetUserImageName)
+daoUser.getUserImageName('bill.puertas@ucm.es', onGetUserImageName);
