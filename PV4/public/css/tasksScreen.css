@@ -1,0 +1,130 @@
+.header{
+
+}
+
+.img1{
+    width: 9em;
+    height: 8em;
+}
+
+.img2{
+    width: 5em;
+    height: 5em;
+    margin-top: 1.4em;
+    margin-right: 1em;
+    border-style: solid;
+    border-width: 0.15em;
+}
+
+.align-left{
+    float: left;
+}
+
+.align-right{
+    float: right;
+}
+.align-center {
+    float: center;
+}
+
+.block{
+    display: block;
+}
+
+.center{
+    text-align: center;
+}
+
+.no-dots{
+    list-style: none;
+}
+
+.header-style{
+    height: 8em;
+    background-color: white;
+    border-bottom: 1px solid black;
+}
+
+.margintop{
+    margin-top: 2.5em;
+}
+
+.margin-top-sm {
+    margin-top: 0.7em;
+}
+
+.border{
+    border-style: solid;
+}
+
+.task{
+    border-style: solid;
+    border-width: 0.15em;
+    border-color: rgb(0, 129, 151);
+    background-color: rgba(0, 154, 201, 0.61);
+    padding: 0.5em;
+    margin-top: 0.4em;
+    text-align: left;
+    width: 30em;
+    border-radius: 0.4em;
+}
+
+.inline{
+    display: inline;
+}
+
+.marginright{
+    margin-right: 1em;
+}
+
+.flexcenter{
+    display: flex;
+    justify-content: center;
+}
+
+.buttonstyle{
+    padding: 0.4em;
+    margin-top: 0.7em;
+    text-align: left;
+    width: 8em;
+    text-align: center;
+}
+
+.buttonred{
+    background-color: rgb(255, 166, 166);
+}
+
+.buttongreen{
+    background-color: rgb(165, 255, 162);
+}
+
+.buttonblue{
+    background-color: rgb(155, 195, 255);
+}
+
+.buttontextred{
+    color: red;
+}
+
+.buttontextgreen{
+    color: green
+}
+
+.tagstyle{
+    border-style: solid;
+    border-width: 0.1em;
+    padding: 0.2em;
+    background-color: rgb(236, 236, 236);
+}
+
+.borderradius{
+    border-radius: 0.4em;
+}
+
+.sticky{
+    position: fixed;
+    top: 0;
+    width: 100%;
+}
+
+
