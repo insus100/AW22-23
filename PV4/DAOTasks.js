@@ -60,19 +60,7 @@ class DAOTasks {
             }
         });
     }
-    doesTagExist(tag, callback) {
-        this.pool.getConnection((err, connection) => {
-            if(err) callback(new Error("doesTagExist: Error de conexión a la base de datos " + err));
-            else {
-                connection.query(`SELECT * FROM aw_tareas_etiquetas WHERE texto='${tag}'`, (err, res) => {
-                    if(err) callback(new Error("doesTagExist: Error de acceso a la base de datos " + err));
-                    else {
-                        callback(null, res.length > 1, res.length > 1 ? res[0].idEtiqueta : null);
-                    }
-                });
-            }
-        });
-    }
+
     insertTask(email, task, callback){
         this.pool.getConnection((err, connection) => {
             if(err) callback(new Error("Error de conexión a la base de datos"));
@@ -80,62 +68,60 @@ class DAOTasks {
                 connection.query(`INSERT INTO aw_tareas_tareas (texto) VALUES ('${task.text}')`, 
                 (err, result) => {
                     connection.release(); //TODO REVISAR
-                    if(err) callback(new Error("Error de acceso a la base de datos1 " + err));
+                    if(err) callback(new Error("insertTask: Error de acceso a la base de datos1 " + err));
                     else {
-                        console.log("insertTask " + JSON.stringify(task))
+                        //console.log("insertTask " + JSON.stringify(task))
                         const taskId = result.insertId;
-                        let tagQuery = "INSERT INTO aw_tareas_etiquetas (texto) VALUES ";
+                        let checkTagsExist = "SELECT * FROM aw_tareas_etiquetas WHERE ";
                         let relationQuery = "INSERT INTO aw_tareas_tareas_etiquetas VALUES ";
-                        task.tags.forEach(t => {
-                            this.doesTagExist(t, (err, existe, tagId) => {
-                                if(err) console.log(err);
-                                else {
-                                    if(existe) {//si existe solo añadimos la relacion
-                                        relationQuery += `(${taskId}, ${tagId}),`;
-                                    } else {//si no, tenemos que crear las tags y luego relacionarlas
-                                        tagQuery += `(${t}),`;
-                                        //relationQuery += `(${taskId}, ${tagId}),`;
+                        let tagQuery = "INSERT INTO aw_tareas_etiquetas (texto) VALUES ";
+                        task.tags.forEach((t) =>  checkTagsExist += `texto = '${t}' OR `);
+                        checkTagsExist = checkTagsExist.slice(0, -4) + ';';
+                        //console.log("checkTagsExist", checkTagsExist);
+                        connection.query(checkTagsExist, (err, res) => {
+                            if(err) callback(new Error("insertTask: Error de acceso a la base de datos2 " + err));
+                            else {
+                                //res contiene las tags a las que solo hay que meterlas en la relacion.
+                                if(res.length > 0) {
+                                    res.forEach((t) => relationQuery += `(${taskId}, ${t.idEtiqueta}),`);
+                                    relationQuery = relationQuery.slice(0, -1) + ';';
+                                    task.tags = task.tags.filter((t) => { return !res.find(t2 => t2.texto.toLowerCase() === t.toLowerCase()); });//sacamos de task.tags las que ya estaban en la base de datos (las que estan en res)
+                                    //console.log("res", res, "\n", "task.tags", task.tags);
+                                    //console.log("relationQuery", relationQuery);
+                                    connection.query(relationQuery, (err, res) => { if(err) callback(new Error("insertTask: Error de acceso a la base de datos3 " + err));});
+                                }
+                                //en task.tags quedan ahora las tags a insertar y crear relacion
+                                relationQuery = "INSERT INTO aw_tareas_tareas_etiquetas VALUES ";//reset for new tags.
+                                task.tags.forEach((t) => tagQuery += `('${t}'),`);
+                                tagQuery = tagQuery.slice(0, -1) + ';';
+                                //console.log("tagQuery", tagQuery);
+                                connection.query(tagQuery, (err, res) => {
+                                    if(err) callback(new Error("insertTask: Error de acceso a la base de datos3 " + err));
+                                    else {
+                                        let firstInsertId = res.insertId;
+                                        task.tags.forEach((t) => {
+                                            relationQuery += `(${taskId}, ${firstInsertId}),`;
+                                            firstInsertId++;
+                                        });
+                                        relationQuery = relationQuery.slice(0, -1) + ';';
+                                        connection.query(relationQuery, (err, res) => { if(err) callback(new Error("insertTask: Error de acceso a la base de datos3 " + err));});
+                                        this.getUserIdFromEmail(email, (err, idUser) => {
+                                            if(err) console.log(err);
+                                            else {
+                                                connection.query(`INSERT INTO aw_tareas_user_tarea (idUser, idTarea) VALUES (${idUser}, ${taskId})`,
+                                                (err, result) => {
+                                                    connection.release();
+                                                    if(err) callback(new Error("Error de acceso a la base de datos3 " + err));
+                                                    else {
+                                                        callback(null);
+                                                    }
+                                                });
+                                            }
+                                        });
                                     }
-                                }
-                            }); 
+                                });
+                            }
                         });
-                        tagQuery = tagQuery.slice(0, -1) + ';';
-                        relationQuery = relationQuery.slice(0, -1) + ';';
-                        console.log(tagQuery + "\n" + relationQuery);
-                        /*connection.query(tagQuery, (err, res) => {
-                            if(err) callback(new Error("Error de acceso a la base de datos2 " + err));
-                            else {
-                                if(taskId) {
-                                    console.log(JSON.stringify(res));
-                                }
-                            }
-                        });*/
-                        //let tagQuery = "INSERT INTO aw_tareas_tareas_etiquetas VALUES ";
-                        /*task.tags.forEach((t) => {
-                            tagQuery += `(${taskId}, ${t}),`;
-                            //connection.query(`INSERT INTO aw_tareas_tareas_etiquetas VALUES (${taskId}, ${t})`, 
-                            //(err, result) => {
-                            //    if(err) callback(new Error("Error de acceso a la base de datos2 " + err));
-                            //});
-                        });*/
-                        /*connection.query(tagQuery, 
-                        (err, result) => {
-                            if(err) callback(new Error("Error de acceso a la base de datos2 " + err));
-                            else {
-                                if(taskId != undefined){
-                                    this.getUserIdFromEmail(email, (err, idUser) => {
-                                        if(err) console.log(err);
-                                        else {
-                                            connection.query(`INSERT INTO aw_tareas_user_tarea (idUser, idTarea) VALUES (${idUser}, ${taskId})`,
-                                            (err, result) => {
-                                                connection.release();
-                                                if(err) callback(new Error("Error de acceso a la base de datos3 " + err));
-                                            });
-                                        }
-                                    });
-                                }
-                            }
-                        });*/
                     }
                 });
             }

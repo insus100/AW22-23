@@ -42,15 +42,19 @@ app.get('/', function(req, res) {
 app.post('/addTask', (req, res) => {
     if(req.body.tarea && req.body.tarea.length > 0) {
         const task = createTask(req.body.tarea);
-        //console.log(JSON.stringify(task));
+        console.log("req.body", req.body, "\n", JSON.stringify(task));
         daoT.insertTask('aitor.tilla@ucm.es', task, (err) => {
             if(err) console.log(err);
-            daoT.getAllTasks('aitor.tilla@ucm.es', (err, tasks) => {
-                if(err) console.log(err);
-                else {
-                    res.render(path.join(__dirname, 'views/tasks'), { tasksArray: tasks });
-                }
-            });
+            else {
+                daoT.getAllTasks('aitor.tilla@ucm.es', (err, tasks) => {
+                    if(err) console.log(err);
+                    else {
+                        console.log("redirect to /");
+                        res.redirect("/");
+                        //res.render(path.join(__dirname, 'views/tasks'), { tasksArray: tasks });
+                    }
+                });
+            }
         });
     } 
 });
