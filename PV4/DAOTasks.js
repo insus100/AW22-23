@@ -60,7 +60,19 @@ class DAOTasks {
             }
         });
     }
-
+    doesTagExist(tag, callback) {
+        this.pool.getConnection((err, connection) => {
+            if(err) callback(new Error("doesTagExist: Error de conexión a la base de datos " + err));
+            else {
+                connection.query(`SELECT * FROM aw_tareas_etiquetas WHERE texto='${tag}'`, (err, res) => {
+                    if(err) callback(new Error("doesTagExist: Error de acceso a la base de datos " + err));
+                    else {
+                        callback(null, res.length > 1, res.length > 1 ? res[0].idEtiqueta : null);
+                    }
+                });
+            }
+        });
+    }
     insertTask(email, task, callback){
         this.pool.getConnection((err, connection) => {
             if(err) callback(new Error("Error de conexión a la base de datos"));
@@ -70,26 +82,60 @@ class DAOTasks {
                     connection.release(); //TODO REVISAR
                     if(err) callback(new Error("Error de acceso a la base de datos1 " + err));
                     else {
+                        console.log("insertTask " + JSON.stringify(task))
                         const taskId = result.insertId;
-                        task.tags.forEach((t) => {
-                            connection.query(`INSERT INTO aw_tareas_tareas_etiquetas VALUES (${taskId}, ${t})`, 
-                            (err, result) => {
-                                if(err) callback(new Error("Error de acceso a la base de datos2 " + err));
-                            });
-                        });
-
-                        if(taskId != undefined){
-                            this.getUserIdFromEmail(email, (err, idUser) => {
+                        let tagQuery = "INSERT INTO aw_tareas_etiquetas (texto) VALUES ";
+                        let relationQuery = "INSERT INTO aw_tareas_tareas_etiquetas VALUES ";
+                        task.tags.forEach(t => {
+                            this.doesTagExist(t, (err, existe, tagId) => {
                                 if(err) console.log(err);
                                 else {
-                                    connection.query(`INSERT INTO aw_tareas_user_tarea (idUser, idTarea) VALUES (${idUser}, ${taskId})`,
-                                    (err, result) => {
-                                        connection.release();
-                                        if(err) callback(new Error("Error de acceso a la base de datos3 " + err));
+                                    if(existe) {//si existe solo añadimos la relacion
+                                        relationQuery += `(${taskId}, ${tagId}),`;
+                                    } else {//si no, tenemos que crear las tags y luego relacionarlas
+                                        tagQuery += `(${t}),`;
+                                        //relationQuery += `(${taskId}, ${tagId}),`;
+                                    }
+                                }
+                            }); 
+                        });
+                        tagQuery = tagQuery.slice(0, -1) + ';';
+                        relationQuery = relationQuery.slice(0, -1) + ';';
+                        console.log(tagQuery + "\n" + relationQuery);
+                        /*connection.query(tagQuery, (err, res) => {
+                            if(err) callback(new Error("Error de acceso a la base de datos2 " + err));
+                            else {
+                                if(taskId) {
+                                    console.log(JSON.stringify(res));
+                                }
+                            }
+                        });*/
+                        //let tagQuery = "INSERT INTO aw_tareas_tareas_etiquetas VALUES ";
+                        /*task.tags.forEach((t) => {
+                            tagQuery += `(${taskId}, ${t}),`;
+                            //connection.query(`INSERT INTO aw_tareas_tareas_etiquetas VALUES (${taskId}, ${t})`, 
+                            //(err, result) => {
+                            //    if(err) callback(new Error("Error de acceso a la base de datos2 " + err));
+                            //});
+                        });*/
+                        /*connection.query(tagQuery, 
+                        (err, result) => {
+                            if(err) callback(new Error("Error de acceso a la base de datos2 " + err));
+                            else {
+                                if(taskId != undefined){
+                                    this.getUserIdFromEmail(email, (err, idUser) => {
+                                        if(err) console.log(err);
+                                        else {
+                                            connection.query(`INSERT INTO aw_tareas_user_tarea (idUser, idTarea) VALUES (${idUser}, ${taskId})`,
+                                            (err, result) => {
+                                                connection.release();
+                                                if(err) callback(new Error("Error de acceso a la base de datos3 " + err));
+                                            });
+                                        }
                                     });
                                 }
-                            });
-                        }
+                            }
+                        });*/
                     }
                 });
             }

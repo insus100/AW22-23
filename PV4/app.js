@@ -42,14 +42,15 @@ app.get('/', function(req, res) {
 app.post('/addTask', (req, res) => {
     if(req.body.tarea && req.body.tarea.length > 0) {
         const task = createTask(req.body.tarea);
-        console.log(task);
-        daoT.insertTask('aitor.tilla@ucm.es', task, )
-    }
-
-    daoT.getAllTasks('aitor.tilla@ucm.es', (err, tasks) => {
-        if(err) console.log(err);
-        else {
-            res.render(path.join(__dirname, 'views/tasks'), { tasksArray: tasks });
-        }
-    });
+        //console.log(JSON.stringify(task));
+        daoT.insertTask('aitor.tilla@ucm.es', task, (err) => {
+            if(err) console.log(err);
+            daoT.getAllTasks('aitor.tilla@ucm.es', (err, tasks) => {
+                if(err) console.log(err);
+                else {
+                    res.render(path.join(__dirname, 'views/tasks'), { tasksArray: tasks });
+                }
+            });
+        });
+    } 
 });

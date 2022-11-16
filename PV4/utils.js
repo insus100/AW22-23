@@ -39,7 +39,7 @@ function createTask(texto){
     const expr = new RegExp(/(?<=\@).\w*/g);
     const matches = texto.match(expr);
     texto = texto.replace(/\s\@\w*/g, "");
-    let res = [{text : texto, tags : matches}];
+    let res = {text : texto, tags: matches};
     return res;
 }
 
