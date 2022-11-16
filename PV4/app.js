@@ -41,8 +41,9 @@ app.get('/', function(req, res) {
 
 app.post('/addTask', (req, res) => {
     if(req.body.tarea && req.body.tarea.length > 0) {
-        const tags = createTask(req.body.tarea);
-        console.log(tags);
+        const task = createTask(req.body.tarea);
+        console.log(task);
+        daoT.insertTask('aitor.tilla@ucm.es', task, )
     }
 
     daoT.getAllTasks('aitor.tilla@ucm.es', (err, tasks) => {
