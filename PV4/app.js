@@ -49,7 +49,7 @@ app.post('/addTask', (req, res) => {
                 daoT.getAllTasks('aitor.tilla@ucm.es', (err, tasks) => {
                     if(err) console.log(err);
                     else {
-                        console.log("redirect to /");
+                        //console.log("redirect to /");
                         res.redirect("/");
                         //res.render(path.join(__dirname, 'views/tasks'), { tasksArray: tasks });
                     }
