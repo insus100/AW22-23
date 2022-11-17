@@ -34,9 +34,32 @@ app.get('/', function(req, res) {
     daoT.getAllTasks('aitor.tilla@ucm.es', (err, tasks) => {
         if(err) console.log(err);
         else {
+            console.log(tasks);
             res.render(path.join(__dirname, 'views/tasks'), { tasksArray: tasks });
         }
     });
+});
+
+app.get('/finish/:id', (req, res) => {
+    const idTarea = parseInt(req.params.id);
+    if(idTarea && !isNaN(idTarea)) {
+        daoT.markTaskDone(idTarea, (err) => {
+            if(err) console.log(err);
+            else {
+                res.redirect("/");
+            }
+        });
+    }
+});
+
+app.get('/deleteCompleted', (req, res) => {
+    daoT.deleteCompleted('aitor.tilla@ucm.es', (err) => {
+        if(err) console.log(err);
+        else {
+            res.redirect("/");
+        }
+    });
+    
 });
 
 app.post('/addTask', (req, res) => {

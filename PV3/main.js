@@ -50,7 +50,7 @@ function onGetUserImageName(err, img) {
 
 // Uso de los métodos de las clases DAOUsers y DAOTasks
 daoTask.getAllTasks('aitor.tilla@ucm.es', onGetAllTasks);
-daoTask.insertTask('aitor.tilla@ucm.es', { text: `test${Date.now()}`, tags: [1, 2] }, onInsertTask);
+daoTask.insertTask('aitor.tilla@ucm.es', { text: `test${Date.now()}`, tags: ["hola2", "adios1"] }, onInsertTask);
 daoTask.markTaskDone(3, onMarkTaskDone);
 daoTask.deleteCompleted('aitor.tilla@ucm.es', onDeleteCompleted);
 

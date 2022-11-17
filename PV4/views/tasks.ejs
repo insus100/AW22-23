@@ -28,18 +28,20 @@
                                 <p class="inline marginright"><del><%= t.texto %></del></p>
                             <% } else { %>
                                 <p class="inline marginright"><%= t.texto %></p>
-                                <input class="align-right buttontextred" type="button" id="finalizar" value="Finalizar">
+                                <a href="/finish/<%= t.idTareas %>"><input class="align-right buttontextred" type="button" id="finalizar" value="Finalizar"></a>
                             <% } %>
                             <!-- Task tags -->
-                            <% t.tags.forEach(tag => { %>
+                            <% if(t.tags && t.tags.length > 0){ t.tags.forEach(tag => { %>
+                                <% if(tag){ %>
                                 <p class="inline marginright borderradius tagstyle"><%= tag %></p>
-                            <% }); %> 
+                                <% } %>
+                            <% });} %> 
                         </div>
                     </li>
                 <% }); %>
                 <li><div class="">
-                    <form action="/addTask" method="post">
-                        <input class="buttonstyle align-left buttonred" type="button" id="delete" value="Eliminar tareas">
+                    <a href="/deleteCompleted"><input class="buttonstyle align-left buttonred" type="button" id="delete" value="Eliminar tareas"></a>
+                    <form action="/addTask" method="post">                        
                         <div class="align-right margin-top-sm">
                             <input class="block" name="tarea" type="text" size="10">
                             <input class="buttonstyle align-right buttongreen" type="submit" value="Añadir nueva">
