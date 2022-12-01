@@ -126,21 +126,23 @@ app.post('/addTask', isAuthorized, (req, res) => {
 });
 
 app.get('/login', isNotAuthorized, (req, res) => {
-    if(req.session && req.session.currentUser){
+    res.render(path.join(__dirname, 'views/login'), {mensaje : ""});
+    /*if(req.session && req.session.currentUser){
         res.redirect("/");
     }
     else{
         res.render(path.join(__dirname, 'views/login'), {mensaje : ""});
-    }
+    }*/
 });
 
 app.get('/register', isNotAuthorized, (req, res) => {
-    if(req.session && req.session.currentUser){
+    res.render(path.join(__dirname, 'views/register'), {mensaje : ""});
+    /*if(req.session && req.session.currentUser){
         res.redirect("/");
     }
     else{
         res.render(path.join(__dirname, 'views/login'), {mensaje : ""});
-    }
+    }*/
 });
 
 app.post("/login", isNotAuthorized, function(req, res) {
