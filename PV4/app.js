@@ -33,13 +33,6 @@ app.use(bodyParser.urlencoded({ extended: true }));
 //ponemos el directorio public como estatico
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use((req, res, next) => {
-    if(req.session && req.session.currentUser){
-        app.locals.user = req.session.currentUser;
-    }
-    next();
-});
-
 const middlewareSession = session({
     saveUninitialized: false,
     secret: "hytvr4vf",
@@ -59,18 +52,31 @@ app.listen(config.port, function(err) {
     }
 });
 
-app.get("/reset", function(request, response) {
-    response.status(200);
-    request.session.contador = 0;
-    response.type("text/plain");
-    response.end("Has reiniciado el contador");
+app.get("/imagenUsuario", function(req, res) {
+daoU.getUserImageName(req.session.currentUser, (err, img) => {
+    if(err)console.log(err);
+    else{
+        if(img && img.length > 0){
+            const imgpath = path.join(__dirname,  'profile_imgs/' + img);
+            if(fs.existsSync(imgpath)) res.sendFile(imgpath);
+            else{
+                res.sendFile(path.join(__dirname, 'public/img/descarga.png'));
+            }
+        }
+        else{
+            res.sendFile(path.join(__dirname, 'public/img/descarga.png'));
+        }
+    }
+});
+
 });
 
 app.get('/', isAuthorized, function(req, res) {
-    daoT.getAllTasks('aitor.tilla@ucm.es', (err, tasks) => {
+    daoT.getAllTasks(req.session.currentUser , (err, tasks) => {
         if(err) console.log(err);
         else {
             console.log(tasks);
+            if(!res.locals.user) res.locals.user = req.session.currentUser;
             res.render(path.join(__dirname, 'views/tasks'), { tasksArray: tasks });
         }
     });
@@ -89,7 +95,8 @@ app.get('/finish/:id', isAuthorized, (req, res) => {
 });
 
 app.get('/deleteCompleted', isAuthorized, (req, res) => {
-    daoT.deleteCompleted('aitor.tilla@ucm.es', (err) => {
+    
+    daoT.deleteCompleted(req.session.currentUser, (err) => {
         if(err) console.log(err);
         else {
             res.redirect("/");
@@ -102,10 +109,10 @@ app.post('/addTask', isAuthorized, (req, res) => {
     if(req.body.tarea && req.body.tarea.length > 0) {
         const task = createTask(req.body.tarea);
         console.log("req.body", req.body, "\n", JSON.stringify(task));
-        daoT.insertTask('aitor.tilla@ucm.es', task, (err) => {
+        daoT.insertTask(req.session.currentUser, task, (err) => {
             if(err) console.log(err);
             else {
-                daoT.getAllTasks('aitor.tilla@ucm.es', (err, tasks) => {
+                daoT.getAllTasks(req.session.currentUser, (err, tasks) => {
                     if(err) console.log(err);
                     else {
                         //console.log("redirect to /");
@@ -138,6 +145,7 @@ app.post("/login", isNotAuthorized, function(req, res) {
                 }
                 else if(ok){
                     req.session.currentUser = req.body.email;
+                    res.locals.user = req.body.email;
                     res.redirect("/");
                 }
                 else{
