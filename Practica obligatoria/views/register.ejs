@@ -28,9 +28,80 @@
     <!-- Custom styles for this template -->
     <link href="css/signin.css" rel="stylesheet">
   </head>  
-  <body class="text-center">
-<main class="form-signin w-100 m-auto">
-
+  <body>
+<main class="form-register w-100 m-auto">
+  <div class="text-center">
+    <img class="img" src="img/logo.png" alt="">
+    <h1 class="h3 mb-3 fw-normal">UCM-CAU</h1>
+    <h3 class="h3">Centro de atención al usuario - registro</h3>
+  </div>
+  <form class="row g-3">
+    <div class="col-12">
+      <label for="inputEmail4" class="form-label">E-mail</label>
+      <input type="email" class="form-control" id="inputEmail4" placeholder="ejemplo@ucm.es">
+    </div>
+    <div class="col-md-6">
+      <label for="inputPassword4" class="form-label">Contraseña</label>
+      <input type="password" class="form-control" id="inputPassword4">
+    </div>
+    <div class="col-md-6">
+      <label for="inputCheckPassword" class="form-label">Confirmar contraseña</label>
+      <input type="password" class="form-control" id="inputCheckPassword">
+    </div>
+    <div class="col-12">
+      <label for="inputAddress" class="form-label">Nombre de usuario</label>
+      <input type="text" class="form-control" id="inputNombreUsuario" placeholder="Felipe López">
+    </div>
+    <div class="col-12">
+      <label for="inputState" class="form-label">Perfil universitario</label>
+      <select id="inputState" class="form-select">
+        <option selected>Elige...</option>
+        <option>Alumno</option>
+        <option>Personal de administración y servicios (PAS)</option>
+        <option>Personal docente e investigador (PDI)</option>
+        <option>Antiguo alumno</option>
+      </select>
+    </div>
+    <div class="col-12">
+      <label for="formFile" class="form-label">Imagen de perfil</label>
+      <input class="form-control" type="file" id="formFile">
+    </div>
+    <div class="col-md-2">
+      <div class="form-check pt-5">
+        <input class="form-check-input" type="checkbox" id="gridCheck" onclick="mostrarNumEmpleado()">
+        <label class="form-check-label" for="gridCheck">
+          Técnico
+        </label>
+      </div>
+    </div>
+    <div class="col-md-6 hide" id="divInputEmpleado">
+      <label for="inputEmpleado" class="form-label">Nº empleado</label>
+      <input type="number" class="form-control" id="inputEmpleado">
+    </div>
+    <div class="col-md-6">
+    </div>
+    <div class="col-md-10">
+      <button type="submit" class="btn btn-primary">Registrarse</button>
+    </div>
+    <div class="col-md-2">
+      <a class="btn btn-secondary" href="/login">Iniciar sesión</a>
+    </div>
+  </form>
 </main>
+<script>
+  function mostrarNumEmpleado() {
+    const checkbox = document.getElementById("gridCheck");
+    const input = document.getElementById("divInputEmpleado");
+    
+    //console.log("checkbox", checkbox.ariaChecked);
+    if(checkbox.checked === true) {
+      input.classList.remove("hide");
+      checkbox.ariaChecked = false;
+    } else {
+      input.classList.add("hide");
+      checkbox.ariaChecked = true;
+    }
+  }
+</script>
   </body>
 </html>

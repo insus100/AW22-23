@@ -8,7 +8,7 @@ class DAOUsers {
         this.pool.getConnection((err, connection) => {
             if (err) callback(new Error("Error de conexión a la base de datos"));
             else {
-                connection.query("SELECT * FROM aw_tareas_usuarios WHERE email = ? AND password = ?", [email,password],
+                connection.query("SELECT * FROM users WHERE email = ? AND password = ?", [email,password],
                 (err, rows) => {
                     connection.release(); // devolver al pool la conexión
                     if (err) callback(new Error("Error de acceso a la base de datos"));
@@ -25,7 +25,7 @@ class DAOUsers {
         this.pool.getConnection((err, connection) => {
             if(err) callback(new Error("Error de conexión a la base de datos"));
             else {
-                connection.query(`SELECT img FROM aw_tareas_usuarios WHERE email='${email}'`,
+                connection.query(`SELECT img FROM users WHERE email='${email}'`,
                 (err, rows) => {
                     connection.release();
                     if(err) callback(new Error("Error de acceso a la base de datos"));

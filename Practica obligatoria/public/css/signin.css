@@ -15,6 +15,9 @@ body {
   max-width: 330px;
   padding: 15px;
 }
+.form-register {
+  max-width: 50em;
+}
 
 .form-signin .form-floating:focus-within {
   z-index: 2;
@@ -37,6 +40,10 @@ body {
 }
 
 .img{
-  height: 11em;
+  height: 12em;
   width: 11em;
+}
+
+.hide {
+  display: none;
 }
