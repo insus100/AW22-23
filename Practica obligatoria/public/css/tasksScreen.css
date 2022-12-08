@@ -1,17 +1,12 @@
-.header{
-
-}
 
 .img1{
     width: 9em;
-    height: 8em;
+    height: 10em;
 }
 
 .img2{
     width: 5em;
     height: 5em;
-    margin-top: 1.4em;
-    margin-right: 1em;
     border-style: solid;
     border-width: 0.15em;
 }
@@ -37,7 +32,7 @@
 }
 
 .header-style{
-    height: 8em;
+    height: 19em;
     background-color: white;
     border-bottom: 1px solid black;
 }

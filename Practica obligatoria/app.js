@@ -71,15 +71,17 @@ daoU.getUserImageName(req.session.currentUser, (err, img) => {
 
 });
 
-app.get('/', isAuthorized, function(req, res) {
-    daoT.getAllTasks(req.session.currentUser , (err, tasks) => {
+app.get('/', function(req, res) {
+    res.locals.user = "TEST";
+    res.render(path.join(__dirname, 'views/usuario'));
+    /*daoT.getAllTasks(req.session.currentUser , (err, tasks) => {
         if(err) console.log(err);
         else {
             console.log(tasks);
             if(!res.locals.user) res.locals.user = req.session.currentUser;
-            res.render(path.join(__dirname, 'views/tasks'), { tasksArray: tasks });
+            res.render(path.join(__dirname, 'views/usuario'), { tasksArray: tasks });
         }
-    });
+    });*/
 });
 
 app.get('/finish/:id', isAuthorized, (req, res) => {
