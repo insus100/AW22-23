@@ -23,9 +23,6 @@
 .align-right{
     float: right;
 }
-.align-center {
-    float: center;
-}
 
 .block{
     display: block;
@@ -47,10 +44,6 @@
 
 .margintop{
     margin-top: 2.5em;
-}
-
-.margin-top-sm {
-    margin-top: 0.7em;
 }
 
 .border{
