@@ -36,7 +36,9 @@
     background-color: white;
     border-bottom: 1px solid black;
 }
-
+.header-index {
+    z-index: 1;
+}
 .margintop{
     margin-top: 2.5em;
 }
