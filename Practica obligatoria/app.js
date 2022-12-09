@@ -17,8 +17,9 @@ const sessionStore = new MySQLStore({
     host: "localhost",
     user: "root",
     password: "",
-    database: "aw_2022"
-})
+    database: config.mysqlConfig.database
+});
+const views = ["usuario", "tecnico"];
 // Crear un servidor Express.js
 const app = express();
 // Crear un pool de conexiones a la base de datos de MySQL
@@ -53,7 +54,7 @@ app.listen(config.port, function(err) {
 });
 
 app.get("/imagenUsuario", function(req, res) {
-daoU.getUserImageName(req.session.currentUser, (err, img) => {
+daoU.getUserImageName(req.session.email, (err, img) => {
     if(err)console.log(err);
     else{
         if(img && img.length > 0){
@@ -71,14 +72,14 @@ daoU.getUserImageName(req.session.currentUser, (err, img) => {
 
 });
 
-app.get('/', function(req, res) {
-    res.locals.user = "TEST";
-    res.render(path.join(__dirname, 'views/usuario'));
-    /*daoT.getAllTasks(req.session.currentUser , (err, tasks) => {
+app.get('/', isAuthorized, (req, res) => {
+    res.locals.user = req.session.username;
+    res.render(path.join(__dirname, `views/usuario`));
+    /*daoT.getAllTasks(req.session.email , (err, tasks) => {
         if(err) console.log(err);
         else {
             console.log(tasks);
-            if(!res.locals.user) res.locals.user = req.session.currentUser;
+            if(!res.locals.user) res.locals.user = req.session.email;
             res.render(path.join(__dirname, 'views/usuario'), { tasksArray: tasks });
         }
     });*/
@@ -98,7 +99,7 @@ app.get('/finish/:id', isAuthorized, (req, res) => {
 
 app.get('/deleteCompleted', isAuthorized, (req, res) => {
     
-    daoT.deleteCompleted(req.session.currentUser, (err) => {
+    daoT.deleteCompleted(req.session.email, (err) => {
         if(err) console.log(err);
         else {
             res.redirect("/");
@@ -111,10 +112,10 @@ app.post('/addTask', isAuthorized, (req, res) => {
     if(req.body.tarea && req.body.tarea.length > 0) {
         const task = createTask(req.body.tarea);
         console.log("req.body", req.body, "\n", JSON.stringify(task));
-        daoT.insertTask(req.session.currentUser, task, (err) => {
+        daoT.insertTask(req.session.email, task, (err) => {
             if(err) console.log(err);
             else {
-                daoT.getAllTasks(req.session.currentUser, (err, tasks) => {
+                daoT.getAllTasks(req.session.email, (err, tasks) => {
                     if(err) console.log(err);
                     else {
                         //console.log("redirect to /");
@@ -127,39 +128,26 @@ app.post('/addTask', isAuthorized, (req, res) => {
     } 
 });
 
-app.get('/login', isNotAuthorized, (req, res) => {
-    res.render(path.join(__dirname, 'views/login'), {mensaje : ""});
-    /*if(req.session && req.session.currentUser){
-        res.redirect("/");
-    }
-    else{
-        res.render(path.join(__dirname, 'views/login'), {mensaje : ""});
-    }*/
-});
+app.get('/login', isNotAuthorized, (req, res) =>  res.render(path.join(__dirname, 'views/login'), {mensaje : ""}));
+app.get('/register', isNotAuthorized, (req, res) =>  res.render(path.join(__dirname, 'views/register'), {mensaje : ""}));
 
-app.get('/register', isNotAuthorized, (req, res) => {
-    res.render(path.join(__dirname, 'views/register'), {mensaje : ""});
-    /*if(req.session && req.session.currentUser){
-        res.redirect("/");
-    }
-    else{
-        res.render(path.join(__dirname, 'views/login'), {mensaje : ""});
-    }*/
-});
-
+function setSessionDataAndRedirect(req, res, user) {
+    req.session.email = user.email;
+    req.session.role = user.role;
+    req.session.username = res.locals.user = user.username;
+    res.redirect("/");
+}
 app.post("/login", isNotAuthorized, function(req, res) {
     if(req.body.email && req.body.password){
-        daoU.isUserCorrect(req.body.email,
-            req.body.password, function (err, ok) {
-                if(err){
+        daoU.isUserCorrect(req.body.email, req.body.password,
+            (err, user) => {
+                if(err) {
                     console.log("/login", err)
                     res.status(500);
                     res.render(path.join(__dirname, 'views/login'), {mensaje : "Error interno de acceso a la base de datos"});
                 }
-                else if(ok){
-                    req.session.currentUser = req.body.email;
-                    res.locals.user = req.body.email;
-                    res.redirect("/");
+                else if(user) {
+                    setSessionDataAndRedirect(req, res, user);
                 }
                 else{
                     res.status(200);
@@ -167,9 +155,45 @@ app.post("/login", isNotAuthorized, function(req, res) {
                 }
             })
     }
-    else{
+    else {
         res.render(path.join(__dirname, 'views/login'), {mensaje : "Introduzca todos los datos"});
     }
+});
+
+app.post("/register", isNotAuthorized, (req, res) => {
+    console.log("/register " + JSON.stringify(req.body));
+    if(req.body.email && req.body.password && req.body.email.length > 0 && req.body.password.length > 0 
+        && req.body.nombreUsuario && req.body.nombreUsuario.length > 0
+        && req.body.img && req.body.img.length > 0) {
+        if(req.body.password !== req.body.confirmPassword){
+            res.render(path.join(__dirname, 'views/register'), {mensaje : "Las contraseñas no coinciden."});
+        } else {
+            daoT.getUserIdFromEmail(req.body.email, (err, userId) => {
+                if(err && userId === -1) {//usuario no registrado
+                    const userData = {
+                        email: req.body.email,
+                        password: req.body.password,
+                        username: req.body.nombreUsuario,
+                        uniprofile: req.body.perfil,
+                        img: req.body.img,
+                        role: req.body.role ? 1 : 0,
+                        employeenumber: req.body.employeenumber.length > 0 ? req.body.employeenumber : -1
+                    }
+                    daoU.registerUser(userData, (err) => {
+                        if(err) console.log(err);
+                        else {
+                            setSessionDataAndRedirect(req, res, userData);
+                        }
+                    });
+                } else {//hay un usuario registrado con ese mail
+                    res.render(path.join(__dirname, 'views/register'), {mensaje : "El usuario ya existe."});
+                }
+            });
+        }
+    } else {
+        res.render(path.join(__dirname, 'views/register'), {mensaje : "Introduzca todos los datos"});
+    }
+    
 });
 
 app.get("/logout", isAuthorized, function(req, res){

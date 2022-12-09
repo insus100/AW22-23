@@ -9,13 +9,14 @@ class DAOTasks {
         this.pool.getConnection((err, connection) => {
             if(err) callback(new Error("Error de conexión a la base de datos"));
             else {
-                connection.query(`SELECT idUser FROM aw_tareas_usuarios WHERE email='${email}'`,
+                connection.query(`SELECT id FROM UCM_AW_CAU_USU_Usuarios WHERE email='${email}'`,
                 (err, rows) => {
+                    connection.release();
                     if(err) callback(new Error("Error de acceso a la base de datos " + err));
                     else {
-                        if (rows.length === 0) callback(new Error("No existe el usuario"));
+                        if (rows.length === 0) callback(new Error("No existe el usuario"), -1);
                         else {
-                            callback(null, rows[0].idUser);
+                            callback(null, rows[0].id);
                         }
                     }
                 });
