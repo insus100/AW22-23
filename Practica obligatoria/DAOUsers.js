@@ -43,7 +43,7 @@ class DAOUsers {
             if(err) callback(new Error("Error de conexión a la base de datos"));
             else {
                 connection.query(`INSERT INTO UCM_AW_CAU_USU_Usuarios (email, password, username, uniprofile, role, employeenumber, img) VALUES 
-                ('${userData.email}', '${userData.password}', '${userData.username}', '${userData.uniprofile}', ${userData.role}, ${userData.employeenumber !== -1 ? userData.employeenumber : 'NULL'}, '${userData.img}')`,
+                ('${userData.email}', '${userData.password}', '${userData.username}', '${userData.uniprofile}', ${userData.role}, '${userData.role === 1 ? userData.employeenumber : ''}', '${userData.img}')`,
                 (err, res) => {
                     connection.release();
                     if(err) callback(err);

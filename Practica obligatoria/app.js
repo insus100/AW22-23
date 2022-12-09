@@ -19,7 +19,7 @@ const sessionStore = new MySQLStore({
     password: "",
     database: config.mysqlConfig.database
 });
-const views = ["usuario", "tecnico"];
+const roles = ["usuario", "tecnico"];//usar role como índice de este array (0 -> usuario, 1 -> técnico)
 // Crear un servidor Express.js
 const app = express();
 // Crear un pool de conexiones a la base de datos de MySQL
@@ -74,7 +74,11 @@ daoU.getUserImageName(req.session.email, (err, img) => {
 
 app.get('/', isAuthorized, (req, res) => {
     res.locals.user = req.session.username;
-    res.render(path.join(__dirname, `views/usuario`));
+    res.locals.role =  {
+        name: roles[req.session.role],
+        index: req.session.role
+    }
+    res.render(path.join(__dirname, `views/main`));
     /*daoT.getAllTasks(req.session.email , (err, tasks) => {
         if(err) console.log(err);
         else {
@@ -128,16 +132,21 @@ app.post('/addTask', isAuthorized, (req, res) => {
     } 
 });
 
-app.get('/login', isNotAuthorized, (req, res) =>  res.render(path.join(__dirname, 'views/login'), {mensaje : ""}));
-app.get('/register', isNotAuthorized, (req, res) =>  res.render(path.join(__dirname, 'views/register'), {mensaje : ""}));
-
 function setSessionDataAndRedirect(req, res, user) {
     req.session.email = user.email;
     req.session.role = user.role;
+    res.locals.role = {
+        name:roles[user.role],
+        index:user.role
+    };
     req.session.username = res.locals.user = user.username;
     res.redirect("/");
 }
-app.post("/login", isNotAuthorized, function(req, res) {
+
+app.get('/login', isNotAuthorized, (req, res) =>  res.render(path.join(__dirname, 'views/login'), {mensaje : ""}));//cuando se accede al enlace localhost:3000/login
+app.get('/register', isNotAuthorized, (req, res) =>  res.render(path.join(__dirname, 'views/register'), {mensaje : ""}));//cuando se accede al enlace localhost:3000/register
+
+app.post("/login", isNotAuthorized, function(req, res) {//cuando el usuario le da al boton de iniciar sesion en la view login, manda los datos aqui
     if(req.body.email && req.body.password){
         daoU.isUserCorrect(req.body.email, req.body.password,
             (err, user) => {
@@ -160,16 +169,16 @@ app.post("/login", isNotAuthorized, function(req, res) {
     }
 });
 
-app.post("/register", isNotAuthorized, (req, res) => {
+app.post("/register", isNotAuthorized, (req, res) => {//cuando el usuario le da click a registrarse en la view register, manda los datos aquí
     console.log("/register " + JSON.stringify(req.body));
     if(req.body.email && req.body.password && req.body.email.length > 0 && req.body.password.length > 0 
-        && req.body.nombreUsuario && req.body.nombreUsuario.length > 0
-        && req.body.img && req.body.img.length > 0) {
+        && req.body.nombreUsuario && req.body.nombreUsuario.length > 0) {
         if(req.body.password !== req.body.confirmPassword){
             res.render(path.join(__dirname, 'views/register'), {mensaje : "Las contraseñas no coinciden."});
         } else {
             daoT.getUserIdFromEmail(req.body.email, (err, userId) => {
-                if(err && userId === -1) {//usuario no registrado
+                if(err && !userId) console.log(err);
+                else if(err && userId === -1) {//usuario no registrado
                     const userData = {
                         email: req.body.email,
                         password: req.body.password,
@@ -178,6 +187,14 @@ app.post("/register", isNotAuthorized, (req, res) => {
                         img: req.body.img,
                         role: req.body.role ? 1 : 0,
                         employeenumber: req.body.employeenumber.length > 0 ? req.body.employeenumber : -1
+                    }
+                    if(userData.role === 1) {
+                        const regex = /^([0-9]{4})-([a-z]{3})$/;
+                        const result = regex.test(userData.employeenumber);
+                        if(!result) {
+                            res.render(path.join(__dirname, 'views/register'), {mensaje : "El Nº de empleado tiene un formato incorrecto, ejemplo: 1234-abc"});
+                            return;
+                        }
                     }
                     daoU.registerUser(userData, (err) => {
                         if(err) console.log(err);
@@ -199,4 +216,18 @@ app.post("/register", isNotAuthorized, (req, res) => {
 app.get("/logout", isAuthorized, function(req, res){
     req.session.destroy();
     res.redirect("/login");
+});
+
+
+app.get('/:page', isAuthorized, (req, res) => {
+    const page = req.params.page;
+    if(config.pages[page]) {
+        if(req.session.role < config.pages[page].minRole) {
+            res.sendStatus(403);//forbidden
+            return;
+        }
+
+    } else {
+        res.sendStatus(404);
+    }
 });

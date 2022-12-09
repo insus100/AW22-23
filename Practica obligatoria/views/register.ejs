@@ -57,7 +57,7 @@
     </div>
     <div class="col-12">
       <label for="inputState" class="form-label">Perfil universitario</label>
-      <select name="perfil" id="inputState" class="form-select" onselect="onPerfilChange()" required>
+      <select name="perfil" id="inputState" class="form-select" onchange="onPerfilChange()" required>
         <option selected disabled value="">Elige...</option>
         <option value="Alumno">Alumno</option>
         <option value="PAS">Personal de administración y servicios (PAS)</option>
@@ -80,7 +80,10 @@
     </div>
     <div class="col-md-6 hide" id="divInputEmpleado">
       <label for="inputEmpleado" class="form-label">Nº empleado</label>
-      <input name="employeenumber" type="number" class="form-control" id="inputEmpleado">
+      <input name="employeenumber" type="text" class="form-control" id="inputEmpleado" oninput="onInputIdEmpleado()">
+      <div class="invalid-feedback" id="employeenumber-invalid-msg">
+        El número de empleado es inválido, ejemplo: 1234-abc
+      </div>
     </div>
     <div class="col-md-6">
     </div>
@@ -91,13 +94,15 @@
       <a class="btn btn-secondary" href="/login">Iniciar sesión</a>
     </div>
     <div class="col-12">
-      <p id="infoMessage"><%= mensaje %></p>
+      <h5 class="text-center text-danger" id="infoMessage"><%= mensaje %></h5>
     </div>
   </form>
 </main>
 <script>
+  let isValidEmployeeNumber = false;
   window.onload = (event) => {
     document.getElementById('submitButton').disabled = true;
+    isValidEmployeeNumber = false;
   }
   function disableButton(buttonId) {
     document.getElementById(buttonId).disabled = true;
@@ -105,8 +110,18 @@
   function onPerfilChange() {
     const perfil = document.getElementById("inputState").value;
 
-    if(perfil === "PAS") document.getElementById("divCheckboxTecnico").classList.remove("hide");
-    else document.getElementById("divCheckboxTecnico").classList.add("hide");
+    if(perfil === "PAS") {
+      document.getElementById("divCheckboxTecnico").classList.remove("hide");
+      if(document.getElementById("gridCheck").checked === true) {
+        document.getElementById("divInputEmpleado").classList.remove("hide");
+        if(isValidEmployeeNumber) document.getElementById('submitButton').disabled = false;
+        else document.getElementById('submitButton').disabled = true;
+      }
+    }
+    else {
+      document.getElementById("divCheckboxTecnico").classList.add("hide");
+      document.getElementById("divInputEmpleado").classList.add("hide");
+    }
   }
   function onInputPassword() {
     const passwordValue = document.getElementById("password").value;
@@ -120,6 +135,20 @@
       document.getElementById("invalid-feedback-msg").style.display = "none";
     }
   }
+  function onInputIdEmpleado() {
+    const idEmpleado = document.getElementById("inputEmpleado").value;
+    const regex = /^([0-9]{4})-([a-z]{3})$/;
+    const result = regex.test(idEmpleado);
+    if(result === false) {
+      document.getElementById("employeenumber-invalid-msg").style.display = "block";
+      document.getElementById('submitButton').disabled = true;
+    } 
+    else {
+      document.getElementById("employeenumber-invalid-msg").style.display = "none";
+      document.getElementById('submitButton').disabled = false;
+    }
+    isValidEmployeeNumber = result;
+  }
   function mostrarNumEmpleado() {
     const checkbox = document.getElementById("gridCheck");
     const input = document.getElementById("divInputEmpleado");
@@ -129,10 +158,13 @@
       input.classList.remove("hide");
       input.required = true;
       checkbox.ariaChecked = false;
+      if(isValidEmployeeNumber) document.getElementById('submitButton').disabled = false;
+      else document.getElementById('submitButton').disabled = true;
     } else {
       input.classList.add("hide");
       input.required = false;
       checkbox.ariaChecked = true;
+      document.getElementById('submitButton').disabled = false;
     }
   }
 

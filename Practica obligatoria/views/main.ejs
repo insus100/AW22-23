@@ -1,6 +1,6 @@
 <%- include('partials/header') -%>
-<%- include(`partials/nav-user`) -%>
-<table class="table m-auto table-striped table-hover w-75">
+<%- include(`partials/nav-${role}`) -%>
+<table class="table table-dark m-auto table-striped table-hover w-75">
     <thead>
         <tr>
             <th scope="col">Fecha</th>
@@ -29,7 +29,11 @@
         </tr>
     </tbody>
 </table>
-
+<% if(role.name === 'usuario'){ %>
+  <div class="mt-4 m-auto w-75">
+    <button type="button" class="btn btn-primary" onclick="nuevoAviso()">Nuevo aviso</button>
+  </div>
+<% } %>
 <div style="height: 200vh;"></div>
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
