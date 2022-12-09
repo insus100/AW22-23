@@ -1,8 +1,7 @@
 "use strict";
 const config = require("./config");
-const { DAOTasks } = require("./DAOTasks");
+const { DAOAvisos } = require("./DAOAvisos");
 const { DAOUsers } = require("./DAOUsers");
-const { createTask } = require("./utils/utils");
 const path = require("path");
 const mysql = require("mysql");
 const express = require("express");
@@ -10,7 +9,7 @@ const bodyParser = require("body-parser");
 const fs = require("fs");
 const session = require("express-session");
 const mysqlSession = require("express-mysql-session");
-const { response } = require("express");
+const { roles } = require('./utils/auth');
 const MySQLStore = mysqlSession(session);
 const { isAuthorized, isNotAuthorized } = require("./utils/auth");
 const sessionStore = new MySQLStore({
@@ -19,13 +18,12 @@ const sessionStore = new MySQLStore({
     password: "",
     database: config.mysqlConfig.database
 });
-const roles = ["usuario", "tecnico"];//usar role como índice de este array (0 -> usuario, 1 -> técnico)
 // Crear un servidor Express.js
 const app = express();
 // Crear un pool de conexiones a la base de datos de MySQL
 const pool = mysql.createPool(config.mysqlConfig);
-// Crear una instancia de DAOTasks
-const daoT = new DAOTasks(pool);
+// Crear una instancia de DAO
+const daoA = new DAOAvisos(pool);
 const daoU = new DAOUsers(pool);
 
 app.set('view engine', 'ejs');
@@ -73,12 +71,13 @@ daoU.getUserImageName(req.session.email, (err, img) => {
 });
 
 app.get('/', isAuthorized, (req, res) => {
-    res.locals.user = req.session.username;
+    res.redirect('/avisos');
+    /*res.locals.user = req.session.username;
     res.locals.role =  {
         name: roles[req.session.role],
         index: req.session.role
     }
-    res.render(path.join(__dirname, `views/main`));
+    res.render(path.join(__dirname, `views/main`));*/
     /*daoT.getAllTasks(req.session.email , (err, tasks) => {
         if(err) console.log(err);
         else {
@@ -89,7 +88,7 @@ app.get('/', isAuthorized, (req, res) => {
     });*/
 });
 
-app.get('/finish/:id', isAuthorized, (req, res) => {
+/*app.get('/finish/:id', isAuthorized, (req, res) => {
     const idTarea = parseInt(req.params.id);
     if(idTarea && !isNaN(idTarea)) {
         daoT.markTaskDone(idTarea, (err) => {
@@ -109,7 +108,6 @@ app.get('/deleteCompleted', isAuthorized, (req, res) => {
             res.redirect("/");
         }
     });
-    
 });
 
 app.post('/addTask', isAuthorized, (req, res) => {
@@ -130,14 +128,15 @@ app.post('/addTask', isAuthorized, (req, res) => {
             }
         });
     } 
-});
+});*/
 
 function setSessionDataAndRedirect(req, res, user) {
+    req.session.userId = user.id;//database id (Auto increment)
     req.session.email = user.email;
     req.session.role = user.role;
     res.locals.role = {
-        name:roles[user.role],
-        index:user.role
+        name: roles[user.role],//el nombre del rol (usuario, tecnico....)
+        index: user.role//el numero del rol (el que se almacena en la base de datos, 0, 1 ....)
     };
     req.session.username = res.locals.user = user.username;
     res.redirect("/");
@@ -176,7 +175,7 @@ app.post("/register", isNotAuthorized, (req, res) => {//cuando el usuario le da 
         if(req.body.password !== req.body.confirmPassword){
             res.render(path.join(__dirname, 'views/register'), {mensaje : "Las contraseñas no coinciden."});
         } else {
-            daoT.getUserIdFromEmail(req.body.email, (err, userId) => {
+            daoU.getUserIdFromEmail(req.body.email, (err, userId) => {
                 if(err && !userId) console.log(err);
                 else if(err && userId === -1) {//usuario no registrado
                     const userData = {
@@ -193,12 +192,13 @@ app.post("/register", isNotAuthorized, (req, res) => {//cuando el usuario le da 
                         const result = regex.test(userData.employeenumber);
                         if(!result) {
                             res.render(path.join(__dirname, 'views/register'), {mensaje : "El Nº de empleado tiene un formato incorrecto, ejemplo: 1234-abc"});
-                            return;
+                            return;//parar ejecución aquí
                         }
                     }
-                    daoU.registerUser(userData, (err) => {
+                    daoU.registerUser(userData, (err, res) => {
                         if(err) console.log(err);
                         else {
+                            userData.id = res.insertId;
                             setSessionDataAndRedirect(req, res, userData);
                         }
                     });
@@ -221,12 +221,38 @@ app.get("/logout", isAuthorized, function(req, res){
 
 app.get('/:page', isAuthorized, (req, res) => {
     const page = req.params.page;
+    const role = req.session.role;
     if(config.pages[page]) {
-        if(req.session.role < config.pages[page].minRole) {
+        if(role < config.pages[page].minRole) {
             res.sendStatus(403);//forbidden
             return;
         }
+        /*//mirar que en config, tengan las funciones del dao definidas en el objeto pages,
+        //mejor no lo hacemos dinamico
+        if(config.pages[page].daoFunc && config.pages[page].daoFunc[role]) {
+            daoA[config.pages[page].daoFunc[role]](req, res, callbacks[page][config.pages[page].daoFunc[role]]);
+        } else {
+            console.error(`/:page ${page} error al ejecutar funcion del dao, la funcion no está definida en el objeto pages.${page}.daoFunc en config.js`);
+        }*/
+        if(page === 'avisos') {
+            daoA.getMisAvisos(req.session.userId, req.session.role, (err, result) => {
+                if(err) console.log("avisos " + err);
+                else {
+                    res.render(path.join(__dirname, `views/main`), { page: page, columns: config.pages[page].columns, dataArray: result });
+                }
+            });
+        } else if(page === 'historico') {
+            daoA.getMisAvisos(req.session.userId, req.session.role, (err, result) => {
+                if(err) console.log("avisos " + err);
+                else {
+                    res.render(path.join(__dirname, `views/main`), { page: page, columns: config.pages[page].columns, dataArray: result });
+                }
+            });
+        } else if(page === 'entrantes') {
 
+        } else if(page === 'usuarios') {
+
+        }
     } else {
         res.sendStatus(404);
     }

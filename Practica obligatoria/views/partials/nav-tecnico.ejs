@@ -1,10 +1,10 @@
 <nav class="navbar mt-4 m-auto w-75 navbar-dark navbar-expand-sm bg-primary">
     <div class="container-fluid">
       <div class="navbar-nav">
-        <a class="nav-link active" aria-current="page" href="/entrantes">Avisos entrantes</a>
-        <a class="nav-link" href="/avisos">Mis Avisos</a>
-        <a class="nav-link" href="/historico">Histórico de Avisos</a>
-        <a class="nav-link" href="/usuarios">Gestión de usuarios</a>
+        <a class="nav-link <%= page === 'entrantes' ? 'active' : '' %>" aria-current="page" href="/entrantes">Avisos entrantes</a>
+        <a class="nav-link <%= page === 'avisos' ? 'active' : '' %>" href="/avisos">Mis Avisos</a>
+        <a class="nav-link <%= page === 'historico' ? 'active' : '' %>" href="/historico">Histórico de Avisos</a>
+        <a class="nav-link <%= page === 'usuarios' ? 'active' : '' %>" href="/usuarios">Gestión de usuarios</a>
       </div>
       <form class="d-flex" role="search">
         <input type="text" class="form-control" placeholder="Buscar aviso" aria-label="Buscar aviso" aria-describedby="button-addon2">

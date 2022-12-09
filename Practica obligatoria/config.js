@@ -10,6 +10,7 @@ module.exports = {
     pages: {
         avisos: {//mis avisos
             minRole: 0,
+            //daoFunc: ["getMisAvisos", "getAvisosForTecnico"],
             columns: [
                 {
                     data: "fecha",//nombre de la columna en la base de datos
@@ -69,7 +70,45 @@ module.exports = {
             ]
         },
         historico: {//historico de avisos
-            minRole: 0
+            minRole: 0,
+            columns: [
+                {
+                    data: "tipo",//nombre de la columna en la base de datos
+                    name: "Tipo",//nombre que saldrá en la cabeza de la tabla
+                    roles: [0, 1],
+                    modal: {
+                      "editable":false,
+                      "type":"text"
+                    }
+                },
+                {
+                    data: "fecha",//nombre de la columna en la base de datos
+                    name: "Fecha",//nombre que saldrá en la cabeza de la tabla
+                    roles: [0, 1],
+                    modal: {
+                      "editable":false,
+                      "type":"text"
+                    }
+                },
+                {
+                    data: "texto",//nombre de la columna en la base de datos
+                    name: "Texto",//nombre que saldrá en la cabeza de la tabla
+                    roles: [0, 1],
+                    modal: {
+                      "editable":false,
+                      "type":"text"
+                    }
+                },
+                {
+                    data: "acciones",//nombre de la columna en la base de datos
+                    name: "Acciones",//nombre que saldrá en la cabeza de la tabla
+                    roles: [0, 1],
+                    modal: {
+                      "editable":false,
+                      "type":"text"
+                    }
+                },
+            ]
         },
         //solo tecnico:
         entrantes: {//Avisos entrantes

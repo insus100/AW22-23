@@ -1,12 +1,17 @@
 <%- include('partials/header') -%>
-<%- include(`partials/nav-${role}`) -%>
+<%- include(`partials/nav-${role.name}`) -%>
 <table class="table table-dark m-auto table-striped table-hover w-75">
     <thead>
         <tr>
-            <th scope="col">Fecha</th>
+            <!--<th scope="col">Fecha</th>
             <th scope="col">Texto</th>
             <th scope="col">Tipo</th>
-            <th scope="col">Técnico</th>
+            <th scope="col">Técnico</th>-->
+            <% columns.forEach(c => { %>
+              <% if(c.roles.includes(role.index) && c.show !== false){ %>
+                <th scope="col"><%= c.name %></th>
+              <% } %>
+            <% })%>
         </tr>
     </thead>
     <tbody>

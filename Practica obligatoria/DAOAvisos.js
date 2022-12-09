@@ -1,29 +1,26 @@
 "use strict";
 
-class DAOTasks {
+class DAOAvisos {
     constructor(pool) {
         this.pool = pool;
     }
-
-    getUserIdFromEmail(email, callback){
+    getMisAvisos(userId, role, callback) {
         this.pool.getConnection((err, connection) => {
-            if(err) callback(new Error("Error de conexión a la base de datos"));
+            if(err) callback(new Error("getMisAvisos Error de conexión a la base de datos"));
             else {
-                connection.query(`SELECT id FROM UCM_AW_CAU_USU_Usuarios WHERE email='${email}'`,
-                (err, rows) => {
+                let query;
+                if(role === 0) query = `SELECT * FROM UCM_AW_CAU_AVI_Avisos WHERE creador = ${userId}`;//query para el usuario
+                else if(role === 1) query = `SELECT * FROM UCM_AW_CAU_AVI_Avisos WHERE tecnico = ${userId}`;//query para el tecnico
+                connection.query(query, (err, rows) => {
                     connection.release();
-                    if(err) callback(new Error("Error de acceso a la base de datos " + err));
+                    if(err) callback(err);
                     else {
-                        if (rows.length === 0) callback(new Error("No existe el usuario"), -1);
-                        else {
-                            callback(null, rows[0].id);
-                        }
+                        callback(null, rows);
                     }
                 });
             }
         });
     }
-
     getAllTasks(email, callback) {
         this.pool.getConnection((err, connection) => {
             if(err) callback(new Error("Error de conexión a la base de datos"));
@@ -176,5 +173,5 @@ class DAOTasks {
 }
 
 module.exports = {
-    DAOTasks
+    DAOAvisos
 }

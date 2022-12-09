@@ -4,6 +4,25 @@ class DAOUsers {
         this.pool = pool;
     }
 
+    getUserIdFromEmail(email, callback){
+        this.pool.getConnection((err, connection) => {
+            if(err) callback(new Error("Error de conexión a la base de datos"));
+            else {
+                connection.query(`SELECT id FROM UCM_AW_CAU_USU_Usuarios WHERE email='${email}'`,
+                (err, rows) => {
+                    connection.release();
+                    if(err) callback(new Error("Error de acceso a la base de datos " + err));
+                    else {
+                        if (rows.length === 0) callback(new Error("No existe el usuario"), -1);
+                        else {
+                            callback(null, rows[0].id);
+                        }
+                    }
+                });
+            }
+        });
+    }
+
     isUserCorrect(email, password, callback) {
         this.pool.getConnection((err, connection) => {
             if (err) callback(new Error("Error de conexión a la base de datos"));
@@ -47,7 +66,7 @@ class DAOUsers {
                 (err, res) => {
                     connection.release();
                     if(err) callback(err);
-                    else callback(null);
+                    else callback(null, res);
                 })
             }
         })
