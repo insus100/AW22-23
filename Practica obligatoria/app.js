@@ -195,10 +195,10 @@ app.post("/register", isNotAuthorized, (req, res) => {//cuando el usuario le da 
                             return;//parar ejecución aquí
                         }
                     }
-                    daoU.registerUser(userData, (err, res) => {
+                    daoU.registerUser(userData, (err, response) => {
                         if(err) console.log(err);
                         else {
-                            userData.id = res.insertId;
+                            userData.id = response.insertId;
                             setSessionDataAndRedirect(req, res, userData);
                         }
                     });
@@ -227,9 +227,9 @@ app.get('/:page', isAuthorized, (req, res) => {
             res.sendStatus(403);//forbidden
             return;
         }
-        /*//mirar que en config, tengan las funciones del dao definidas en el objeto pages,
+        //mirar que en config, tengan las funciones del dao definidas en el objeto pages,
         //mejor no lo hacemos dinamico
-        if(config.pages[page].daoFunc && config.pages[page].daoFunc[role]) {
+        /*if(config.pages[page].daoFunc && config.pages[page].daoFunc[role]) {
             daoA[config.pages[page].daoFunc[role]](req, res, callbacks[page][config.pages[page].daoFunc[role]]);
         } else {
             console.error(`/:page ${page} error al ejecutar funcion del dao, la funcion no está definida en el objeto pages.${page}.daoFunc en config.js`);

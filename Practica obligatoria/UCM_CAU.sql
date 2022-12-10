@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 09-12-2022 a las 19:58:45
+-- Tiempo de generación: 10-12-2022 a las 18:25:51
 -- Versión del servidor: 10.4.13-MariaDB
 -- Versión de PHP: 7.4.7
 
@@ -33,6 +33,13 @@ CREATE TABLE `sessions` (
   `data` mediumtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Volcado de datos para la tabla `sessions`
+--
+
+INSERT INTO `sessions` (`session_id`, `expires`, `data`) VALUES
+('wT-PlAvbUAwwoDDn0dpjeSK2-iF0ftZF', 1670778176, '{\"cookie\":{\"originalMaxAge\":null,\"expires\":null,\"httpOnly\":true,\"path\":\"/\"},\"userId\":1,\"email\":\"inivelas@ucm.es\",\"role\":0,\"username\":\"Íñigo\"}');
+
 -- --------------------------------------------------------
 
 --
@@ -42,11 +49,11 @@ CREATE TABLE `sessions` (
 CREATE TABLE `UCM_AW_CAU_AVI_Avisos` (
   `id` int(11) NOT NULL,
   `creador` int(11) NOT NULL,
-  `fecha` date NOT NULL,
+  `fecha` timestamp NOT NULL DEFAULT current_timestamp(),
   `texto` text NOT NULL,
   `comentario` text NOT NULL,
   `tipo` tinyint(4) NOT NULL,
-  `tecnico` int(11) NOT NULL,
+  `tecnico` int(11) DEFAULT NULL,
   `resuelto` tinyint(1) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -76,7 +83,8 @@ CREATE TABLE `UCM_AW_CAU_USU_Usuarios` (
 INSERT INTO `UCM_AW_CAU_USU_Usuarios` (`id`, `email`, `password`, `username`, `uniprofile`, `role`, `employeenumber`, `img`, `rep`, `incidence`) VALUES
 (1, 'inivelas@ucm.es', 'ojete', 'Íñigo', 'Alumno', 0, '', '', '', ''),
 (2, 'test@ucm.es', 'ojete', 'Felipe Ferras Gómez', 'PAS', 1, '1234-abc', '', '', ''),
-(3, 'test1@ucm.es', 'ojete', 'Felipe Ferras Gómez', 'PAS', 0, '', '', '', '');
+(3, 'test1@ucm.es', 'ojete', 'Felipe Ferras Gómez', 'PAS', 0, '', '', '', ''),
+(4, 'ajajaj@ucm.es', 'ojete', 'Oooooo', 'Alumno', 0, '', '', '', '');
 
 --
 -- Índices para tablas volcadas
@@ -116,7 +124,7 @@ ALTER TABLE `UCM_AW_CAU_AVI_Avisos`
 -- AUTO_INCREMENT de la tabla `UCM_AW_CAU_USU_Usuarios`
 --
 ALTER TABLE `UCM_AW_CAU_USU_Usuarios`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- Restricciones para tablas volcadas
