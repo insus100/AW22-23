@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 10-12-2022 a las 18:25:51
+-- Tiempo de generación: 10-12-2022 a las 21:05:47
 -- Versión del servidor: 10.4.13-MariaDB
 -- Versión de PHP: 7.4.7
 
@@ -38,7 +38,7 @@ CREATE TABLE `sessions` (
 --
 
 INSERT INTO `sessions` (`session_id`, `expires`, `data`) VALUES
-('wT-PlAvbUAwwoDDn0dpjeSK2-iF0ftZF', 1670778176, '{\"cookie\":{\"originalMaxAge\":null,\"expires\":null,\"httpOnly\":true,\"path\":\"/\"},\"userId\":1,\"email\":\"inivelas@ucm.es\",\"role\":0,\"username\":\"Íñigo\"}');
+('2vXjGpJM9GtPBNovRiL60ghs3hVKOt69', 1670787537, '{\"cookie\":{\"originalMaxAge\":null,\"expires\":null,\"httpOnly\":true,\"path\":\"/\"},\"userId\":2,\"email\":\"test@ucm.es\",\"role\":1,\"username\":\"Felipe Ferras Gómez\"}');
 
 -- --------------------------------------------------------
 
@@ -56,6 +56,15 @@ CREATE TABLE `UCM_AW_CAU_AVI_Avisos` (
   `tecnico` int(11) DEFAULT NULL,
   `resuelto` tinyint(1) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `UCM_AW_CAU_AVI_Avisos`
+--
+
+INSERT INTO `UCM_AW_CAU_AVI_Avisos` (`id`, `creador`, `fecha`, `texto`, `comentario`, `tipo`, `tecnico`, `resuelto`) VALUES
+(1, 1, '2022-12-10 17:26:55', 'cgaeggadddddddddddddddddddddddddddcgaeggadddddddddddddddddddddddddddcgaeggadddddddddddddddddddddddddddcgaeggadddddddddddddddddddddddddddcgaeggadddddddddddddddddddddddddddcgaeggadddddddddddddddddddddddddddcgaeggadddddddddddddddddddddddddddcgaeggadddddddddddddddddddddddddddcgaeggadddddddddddddddddddddddddddcgaeggadddddddddddddddddddddddddddcgaeggadddddddddddddddddddddddddddcgaeggadddddddddddddddddddddddddddcgaeggadddddddddddddddddddddddddddcgaeggadddddddddddddddddddddddddddcgaeggadddddddddddddddddddddddddddcgaeggadddddddddddddddddddddddddddcgaeggadddddddddddddddddddddddddddcgaeggadddddddddddddddddddddddddddcgaeggadddddddddddddddddddddddddddcgaeggadddddddddddddddddddddddddddcgaeggadddddddddddddddddddddddddddcgaeggaddddddddddddddddddddddddddd', 'cgaeggadddddddddddddddddddddddddddcgaeggadddddddddddddddddddddddddddcgaeggadddddddddddddddddddddddddddcgaeggadddddddddddddddddddddddddddcgaeggadddddddddddddddddddddddddddcgaeggadddddddddddddddddddddddddddcgaeggadddddddddddddddddddddddddddcgaeggadddddddddddddddddddddddddddcgaeggadddddddddddddddddddddddddddcgaeggadddddddddddddddddddddddddddcgaeggadddddddddddddddddddddddddddcgaeggadddddddddddddddddddddddddddcgaeggadddddddddddddddddddddddddddcgaeggadddddddddddddddddddddddddddcgaeggadddddddddddddddddddddddddddcgaeggadddddddddddddddddddddddddddcgaeggadddddddddddddddddddddddddddcgaeggadddddddddddddddddddddddddddcgaeggadddddddddddddddddddddddddddcgaeggadddddddddddddddddddddddddddcgaeggadddddddddddddddddddddddddddcgaeggaddddddddddddddddddddddddddd', 0, NULL, 0),
+(2, 1, '2022-12-10 17:27:26', 'cgaeggadddddddddddddddddddddddddddcgaeggadddddddddddddddddddddddddddcgaeggadddddddddddddddddddddddddddcgaeggadddddddddddddddddddddddddddcgaeggadddddddddddddddddddddddddddcgaeggadddddddddddddddddddddddddddcgaeggadddddddddddddddddddddddddddcgaeggadddddddddddddddddddddddddddcgaeggadddddddddddddddddddddddddddcgaeggadddddddddddddddddddddddddddcgaeggadddddddddddddddddddddddddddcgaeggadddddddddddddddddddddddddddcgaeggadddddddddddddddddddddddddddcgaeggadddddddddddddddddddddddddddcgaeggadddddddddddddddddddddddddddcgaeggadddddddddddddddddddddddddddcgaeggadddddddddddddddddddddddddddcgaeggadddddddddddddddddddddddddddcgaeggadddddddddddddddddddddddddddcgaeggadddddddddddddddddddddddddddcgaeggadddddddddddddddddddddddddddcgaeggaddddddddddddddddddddddddddd', 'cgaeggadddddddddddddddddddddddddddcgaeggadddddddddddddddddddddddddddcgaeggadddddddddddddddddddddddddddcgaeggadddddddddddddddddddddddddddcgaeggadddddddddddddddddddddddddddcgaeggadddddddddddddddddddddddddddcgaeggadddddddddddddddddddddddddddcgaeggadddddddddddddddddddddddddddcgaeggadddddddddddddddddddddddddddcgaeggadddddddddddddddddddddddddddcgaeggadddddddddddddddddddddddddddcgaeggadddddddddddddddddddddddddddcgaeggadddddddddddddddddddddddddddcgaeggadddddddddddddddddddddddddddcgaeggadddddddddddddddddddddddddddcgaeggadddddddddddddddddddddddddddcgaeggadddddddddddddddddddddddddddcgaeggadddddddddddddddddddddddddddcgaeggadddddddddddddddddddddddddddcgaeggadddddddddddddddddddddddddddcgaeggadddddddddddddddddddddddddddcgaeggaddddddddddddddddddddddddddd', 1, 2, 0),
+(3, 1, '2022-12-10 19:13:58', 'fhhddfhdhfhfd', '', 2, NULL, 0);
 
 -- --------------------------------------------------------
 
@@ -118,7 +127,7 @@ ALTER TABLE `UCM_AW_CAU_USU_Usuarios`
 -- AUTO_INCREMENT de la tabla `UCM_AW_CAU_AVI_Avisos`
 --
 ALTER TABLE `UCM_AW_CAU_AVI_Avisos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de la tabla `UCM_AW_CAU_USU_Usuarios`
