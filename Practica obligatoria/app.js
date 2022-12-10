@@ -219,7 +219,7 @@ app.get("/logout", isAuthorized, function(req, res){
 });
 
 
-app.get('/:page', isAuthorized, (req, res) => {
+app.get('/:page', isAuthorized, (req, res) => {//este manejador abajo del todo siempre, para que no haya conflictos con el resto
     const page = req.params.page;
     const role = req.session.role;
     if(config.pages[page]) {

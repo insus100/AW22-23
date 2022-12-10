@@ -3,6 +3,7 @@
         <script>
             const tiposAviso = ["Sugerencia", "Incidencia", "Felicitación"];
             window.onload = () => {
+                //la página se genera con tipo aviso numerico (0, 1, 2...) este evento se llama cuando termina de cargar, y modificamos la tabla convenientemente con el array tiposAviso
                 const tipoAvisoElems = document.getElementsByClassName("tipoAviso");
                 if(tipoAvisoElems) {
                     for(let i = 0; i < tipoAvisoElems.length; i++) {
