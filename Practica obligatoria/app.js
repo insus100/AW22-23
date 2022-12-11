@@ -1,15 +1,12 @@
 "use strict";
 const config = require("./config");
-const { DAOAvisos } = require("./DAOAvisos");
-const { DAOUsers } = require("./DAOUsers");
+const {daoA, daoU} = require("./DAO/DAO");
 const path = require("path");
-const mysql = require("mysql");
 const express = require("express");
 const bodyParser = require("body-parser");
 const fs = require("fs");
 const session = require("express-session");
 const mysqlSession = require("express-mysql-session");
-const { roles } = require('./utils/auth');
 const MySQLStore = mysqlSession(session);
 const { isAuthorized, isNotAuthorized } = require("./utils/auth");
 const sessionStore = new MySQLStore({
@@ -21,10 +18,8 @@ const sessionStore = new MySQLStore({
 // Crear un servidor Express.js
 const app = express();
 // Crear un pool de conexiones a la base de datos de MySQL
-const pool = mysql.createPool(config.mysqlConfig);
-// Crear una instancia de DAO
-const daoA = new DAOAvisos(pool);
-const daoU = new DAOUsers(pool);
+
+
 let userPages = {};
 app.set('view engine', 'ejs');
 app.use(bodyParser.json());
@@ -136,7 +131,7 @@ function setSessionDataAndRedirect(req, res, user) {
     req.session.role = user.role;
     req.session.username = user.username;
 
-    //al cambiar las locals aquí, acordarse de cambiarlas en utils/auth.js isAuthorized() también
+    /*//al cambiar las locals aquí, acordarse de cambiarlas en utils/auth.js isAuthorized() también
     res.locals.role = {
         name: roles[user.role],//el nombre del rol (usuario, tecnico....)
         index: user.role//el numero del rol (el que se almacena en la base de datos, 0, 1 ....)
@@ -144,7 +139,7 @@ function setSessionDataAndRedirect(req, res, user) {
     res.locals.user = {
         username: user.username,
         id: user.id
-    }
+    }*/
     res.redirect("/");
 }
 
@@ -240,9 +235,24 @@ app.get('/deleteAviso/:id', isAuthorized, (req, res) => {
         return;
     }
     const idAviso = parseInt(req.params.id);
-    console.log("/deleteAviso", idAviso);
+    //console.log("/deleteAviso", idAviso);
     if(idAviso && !isNaN(idAviso)) {
         daoA.deleteAviso(idAviso, (err, result) => {
+            if(err) console.log(err);
+            if(userPages[req.session.userId]) res.redirect(`/${userPages[req.session.userId]}`);
+            else res.redirect("/avisos");
+        });
+    }
+});
+
+app.get("/disableUser/:id", isAuthorized, (req, res) => {
+    if(req.session.role < 1) {
+        res.redirect("/avisos");
+        return;
+    }
+    const userId = parseInt(req.params.id);
+    if(userId && !isNaN(userId)) {
+        daoU.disableUser(userId, (err) => {
             if(err) console.log(err);
             if(userPages[req.session.userId]) res.redirect(`/${userPages[req.session.userId]}`);
             else res.redirect("/avisos");
@@ -283,15 +293,20 @@ app.get('/:page', isAuthorized, (req, res) => {//este manejador abajo del todo s
             });
         } else if(page === 'entrantes') {
             daoA.getEntrantes(req.session.userId, (err, result) => {
-                if(err) console.log("historico " + err);
+                if(err) console.log("entrantes " + err);
                 else {
                     daoU.getTecnicos((err, tecnicos) => {
-                        res.render(path.join(__dirname, `views/main`), { page: page, columns: config.pages[page].columns, dataArray: result, tecnicos: tecnicos });
+                        if(err) console.log("entrantes2 " + err);
+                        else res.render(path.join(__dirname, `views/main`), { page: page, columns: config.pages[page].columns, dataArray: result, tecnicos: tecnicos });
+                        //el objeto técnicos que se pasa aquí es para el dropdown del botón de asignar técnico
                     });
                 }
             });
         } else if(page === 'usuarios') {
-
+            daoU.getAllUsuarios((err, result) => {
+                if(err) console.log(err);
+                else res.render(path.join(__dirname, `views/main`), { page: page, columns: config.pages[page].columns, dataArray: result, tecnicos: null });
+            });
         }
     } else {
         //res.sendStatus(404);

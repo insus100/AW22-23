@@ -3,12 +3,21 @@
         <script>
             let selectedAvisoId = null;
             const tiposAviso = ["Sugerencia", "Incidencia", "Felicitación"];
-            window.onload = () => {
+            const roles = ["Usuario", "Técnico"];
+            window.onload = () => {//evento que se llama cuando la página termina de cargar en el navegador.
                 //la página se genera con tipo aviso numerico (0, 1, 2...) este evento se llama cuando termina de cargar, y modificamos la tabla convenientemente con el array tiposAviso
                 const tipoAvisoElems = document.getElementsByClassName("tipoAviso");
                 if(tipoAvisoElems) {
                     for(let i = 0; i < tipoAvisoElems.length; i++) {
                         tipoAvisoElems[i].innerText = tiposAviso[tipoAvisoElems[i].innerText];
+                    }
+                }
+
+                //cambiar el índice de rol por el nombre en la tabla
+                const roleElems = document.getElementsByClassName("role");
+                if(roleElems) {
+                    for(let i = 0; i < roleElems.length; i++) {
+                        roleElems[i].innerText = roles[roleElems[i].innerText];
                     }
                 }
             }
@@ -45,10 +54,24 @@
                     const textareaComentario = document.getElementById("modalComentario");
                     textareaComentario.value = data.comentario;
                     textareaComentario.readOnly = true;
+                } else {
+                    document.getElementById("divModalComentario").classList.add("hide");
                 }
                 const divtecnicos = document.getElementById("divTecnicos");
                 if(showTecnicos) divtecnicos.classList.remove("hide");
                 else if(divtecnicos) divtecnicos.classList.add("hide");
+                document.getElementById(`modal-body-usuario`).classList.add("hide");
+                document.getElementById(`modal-body-aviso`).classList.remove("hide");
+                modal.show();
+            }
+            function openModalUsuario() {
+                document.getElementById(`modal-body-usuario`).classList.remove("hide");
+                document.getElementById(`modal-body-aviso`).classList.add("hide");
+
+                document.getElementById("exampleModalLabel").innerText = `Perfil de usuario`;
+
+                const modalElement = document.getElementById('exampleModal');
+                const modal = new bootstrap.Modal(modalElement);
                 modal.show();
             }
 
