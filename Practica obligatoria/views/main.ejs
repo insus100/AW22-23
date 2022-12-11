@@ -23,7 +23,7 @@
                 <td>
                   <div class="btn-group" role="group" aria-label="Basic mixed styles example">
                     <!--<button type="button" class="btn btn-success"><i class="bi bi-eye"></i></button>-->
-                    <button type="button" class="btn btn-danger" onclick="deleteAviso(event, <%= d.id %>)"><i class="bi bi-trash3"></i></button>
+                    <a onclick="stopEventPropagation(event)" title="Eliminar aviso" class="btn btn-danger" href="/deleteAviso/<%= d.id %>"><i class="bi bi-trash3"></i></a>
                   </div>
                 </td>
               <% } else if(c.render === 'accionesEntrantes'){ %>
