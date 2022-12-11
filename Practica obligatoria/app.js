@@ -25,7 +25,7 @@ const pool = mysql.createPool(config.mysqlConfig);
 // Crear una instancia de DAO
 const daoA = new DAOAvisos(pool);
 const daoU = new DAOUsers(pool);
-
+let userPages = {};
 app.set('view engine', 'ejs');
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -134,11 +134,17 @@ function setSessionDataAndRedirect(req, res, user) {
     req.session.userId = user.id;//database id (Auto increment)
     req.session.email = user.email;
     req.session.role = user.role;
+    req.session.username = user.username;
+
+    //al cambiar las locals aquí, acordarse de cambiarlas en utils/auth.js isAuthorized() también
     res.locals.role = {
         name: roles[user.role],//el nombre del rol (usuario, tecnico....)
         index: user.role//el numero del rol (el que se almacena en la base de datos, 0, 1 ....)
     };
-    req.session.username = res.locals.user = user.username;
+    res.locals.user = {
+        username: user.username,
+        id: user.id
+    }
     res.redirect("/");
 }
 
@@ -213,20 +219,47 @@ app.post("/register", isNotAuthorized, (req, res) => {//cuando el usuario le da 
     
 });
 
+app.post("/asignarTecnico", isAuthorized, (req, res) => {
+    if(req.body.tecnico && req.body.idAviso) {
+        daoA.asignarTecnico(req.body.idAviso, req.body.tecnico, (err, result) => {
+            res.redirect("/entrantes");
+        });
+    } else {
+        res.redirect("/entrantes")
+    }
+});
+
 app.get("/logout", isAuthorized, function(req, res){
     req.session.destroy();
     res.redirect("/login");
 });
 
+app.get('/deleteAviso/:id', isAuthorized, (req, res) => {
+    if(req.session.role < 1) {
+        res.redirect("/avisos");
+        return;
+    }
+    const idAviso = parseInt(req.params.id);
+    console.log("/deleteAviso", idAviso);
+    if(idAviso && !isNaN(idAviso)) {
+        daoA.deleteAviso(idAviso, (err, result) => {
+            if(err) console.log(err);
+            if(userPages[req.session.userId]) res.redirect(`/${userPages[req.session.userId]}`);
+            else res.redirect("/avisos");
+        });
+    }
+});
 
 app.get('/:page', isAuthorized, (req, res) => {//este manejador abajo del todo siempre, para que no haya conflictos con el resto
     const page = req.params.page;
     const role = req.session.role;
     if(config.pages[page]) {
         if(role < config.pages[page].minRole) {
-            res.sendStatus(403);//forbidden
+            //res.sendStatus(403);//forbidden
+            res.redirect("/avisos");
             return;
         }
+        userPages[req.session.userId] = page;
         //mirar que en config, tengan las funciones del dao definidas en el objeto pages,
         //mejor no lo hacemos dinamico
         /*if(config.pages[page].daoFunc && config.pages[page].daoFunc[role]) {
@@ -238,22 +271,30 @@ app.get('/:page', isAuthorized, (req, res) => {//este manejador abajo del todo s
             daoA.getMisAvisos(req.session.userId, req.session.role, (err, result) => {
                 if(err) console.log("avisos " + err);
                 else {
-                    res.render(path.join(__dirname, `views/main`), { page: page, columns: config.pages[page].columns, dataArray: result });
+                    res.render(path.join(__dirname, `views/main`), { page: page, columns: config.pages[page].columns, dataArray: result, tecnicos: null });
                 }
             });
         } else if(page === 'historico') {
-            daoA.getMisAvisos(req.session.userId, req.session.role, (err, result) => {
-                if(err) console.log("avisos " + err);
+            daoA.getHistorico(req.session.userId, req.session.role, (err, result) => {
+                if(err) console.log("historico " + err);
                 else {
-                    res.render(path.join(__dirname, `views/main`), { page: page, columns: config.pages[page].columns, dataArray: result });
+                    res.render(path.join(__dirname, `views/main`), { page: page, columns: config.pages[page].columns, dataArray: result, tecnicos: null });
                 }
             });
         } else if(page === 'entrantes') {
-
+            daoA.getEntrantes(req.session.userId, (err, result) => {
+                if(err) console.log("historico " + err);
+                else {
+                    daoU.getTecnicos((err, tecnicos) => {
+                        res.render(path.join(__dirname, `views/main`), { page: page, columns: config.pages[page].columns, dataArray: result, tecnicos: tecnicos });
+                    });
+                }
+            });
         } else if(page === 'usuarios') {
 
         }
     } else {
-        res.sendStatus(404);
+        //res.sendStatus(404);
+        res.redirect("/avisos");
     }
 });

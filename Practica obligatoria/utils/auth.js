@@ -1,10 +1,13 @@
 const roles = ["usuario", "tecnico"];//usar role como índice de este array (0 -> usuario, 1 -> técnico)
 function isAuthorized(req, res, next) {
     if(req.session && req.session.email) {
-        res.locals.user = req.session.username;
         res.locals.role =  {
             name: roles[req.session.role],
             index: req.session.role
+        }
+        res.locals.user = {
+            username: req.session.username,
+            id: req.session.userId
         }
         next();
     }

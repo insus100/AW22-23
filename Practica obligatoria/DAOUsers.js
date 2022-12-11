@@ -71,6 +71,22 @@ class DAOUsers {
             }
         })
     }
+
+    getTecnicos(callback) {
+        this.pool.getConnection((err, connection) => {
+            if(err) callback(new Error("getTecnicos Error de conexión a la base de datos"));
+            else {
+                connection.query(`SELECT id, username FROM UCM_AW_CAU_USU_Usuarios WHERE role=1`,
+                (err, rows) => {
+                    connection.release();
+                    if(err) callback(new Error("getTecnicos Error de acceso a la base de datos " + err));
+                    else {
+                        callback(null, rows);
+                    }
+                });
+            }
+        });
+    }
 }
 
 module.exports = {

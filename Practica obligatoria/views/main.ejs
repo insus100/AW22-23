@@ -26,6 +26,15 @@
                     <button type="button" class="btn btn-danger" onclick="deleteAviso(event, <%= d.id %>)"><i class="bi bi-trash3"></i></button>
                   </div>
                 </td>
+              <% } else if(c.render === 'accionesEntrantes'){ %>
+                <td>
+                  <div class="btn-group" role="group" aria-label="Basic mixed styles example">
+                    <button type="button" class="btn btn-success" title="Asignar técnico" onclick="asignarTecnico(event, <%= d.id %>, <%= JSON.stringify(d) %>)" <%= d.tecnicoId ? 'disabled' : '' %>><i class="bi bi-person-plus-fill"></i></button>
+                    <a onclick="stopEventPropagation(event)" title="Eliminar aviso" class="btn btn-danger <%= d.tecnicoId && d.tecnicoId !== user.id ? 'disabled' : '' %>" href="<%= d.tecnicoId && d.tecnicoId !== user.id ? '#' : '/deleteAviso/' + d.id %>"><i class="bi bi-trash3"></i></a>
+                  </div>
+                </td>
+              <% } else if(c.render === 'date'){ %>
+                <td class="dontbreak"><%= d[c.data] %></td>
               <% } else if(c.data === 'tipo'){ %>
                 <td class="tipoAviso"><%= d[c.data] %></td>
               <% } else if(typeof d[c.data] === 'string'){ %>
@@ -82,10 +91,33 @@
             <textarea class="form-control bg-dark text-white" placeholder="Comentario" id="modalComentario" style="height: 200px"></textarea>
             <label for="floatingTextarea2">Comentarios</label>
           </div>
+          <% if(tecnicos && role.name === 'tecnico') { %>
+          <div class="mt-3" id="divTecnicos">
+            <form method="POST" action="/asignarTecnico" onsubmit="return validarFormulario()">
+              <div class="container">
+                <div class="row">
+                  <div class="col-12">
+                    <label for="tecnicoSelect" class="form-label">Seleccione un técnico</label>
+                    <select name="tecnico" id="tecnicoSelect" class="form-select bg-dark text-white" required>
+                      <option selected disabled value="">Elige...</option>
+                      <% tecnicos.forEach(t => { %>
+                        <option value="<%= t.id %>"><%= t.username %></option>
+                      <% });%>
+                    </select>
+                    <input name="idAviso" class="hide" type="number" id="inputIdAviso">
+                  </div>
+                  <div class="col-8">
+                    <button type="submit" class="btn btn-primary mt-4 ml-5" id="submitAsignarTecnico">Asignar Técnico</button>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+          <% } %>
         </div>
         <div class="modal-footer">
-          <% if(role.name === 'tecnico'){ %>
-            <button type="button" class="btn btn-primary">Terminar aviso</button>
+          <% if(role.name === 'tecnico' && page === 'avisos'){ %>
+            <button type="button" class="btn btn-primary">Resolver aviso</button>
           <% } %>
         </div>
       </div>

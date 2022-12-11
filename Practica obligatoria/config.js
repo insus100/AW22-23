@@ -27,6 +27,7 @@ module.exports = {
                 data: "fecha",//nombre de la columna en la base de datos
                 name: "Fecha",//nombre que saldrá en la cabeza de la tabla
                 roles: [0, 1],
+                render: "date",
                 modal: {
                   "editable":false,
                   "type":"text"
@@ -97,6 +98,7 @@ module.exports = {
                     data: "fecha",//nombre de la columna en la base de datos
                     name: "Fecha",//nombre que saldrá en la cabeza de la tabla
                     roles: [0, 1],
+                    render: "date",
                     modal: {
                       "editable":false,
                       "type":"text"
@@ -111,20 +113,61 @@ module.exports = {
                       "type":"text"
                     }
                 },
-                {
-                    data: "acciones",//nombre de la columna en la base de datos
-                    name: "Acciones",//nombre que saldrá en la cabeza de la tabla
-                    roles: [0, 1],
-                    modal: {
-                      "editable":false,
-                      "type":"text"
-                    }
-                },
             ]
         },
         //solo tecnico:
         entrantes: {//Avisos entrantes
-            minRole: 1
+            minRole: 1,
+            columns: [
+              {
+                  data: "tipo",//nombre de la columna en la base de datos
+                  name: "Tipo",//nombre que saldrá en la cabeza de la tabla
+                  roles: [1],
+                  modal: {
+                    "editable":false,
+                    "type":"text"
+                  }
+              },
+              {
+                  data: "fecha",//nombre de la columna en la base de datos
+                  name: "Fecha",//nombre que saldrá en la cabeza de la tabla
+                  roles: [1],
+                  render: "date",
+                  modal: {
+                    "editable":false,
+                    "type":"text"
+                  }
+              },
+              {
+                  data: "texto",//nombre de la columna en la base de datos
+                  name: "Texto",//nombre que saldrá en la cabeza de la tabla
+                  roles: [1],
+                  modal: {
+                    "editable":false,
+                    "type":"text"
+                  }
+              },
+              {
+                data: "acciones",//nombre de la columna en la base de datos
+                name: "Acciones",//nombre que saldrá en la cabeza de la tabla
+                roles: [1],
+                render: "accionesEntrantes",
+                modal: {
+                  "editable":false,
+                  "type":"text"
+                }
+            },
+            {
+              data: "tecnicoId",//nombre de la columna en la base de datos
+              name: "Técnico",//nombre que saldrá en la cabeza de la tabla
+              roles: [1],
+              show: false,
+              modal: {
+                "editable":false,
+                "type":"text"
+              }
+          },
+          ]
         },
         usuarios: {//gestion de usuarios
             minRole: 1

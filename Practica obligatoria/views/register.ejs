@@ -42,7 +42,10 @@
     </div>
     <div class="col-md-6">
       <label for="inputPassword4" class="form-label">Contraseña</label>
-      <input type="password" placeholder=" " name="password" class="form-control" id="password" required>
+      <input type="password" placeholder=" " name="password" class="form-control" id="password" oninput="validPassword()" required>
+      <div class="invalid-feedback" id="invalid-password-msg">
+        La contaseña debe tener entre 8 y 16 caracteres, al menos un dígito, al menos una letra minúscula y otra mayúscula y al menos un carácter no alfanumérico
+      </div>
     </div>
     <div class="col-md-6">
       <label for="inputCheckPassword" class="form-label">Confirmar contraseña</label>
@@ -123,6 +126,26 @@
       document.getElementById("divInputEmpleado").classList.add("hide");
     }
   }
+
+  function validPassword() {
+    const passwordValue = document.getElementById("password").value;
+    const strongRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/
+    if(passwordValue.length < 8 || passwordValue.length > 16) {
+      //console.log("validPassword", passwordValue, "not valid length");
+      document.getElementById('submitButton').disabled = true;
+      document.getElementById("invalid-password-msg").style.display = "block";
+    }
+    else if(strongRegex.test(passwordValue)) {//si es valida la contraseña
+      //console.log("validPassword", passwordValue, "valid");
+      document.getElementById('submitButton').disabled = false;
+      document.getElementById("invalid-password-msg").style.display = "none";
+    } else {
+      //console.log("validPassword", passwordValue, "not valid");
+      document.getElementById('submitButton').disabled = true;
+      document.getElementById("invalid-password-msg").style.display = "block";
+    }
+  }
+
   function onInputPassword() {
     const passwordValue = document.getElementById("password").value;
     const checkPasswordValue = document.getElementById("checkPassword").value;

@@ -4,6 +4,22 @@ class DAOAvisos {
     constructor(pool) {
         this.pool = pool;
     }
+    esTecnico(idUser, callback) {
+        this.pool.getConnection((err, connection) => {
+            if (err) callback(new Error("esTecnico Error de conexión a la base de datos"));
+            else {
+                connection.query(`SELECT * FROM UCM_AW_CAU_USU_Usuarios WHERE id = ${idUser}`,
+                (err, rows) => {
+                    connection.release(); // devolver al pool la conexión
+                    if (err) callback(new Error("esTecnico Error de acceso a la base de datos"));
+                    else {
+                        if (rows.length === 0 || rows[0].role === 0) callback(null, false); //no existe el usuario o no es técnico
+                        else callback(null, true);
+                    }
+                });
+            }
+        });
+    }
     getMisAvisos(userId, role, callback) {
         this.pool.getConnection((err, connection) => {
             if(err) callback(new Error("getMisAvisos Error de conexión a la base de datos"));
@@ -16,6 +32,81 @@ class DAOAvisos {
                     if(err) callback(err);
                     else {
                         callback(null, rows);
+                    }
+                });
+            }
+        });
+    }
+
+    getHistorico(userId, role, callback) {
+        this.pool.getConnection((err, connection) => {
+            if(err) callback(new Error("getHistorico Error de conexión a la base de datos"));
+            else {
+                let query;
+                if(role === 0) query = `SELECT UCM_AW_CAU_AVI_Avisos.id, u2.username as creador, u2.uniprofile, fecha, texto, comentario, tipo, resuelto, u1.username as tecnico FROM UCM_AW_CAU_AVI_Avisos LEFT OUTER JOIN UCM_AW_CAU_USU_Usuarios u1 ON tecnico = u1.id JOIN UCM_AW_CAU_USU_Usuarios u2 on creador = u2.id WHERE creador = ${userId} AND resuelto = 1`;//query para el usuario
+                else if(role === 1) query = `SELECT UCM_AW_CAU_AVI_Avisos.id, u2.username as creador, u2.uniprofile, fecha, texto, comentario, tipo, resuelto, u1.username as tecnico FROM UCM_AW_CAU_AVI_Avisos LEFT OUTER JOIN UCM_AW_CAU_USU_Usuarios u1 ON tecnico = u1.id JOIN UCM_AW_CAU_USU_Usuarios u2 on creador = u2.id WHERE tecnico = ${userId} AND resuelto = 1`;//query para el tecnico
+                connection.query(query, (err, rows) => {
+                    connection.release();
+                    if(err) callback(err);
+                    else {
+                        callback(null, rows);
+                    }
+                });
+            }
+        });
+    }
+
+    getEntrantes(userId, callback) {
+        this.pool.getConnection((err, connection) => {
+            if(err) callback(new Error("getEntrantes Error de conexión a la base de datos"));
+            else {
+                let query = `SELECT UCM_AW_CAU_AVI_Avisos.id, u2.username as creador, u2.uniprofile, fecha, texto, comentario, tipo, resuelto, u1.username as tecnico, u1.id as tecnicoId FROM UCM_AW_CAU_AVI_Avisos LEFT OUTER JOIN UCM_AW_CAU_USU_Usuarios u1 ON tecnico = u1.id JOIN UCM_AW_CAU_USU_Usuarios u2 on creador = u2.id WHERE resuelto = 0`;
+                connection.query(query, (err, rows) => {
+                    connection.release();
+                    if(err) callback(err);
+                    else {
+                        callback(null, rows);
+                    }
+                });
+            }
+        });
+    }
+
+    asignarTecnico(idAviso, idTecnico, callback) {
+        this.pool.getConnection((err, connection) => {
+            if(err) callback(new Error("asignarTecnico Error de conexión a la base de datos"));
+            else {
+                this.esTecnico(idTecnico, (err, result) => {
+                    if(err) console.log(err);
+                    else {
+                        if(result === true) {
+                            const query = `UPDATE UCM_AW_CAU_AVI_Avisos SET tecnico=${idTecnico} WHERE id=${idAviso} LIMIT 1`;
+                            connection.query(query, (err, rows) => {
+                                connection.release();
+                                if(err) callback(err);
+                                else {
+                                    callback(null);
+                                }
+                            });
+                        } else {
+                            callback(new Error(`El usuario ${idTecnico} no es tecnico`));
+                        }
+                    }
+                });
+            }
+        });
+    }
+
+    deleteAviso(idAviso, callback) {
+        this.pool.getConnection((err, connection) => {
+            if(err) callback(new Error("deleteAviso Error de conexión a la base de datos"));
+            else {
+                const query = `DELETE FROM UCM_AW_CAU_AVI_Avisos WHERE id=${idAviso}`;
+                connection.query(query, (err, rows) => {
+                    connection.release();
+                    if(err) callback(err);
+                    else {
+                        callback(null);
                     }
                 });
             }

@@ -9,6 +9,9 @@ body{
     -ms-word-break: break-all;
     word-break: break-all;
 }
+.dontbreak {
+    word-break: keep-all;
+}
 .img2{
     width: 5em;
     height: 5em;

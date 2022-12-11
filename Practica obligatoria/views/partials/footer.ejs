@@ -1,6 +1,7 @@
         <!-- JavaScript Bundle with Popper -->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
         <script>
+            let selectedAvisoId = null;
             const tiposAviso = ["Sugerencia", "Incidencia", "Felicitación"];
             window.onload = () => {
                 //la página se genera con tipo aviso numerico (0, 1, 2...) este evento se llama cuando termina de cargar, y modificamos la tabla convenientemente con el array tiposAviso
@@ -26,7 +27,8 @@
                 }
             }
 
-            function openModal(data) {
+            function openModal(data, showTecnicos = false) {
+                selectedAvisoId = data.id;
                 const modalElement = document.getElementById('exampleModal');
                 const modal = new bootstrap.Modal(modalElement);
                 document.getElementById("exampleModalLabel").innerText = `Aviso ${data.id}: ${tiposAviso[data.tipo]}`;
@@ -44,12 +46,23 @@
                     textareaComentario.value = data.comentario;
                     textareaComentario.readOnly = true;
                 }
+                const divtecnicos = document.getElementById("divTecnicos");
+                if(showTecnicos) divtecnicos.classList.remove("hide");
+                else if(divtecnicos) divtecnicos.classList.add("hide");
                 modal.show();
             }
 
-            function deleteAviso(event, idAviso) {
+            function stopEventPropagation(event,) {
                 event.stopPropagation();
-                console.log("deleteAviso", idAviso);
+            }
+
+            function asignarTecnico(event, idAviso, data) {
+                event.stopPropagation();
+                openModal(data, true);
+            }
+
+            function validarFormulario() {
+                document.getElementById("inputIdAviso").value = selectedAvisoId;
             }
 
             function nuevoAviso() {
