@@ -13,7 +13,7 @@ class DAOAvisos {
                     connection.release(); // devolver al pool la conexión
                     if (err) callback(new Error("esTecnico Error de acceso a la base de datos"));
                     else {
-                        if (rows.length === 0 || rows[0].role === 0) callback(null, false); //no existe el usuario o no es técnico
+                        if (rows.length === 0 || rows[0].role !== 1) callback(null, false); //no existe el usuario o no es técnico
                         else callback(null, true);
                     }
                 });
