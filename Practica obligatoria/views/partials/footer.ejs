@@ -1,7 +1,8 @@
         <!-- JavaScript Bundle with Popper -->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
         <script>
-            let selectedAvisoId = null, modal = null, uniprofile = '<%= user.uniprofile %>';
+            let selectedAvisoId = null, modal = null;
+            const nuevoAvisoData = <%- typeof nuevoAvisoData !== 'undefined' && nuevoAvisoData ? JSON.stringify(nuevoAvisoData) : 'null' %>, uniprofile = '<%= user.uniprofile %>';
             const tiposAviso = ["Sugerencia", "Incidencia", "Felicitación"];
             const roles = ["Usuario", "Técnico"];
             window.onload = () => {//evento que se llama cuando la página termina de cargar en el navegador.
@@ -101,6 +102,60 @@
 
             function validarFormulario() {
                 document.getElementById("inputIdAviso").value = selectedAvisoId;
+            }
+
+            function onTipoAvisoChange() {
+                const tipoAviso = document.getElementById("tipoAvisoSelect").value;
+                if(tipoAviso === '0' || tipoAviso === '1') {//sugerencias o incidencias
+                    document.getElementById("modalSugerenciasIncidencias").classList.remove("hide");
+                    document.getElementById("modalFelicitacion").classList.add("hide");
+                    document.getElementById("modalNuevoAvisoTextDiv").classList.remove("hide");
+                    const selectFelicitacion = document.getElementById("tipoAvisoSelectFelicitacion");
+                    selectFelicitacion.required = false;
+                    selectFelicitacion.value = "";
+                    const categoriaSelect = document.getElementById("categoriaSelect");
+                    categoriaSelect.required = true;
+                    document.getElementById("functionSelect").required = true;
+                    categoriaSelect.innerHTML = `<option selected disabled value="">Elige...</option>`;
+                    Object.keys(nuevoAvisoData.sugerenciasIncidencias).forEach(k => {
+                        if(nuevoAvisoData.sugerenciasIncidencias[k] && nuevoAvisoData.sugerenciasIncidencias[k][uniprofile] && nuevoAvisoData.sugerenciasIncidencias[k][uniprofile].length > 0) {
+                            categoriaSelect.innerHTML += `<option value="${k}">${k}</option>`
+                        }
+                    });
+
+                    /*//volver a poner los required en los selects de sugerencia o incidencia
+                    const ISselects = document.getElementsByClassName("tipoAvisoSelectIS");
+                    for(let i = 0; i < ISselects.length; i++) {
+                        //console.log(typeof ISselects[i].dataset.required, ISselects[i].dataset.required);
+                        ISselects[i].required = ISselects[i].dataset.required === "true" ? true : false;
+                    }*/
+                } else {//felicitacion
+                    document.getElementById("modalSugerenciasIncidencias").classList.add("hide");//ocultamos el div de sugerencia/incidencia (contiene los selects con los tipos de incidencia/sugerencia)
+                    document.getElementById("modalFelicitacion").classList.remove("hide");//mostramos el div de felicitacion (contiene el select con los tipos de felicitacion)
+                    document.getElementById("modalNuevoAvisoTextDiv").classList.remove("hide");//mostramos el texbox de observaciones
+                    document.getElementById("tipoAvisoSelectFelicitacion").required = true;//ponemos el atributo required a el select de tipo felicitacion
+                    const categoriaSelect = document.getElementById("categoriaSelect");
+                    categoriaSelect.required = false;//ponemos que no sean requeridos para el formulario los dropdowns de incidencia/sugerencia 
+                    categoriaSelect.value = "";
+                    document.getElementById("functionSelect").required = false;
+
+                    /*const ISselects = document.getElementsByClassName("tipoAvisoSelectIS");//ponemos con un bucle el atributo required de los selects de incidencia/sugerencia a false para que no de errores
+                    for(let i = 0; i < ISselects.length; i++) {
+                        ISselects[i].required = false
+                        ISselects[i].value = "";
+                    }*/
+                }
+                document.getElementById("modalNuevoAvisoText").required = true;
+            }
+
+            function onCategoriaAvisoChange() {
+                const categoriaSelect = document.getElementById("categoriaSelect");
+                const categoria = categoriaSelect.value;
+                const functionSelect = document.getElementById("functionSelect");
+                functionSelect.innerHTML = `<option selected disabled value="">Elige...</option>`;
+                if(nuevoAvisoData.sugerenciasIncidencias[categoria] && nuevoAvisoData.sugerenciasIncidencias[categoria][uniprofile]) {
+                    nuevoAvisoData.sugerenciasIncidencias[categoria][uniprofile].forEach(f => functionSelect.innerHTML += `<option value="${f}">${f}</option>`);
+                }
             }
 
             function busqueda() {

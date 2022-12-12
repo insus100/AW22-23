@@ -77,7 +77,7 @@
         </tr>-->
     </tbody>
 </table>
-<% if(user.roleName === 'usuario'){ %>
+<% if(user.roleName === 'usuario' && page === 'avisos'){ %>
   <div class="mt-4 m-auto w-75">
     <button type="button" class="btn btn-primary" onclick="openModalNuevoAviso()">Nuevo aviso</button>
   </div>
@@ -148,19 +148,54 @@
             </div>
           </div>
         </div>
-        <div class="modal-body hide" id="modal-body-nuevo">
-          <form method="POST" action="/nuevoAviso" class="row g-3">
-            <div class="col-8">
-              <label for="tipoAvisoSelect" class="form-label">Seleccione un tipo de aviso</label>
-              <select name="tecnico" id="tipoAvisoSelect" class="form-select bg-dark text-white" required>
-                <option selected disabled value="">Elige...</option>
-                <option value="0">Sugerencia</option>
-                <option value="1">Incidencia</option>
-                <option value="2">Felicitación</option>
-              </select>
-            </div>
-          </form>
-        </div>
+        <% if(typeof nuevoAvisoData !== 'undefined' && nuevoAvisoData) {//primero checa que la variable exista (que esta definida), luego que no sea null o undefined %>
+          <div class="modal-body hide" id="modal-body-nuevo">
+            <form method="POST" action="/nuevoAviso" class="row g-3">
+              <div class="col-8">
+                <label for="tipoAvisoSelect" class="form-label">Seleccione un tipo de aviso</label>
+                <select name="tipoAviso" id="tipoAvisoSelect" class="form-select bg-dark text-white" onchange="onTipoAvisoChange()" required>
+                  <option selected disabled value="">Elige...</option>
+                  <option value="0">Sugerencia</option>
+                  <option value="1">Incidencia</option>
+                  <option value="2">Felicitación</option>
+                </select>
+              </div>
+              <div class="hide" id="modalSugerenciasIncidencias"><!-- apartado con los tipos de sugerencias/incidencias -->
+                <div class="col-8">
+                  <label for="categoriaSelect" class="form-label">Categoria:</label>
+                  <select id="categoriaSelect" name="categoria" onchange="onCategoriaAvisoChange()" class="form-select bg-dark text-white tipoAvisoSelectIS">
+                    <option selected disabled value="">Elige...</option>
+                    <%  //Object.keys(nuevoAvisoData.sugerenciasIncidencias).forEach(k => { %>
+                      <!--<option value="<%= //k %>"><%= //k %></option>-->
+                    <% //});%>
+                  </select>
+                </div>
+                <div class="col-8">
+                  <label for="functionSelect" class="form-label">Función:</label>
+                  <select id="functionSelect" name="funcion" class="form-select bg-dark text-white tipoAvisoSelectIS">
+                    <option selected disabled value="">Elige...</option>
+                  </select>
+                </div>
+              </div>
+              <div class="hide" id="modalFelicitacion"><!-- apartado con los tipos de felicitaciones -->
+                <div class="col-8">
+                  <label for="tipoAvisoSelectFelicitacion" class="form-label">Tipo de felicitación</label>
+                  <select value="" name="tipoAvisoFelicitacion" id="tipoAvisoSelectFelicitacion" class="form-select bg-dark text-white">
+                    <option selected disabled value="">Elige...</option>
+                    <% nuevoAvisoData.felicitaciones.forEach(f => { //para cada tipo de felicitacion%>
+                      <option value="<%= f %>"><%= f %></option>
+                    <% });%>
+                  </select>
+                </div>
+              </div>
+              <div class="form-floating hide" id="modalNuevoAvisoTextDiv"><!-- apartado con un apartado de texto para las observaciones (sugerencia, incidencia, felicitacion) -->
+                <textarea name="observaciones" class="form-control bg-dark text-white" placeholder="Observación" id="modalNuevoAvisoText" style="height: 200px"></textarea>
+                <label for="modalNuevoAvisoText">Observaciones</label>
+              </div>
+              <button type="submit" class="btn btn-primary" id="submitNuevoAviso">Crear aviso</button>
+            </form>
+          </div>
+        <% } %>
         <div class="modal-footer">
           <% if(user.roleName === 'tecnico' && page === 'avisos'){ %>
             <button id="botonResolverAviso" type="button" class="btn btn-primary">Resolver aviso</button>

@@ -222,6 +222,46 @@ app.post("/asignarTecnico", isAuthorized, (req, res) => {
     }
 });
 
+app.post("/nuevoAviso", isAuthorized, (req, res) => {
+    //console.log("/nuevoAviso", req.body);
+    if(req.body.tipoAviso) {
+        const tipoAviso = parseInt(req.body.tipoAviso);
+        if(!isNaN(tipoAviso)) {
+            if(tipoAviso === 0 || tipoAviso === 1) {//sugerencia o incidencia
+                if(req.body.categoria && req.body.funcion && req.body.observaciones) {
+                    const aviso = {//las keys en este objeto tienen que tener el mismo nombre que las columnas en la tabla de la base de datos
+                        creador: req.session.userId,
+                        tipo: tipoAviso,
+                        texto: req.body.observaciones,
+                        categoria: req.body.categoria,
+                        funcion: req.body.funcion,
+                    };
+                    daoA.insertAviso(aviso, (err, result) => {
+                        if(err) console.log(err)
+                        res.redirect("/avisos");
+                    });
+                }
+            } else {
+                if(req.body.tipoAvisoFelicitacion && req.body.observaciones) {
+                    const aviso = {//las keys en este objeto tienen que tener el mismo nombre que las columnas en la tabla de la base de datos
+                        creador: req.session.userId,
+                        tipo: tipoAviso,
+                        texto: req.body.observaciones,
+                        categoria: req.body.tipoAvisoFelicitacion,
+                        funcion: "",
+                    };
+                    daoA.insertAviso(aviso, (err, result) => {
+                        if(err) console.log(err)
+                        res.redirect("/avisos");
+                    });
+                }
+            }
+        }
+    } else {
+        res.redirect("/avisos");
+    }
+});
+
 app.get("/logout", isAuthorized, function(req, res){
     req.session.destroy();
     res.redirect("/login");
@@ -276,14 +316,14 @@ app.get('/:page', isAuthorized, (req, res) => {//este manejador abajo del todo s
             console.error(`/:page ${page} error al ejecutar funcion del dao, la funcion no está definida en el objeto pages.${page}.daoFunc en config.js`);
         }*/
         if(page === 'avisos') {
-            daoA.getMisAvisos(req.session.userId, req.session.role, (err, result) => {
+            daoA.getMisAvisos(req.session.userId, role, (err, result) => {
                 if(err) console.log("avisos " + err);
                 else {
-                    res.render(path.join(__dirname, `views/main`), { page: page, columns: config.pages[page].columns, dataArray: result, tecnicos: null });
+                    res.render(path.join(__dirname, `views/main`), { page: page, columns: config.pages[page].columns, dataArray: result, tecnicos: null, nuevoAvisoData: page === 'avisos' && role === 0 ? config.nuevoAvisoData : null });
                 }
             });
         } else if(page === 'historico') {
-            daoA.getHistorico(req.session.userId, req.session.role, (err, result) => {
+            daoA.getHistorico(req.session.userId, role, (err, result) => {
                 if(err) console.log("historico " + err);
                 else {
                     res.render(path.join(__dirname, `views/main`), { page: page, columns: config.pages[page].columns, dataArray: result, tecnicos: null });

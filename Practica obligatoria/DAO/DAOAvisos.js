@@ -112,6 +112,28 @@ class DAOAvisos {
             }
         });
     }
+
+    insertAviso(aviso, callback) {
+        this.pool.getConnection((err, connection) => {
+            if(err) callback(new Error("insertAviso Error de conexión a la base de datos"));
+            else {
+                let query = `INSERT INTO UCM_AW_CAU_AVI_Avisos (`;
+                Object.keys(aviso).forEach((k) => query += `${k}, `);
+                query = query.slice(0, -2) + ') VALUES (';
+                
+                Object.keys(aviso).forEach((k) => query += `'${aviso[k]}', `);
+                query = query.slice(0, -2) + ');';
+                //console.log("insertAviso query", query);
+                connection.query(query, (err, result) => {
+                    connection.release();
+                    if(err) callback(err);
+                    else {
+                        callback(null, result);
+                    }
+                });
+            }
+        });
+    }
     getAllTasks(email, callback) {
         this.pool.getConnection((err, connection) => {
             if(err) callback(new Error("Error de conexión a la base de datos"));

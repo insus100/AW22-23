@@ -152,32 +152,32 @@ module.exports = {
         "Alumno": ["Certificado digital de personal física", "Registro electrónico", "Sede electrónica"],
         "PAS": ["Certificado digital de personal física", "Certificado electrónico de empleado público", "Registro electrónico", "Sede electrónica", "Portafirmas"],
         "PDI": ["Certificado digital de personal física", "Certificado electrónico de empleado público", "Registro electrónico", "Sede electrónica", "Portafirmas"],
-        "Antiguo Alumno": ["Registro electrónico", "Sede electrónica"]
+        "Antiguo alumno": ["Registro electrónico", "Sede electrónica"]
       },
       "Comunicaciones": {
         "Alumno": ["Correo electrónico", "Google Meet", "Cuenta de Alumno"],
         "PAS": ["Correo electrónico", "Google Meet", "Cuenta de personal", "Cuenta genérica"],
         "PDI": ["Correo electrónico", "Google Meet", "Cuenta de personal", "Cuenta genérica"],
-        "Antiguo Alumno": ["Correo electrónico", "Google Meet", "Cuenta de Alumno"],
+        "Antiguo alumno": ["Correo electrónico", "Google Meet", "Cuenta de Alumno"],
       },
       "Conectividad": {
         "Alumno": ["Cortafuegos corporativo", "VPN Acceso remoto", "Wifi Eduroam (ssid: eduroam)"],
         "PAS": ["Cuenta as la Red SARA", "Conexión por cable en despachos", "Cortafuegos corporativo", "Resolución de nombres de dominio (DNS)", "VPN Acceso remoto", "Wifi Eduroam (ssid: eduroam)", "Wifi para visitantes (ssid: UCM-Visitantes)"],
         "PDI": ["Conexión por cable en despachos", "Cortafuegos corporativo", "VPN Acceso remoto", "Wifi Eduroam (ssid: eduroam)", "Wifi para visitantes (ssid: UCM-Visitantes)"],
-        "Antiguo Alumno": []
+        "Antiguo alumno": []
       },
       "Docencia": {
         "Alumno": ["Aula virtual", "Moodle: Aula Global", "Plataforma de cursos online Privados"],
         "PAS": ["Blackboard collaborate", "Listados de clase", "Moodle: Aula Global"],
         "PDI": ["Aula virtual", "Blackboard collaborate", "Listados de clase", "Moodle: Aula Global", "Plataforma de cursos online Privados"],
-        "Antiguo Alumno": []
+        "Antiguo alumno": []
 
       },
       "Web": {
         "Alumno": ["Portal de eventos"],
         "PAS": ["Analítica Web", "Emisión de certificados SSL", "Hosting: alojamiento de páginas web", "Portal de eventos", "Redirecciones web"],
         "PDI": ["Analítica Web", "Emisión de certificados SSL", "Hosting: alojamiento de páginas web", "Portal de eventos", "Redirecciones web"],
-        "Antiguo Alumno": ["Portal de eventos"]
+        "Antiguo alumno": ["Portal de eventos"]
       },
     },
     felicitaciones: [
