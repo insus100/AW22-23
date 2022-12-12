@@ -38,6 +38,7 @@ module.exports = {
                 data: "texto",//nombre de la columna en la base de datos
                 name: "Texto",//nombre que saldrá en la cabeza de la tabla
                 roles: [0, 1],
+                searchable: true
               },
               {
                   data: "comentario",//nombre de la columna en la base de datos
@@ -76,6 +77,7 @@ module.exports = {
                     data: "texto",//nombre de la columna en la base de datos
                     name: "Texto",//nombre que saldrá en la cabeza de la tabla
                     roles: [0, 1],
+                    searchable: true
                 },
             ]
         },
@@ -98,6 +100,7 @@ module.exports = {
                   data: "texto",//nombre de la columna en la base de datos
                   name: "Texto",//nombre que saldrá en la cabeza de la tabla
                   roles: [1],
+                  searchable: true
               },
               {
                 data: "acciones",//nombre de la columna en la base de datos
@@ -126,6 +129,7 @@ module.exports = {
                 data: "username",//nombre de la columna en la base de datos
                 name: "Nombre",//nombre que saldrá en la cabeza de la tabla
                 roles: [1],
+                searchable: true
               },
               {
                 data: "role",//nombre de la columna en la base de datos

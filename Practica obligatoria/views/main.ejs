@@ -14,7 +14,7 @@
             <% });%>
         </tr>
     </thead>
-    <tbody>
+    <tbody id="tabla">
       <% dataArray.forEach(d => { %>
         <% if(page !== 'usuarios') { %>
           <tr onclick="openModal(<%= JSON.stringify(d) %>)">
@@ -50,7 +50,7 @@
               <% } else if(c.data === 'tipo'){ %>
                 <td class="tipoAviso"><%= d[c.data] %></td>
               <% } else if(typeof d[c.data] === 'string'){ %>
-                <td><p class="break"><%= d[c.data].slice(0, 200) %></p></td>
+                <td class="break <%= c.searchable === true ? 'searchable' : '' %>"><%= d[c.data].length > 199 ? d[c.data].slice(0, 200) + '...' : d[c.data] %></td>
               <% } else { %>
                 <td><%= d[c.data] %></td>
               <% } %>

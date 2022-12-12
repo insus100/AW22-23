@@ -93,6 +93,25 @@
                 document.getElementById("inputIdAviso").value = selectedAvisoId;
             }
 
+            function busqueda() {
+                let td, text;
+                const searchValue = document.getElementById("inputBusqueda").value.toLowerCase();
+                const table = document.getElementById("tabla");
+                const tr = table.getElementsByTagName("tr");
+                console.log("busqueda", searchValue);
+                for(let i = 0; i < tr.length; i++) {
+                    td = tr[i].getElementsByClassName("searchable")[0];
+                    if(td) {
+                        text = td.textContent || td.innerText;
+                        if(text.toLowerCase().indexOf(searchValue) > -1) {
+                            tr[i].style.display = "";
+                        } else {
+                            tr[i].style.display = "none";
+                        }
+                    }
+                }
+            }
+
             function nuevoAviso() {
                 
             }
