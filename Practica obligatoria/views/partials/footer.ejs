@@ -113,7 +113,7 @@
                 modal.show();
             }
 
-            function stopEventPropagation(event,) {
+            function stopEventPropagation(event) {
                 event.stopPropagation();
             }
 
@@ -170,7 +170,7 @@
                 document.getElementById("modalNuevoAvisoText").required = true;
             }
 
-            function onCategoriaAvisoChange() {
+            function onCategoriaAvisoChange() {//al cambiar la categoria hay que cambiar las funciones que salen en el siguiente select
                 const categoriaSelect = document.getElementById("categoriaSelect");
                 const categoria = categoriaSelect.value;
                 const functionSelect = document.getElementById("functionSelect");
