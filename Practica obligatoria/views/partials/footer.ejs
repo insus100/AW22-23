@@ -1,10 +1,13 @@
         <!-- JavaScript Bundle with Popper -->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
         <script>
-            let selectedAvisoId = null;
+            let selectedAvisoId = null, modal = null, uniprofile = '<%= user.uniprofile %>';
             const tiposAviso = ["Sugerencia", "Incidencia", "Felicitación"];
             const roles = ["Usuario", "Técnico"];
             window.onload = () => {//evento que se llama cuando la página termina de cargar en el navegador.
+                const modalElement = document.getElementById('exampleModal');
+                modal = new bootstrap.Modal(modalElement);
+
                 //la página se genera con tipo aviso numerico (0, 1, 2...) este evento se llama cuando termina de cargar, y modificamos la tabla convenientemente con el array tiposAviso
                 const tipoAvisoElems = document.getElementsByClassName("tipoAviso");
                 if(tipoAvisoElems) {
@@ -38,8 +41,6 @@
 
             function openModal(data, showTecnicos = false) {
                 selectedAvisoId = data.id;
-                const modalElement = document.getElementById('exampleModal');
-                const modal = new bootstrap.Modal(modalElement);
                 document.getElementById("exampleModalLabel").innerText = `Aviso ${data.id}: ${tiposAviso[data.tipo]}`;
                 document.getElementById("modalFecha").innerText = `Fecha: ${data.fecha}`;
                 document.getElementById("modalCreador").innerText = `Creador: ${data.creador}`;
@@ -65,18 +66,27 @@
                 if(botonResolverAviso) botonResolverAviso.classList.remove("hide");
 
                 document.getElementById(`modal-body-usuario`).classList.add("hide");
+                document.getElementById(`modal-body-nuevo`).classList.add("hide");
                 document.getElementById(`modal-body-aviso`).classList.remove("hide");
                 modal.show();
             }
             function openModalUsuario() {
                 document.getElementById(`modal-body-usuario`).classList.remove("hide");
                 document.getElementById(`modal-body-aviso`).classList.add("hide");
+                document.getElementById(`modal-body-nuevo`).classList.add("hide");
 
                 document.getElementById("exampleModalLabel").innerText = `Perfil de usuario`;
                 const botonResolverAviso = document.getElementById("botonResolverAviso");
                 if(botonResolverAviso) botonResolverAviso.classList.add("hide");
-                const modalElement = document.getElementById('exampleModal');
-                const modal = new bootstrap.Modal(modalElement);
+                modal.show();
+            }
+
+            function openModalNuevoAviso() {
+                document.getElementById(`modal-body-nuevo`).classList.remove("hide");
+                document.getElementById(`modal-body-usuario`).classList.add("hide");
+                document.getElementById(`modal-body-aviso`).classList.add("hide");
+                document.getElementById("exampleModalLabel").innerText = `Crear nuevo aviso`;
+
                 modal.show();
             }
 
@@ -110,10 +120,6 @@
                         }
                     }
                 }
-            }
-
-            function nuevoAviso() {
-                
             }
         </script>
     </body>

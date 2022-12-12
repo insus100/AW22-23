@@ -79,7 +79,7 @@
 </table>
 <% if(user.roleName === 'usuario'){ %>
   <div class="mt-4 m-auto w-75">
-    <button type="button" class="btn btn-primary" onclick="nuevoAviso()">Nuevo aviso</button>
+    <button type="button" class="btn btn-primary" onclick="openModalNuevoAviso()">Nuevo aviso</button>
   </div>
 <% } %>
 <div style="height: 200vh;"></div>
@@ -147,6 +147,19 @@
               <div class="col-8"></div>
             </div>
           </div>
+        </div>
+        <div class="modal-body hide" id="modal-body-nuevo">
+          <form method="POST" action="/nuevoAviso" class="row g-3">
+            <div class="col-8">
+              <label for="tipoAvisoSelect" class="form-label">Seleccione un tipo de aviso</label>
+              <select name="tecnico" id="tipoAvisoSelect" class="form-select bg-dark text-white" required>
+                <option selected disabled value="">Elige...</option>
+                <option value="0">Sugerencia</option>
+                <option value="1">Incidencia</option>
+                <option value="2">Felicitación</option>
+              </select>
+            </div>
+          </form>
         </div>
         <div class="modal-footer">
           <% if(user.roleName === 'tecnico' && page === 'avisos'){ %>
