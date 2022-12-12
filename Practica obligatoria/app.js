@@ -65,65 +65,9 @@ daoU.getUserImageName(req.session.email, (err, img) => {
 
 app.get('/', isAuthorized, (req, res) => {
     res.redirect('/avisos');
-    /*res.locals.user = req.session.username;
-    res.locals.role =  {
-        name: roles[req.session.role],
-        index: req.session.role
-    }
-    res.render(path.join(__dirname, `views/main`));*/
-    /*daoT.getAllTasks(req.session.email , (err, tasks) => {
-        if(err) console.log(err);
-        else {
-            console.log(tasks);
-            if(!res.locals.user) res.locals.user = req.session.email;
-            res.render(path.join(__dirname, 'views/usuario'), { tasksArray: tasks });
-        }
-    });*/
 });
 
-/*app.get('/finish/:id', isAuthorized, (req, res) => {
-    const idTarea = parseInt(req.params.id);
-    if(idTarea && !isNaN(idTarea)) {
-        daoT.markTaskDone(idTarea, (err) => {
-            if(err) console.log(err);
-            else {
-                res.redirect("/");
-            }
-        });
-    }
-});
-
-app.get('/deleteCompleted', isAuthorized, (req, res) => {
-    
-    daoT.deleteCompleted(req.session.email, (err) => {
-        if(err) console.log(err);
-        else {
-            res.redirect("/");
-        }
-    });
-});
-
-app.post('/addTask', isAuthorized, (req, res) => {
-    if(req.body.tarea && req.body.tarea.length > 0) {
-        const task = createTask(req.body.tarea);
-        console.log("req.body", req.body, "\n", JSON.stringify(task));
-        daoT.insertTask(req.session.email, task, (err) => {
-            if(err) console.log(err);
-            else {
-                daoT.getAllTasks(req.session.email, (err, tasks) => {
-                    if(err) console.log(err);
-                    else {
-                        //console.log("redirect to /");
-                        res.redirect("/");
-                        //res.render(path.join(__dirname, 'views/tasks'), { tasksArray: tasks });
-                    }
-                });
-            }
-        });
-    } 
-});*/
-
-function setSessionDataAndRedirect(req, res, user) {
+function setSessionDataAndRedirect(req, res, user) {//se llama desde el login y el register
     req.session.userId = user.id;//database id (Auto increment)
     req.session.email = user.email;
     req.session.role = user.role;
@@ -213,7 +157,7 @@ app.post("/register", isNotAuthorized, (req, res) => {//cuando el usuario le da 
 });
 
 app.post("/asignarTecnico", isAuthorized, (req, res) => {
-    if(req.body.tecnico && req.body.idAviso) {
+    if(req.body.tecnico && req.body.idAviso && req.session.role > 0) {
         daoA.asignarTecnico(req.body.idAviso, req.body.tecnico, (err, result) => {
             res.redirect("/entrantes");
         });
@@ -298,6 +242,23 @@ app.get("/disableUser/:id", isAuthorized, (req, res) => {
     }
 });
 
+app.get("/resolverAviso/:id", isAuthorized, (req, res) => {
+    if(req.session.role < 1) {
+        res.redirect("/avisos");
+        return;
+    }
+    const idAviso = parseInt(req.params.id);
+    if(!isNaN(idAviso) && req.query.comment) {
+        const comentario = req.query.eliminado === 'true' ? `Este aviso ha sido eliminado por el técnico ${req.session.username} debido a: ${req.query.comment}` : req.query.comment;
+        daoA.resolverAviso(idAviso, comentario, (err, result) => {
+            if(err) console.log(err);
+            res.redirect("/avisos");
+        });
+    } else {
+        res.redirect("/avisos");
+    }
+});
+
 app.get('/:page', isAuthorized, (req, res) => {//este manejador abajo del todo siempre, para que no haya conflictos con el resto
     const page = req.params.page;
     const role = req.session.role;
@@ -315,7 +276,7 @@ app.get('/:page', isAuthorized, (req, res) => {//este manejador abajo del todo s
         } else {
             console.error(`/:page ${page} error al ejecutar funcion del dao, la funcion no está definida en el objeto pages.${page}.daoFunc en config.js`);
         }*/
-        if(page === 'avisos') {
+        if(page === 'avisos') {//cada vez que se añada una página nueva, añadirla en el config.js tb con sus columnas a mostrar
             daoA.getMisAvisos(req.session.userId, role, (err, result) => {
                 if(err) console.log("avisos " + err);
                 else {

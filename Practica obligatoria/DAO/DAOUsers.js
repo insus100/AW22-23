@@ -124,7 +124,7 @@ class DAOUsers {
         this.pool.getConnection((err, connection) => {
             if(err) callback(new Error("Error de conexión a la base de datos"));
             else {
-                connection.query(`SELECT username, password, fecha, role, uniprofile, 
+                connection.query(`SELECT id, username, password, fecha, role, uniprofile, 
                     (SELECT COUNT(*) FROM UCM_AW_CAU_AVI_Avisos WHERE creador = ${userId}) as avisos, 
                     (SELECT COUNT(*) FROM UCM_AW_CAU_AVI_Avisos WHERE creador = ${userId} AND tipo = 0) as sugerencias, 
                     (SELECT COUNT(*) FROM UCM_AW_CAU_AVI_Avisos WHERE creador = ${userId} AND tipo = 1) as incidencias, 

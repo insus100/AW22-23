@@ -113,7 +113,7 @@ class DAOAvisos {
         });
     }
 
-    insertAviso(aviso, callback) {
+    insertAviso(aviso, callback) {//aviso es un objeto
         this.pool.getConnection((err, connection) => {
             if(err) callback(new Error("insertAviso Error de conexión a la base de datos"));
             else {
@@ -129,6 +129,22 @@ class DAOAvisos {
                     if(err) callback(err);
                     else {
                         callback(null, result);
+                    }
+                });
+            }
+        });
+    }
+
+    resolverAviso(idAviso, comentario, callback) {
+        this.pool.getConnection((err, connection) => {
+            if(err) callback(new Error("resolverAviso Error de conexión a la base de datos"));
+            else {
+                const query = `UPDATE UCM_AW_CAU_AVI_Avisos SET resuelto=1, comentario='${comentario}' WHERE id=${idAviso}`;
+                connection.query(query, (err, rows) => {
+                    connection.release();
+                    if(err) callback(err);
+                    else {
+                        callback(null);
                     }
                 });
             }

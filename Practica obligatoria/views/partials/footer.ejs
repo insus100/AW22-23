@@ -1,8 +1,8 @@
         <!-- JavaScript Bundle with Popper -->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
         <script>
-            let selectedAvisoId = null, modal = null;
-            const nuevoAvisoData = <%- typeof nuevoAvisoData !== 'undefined' && nuevoAvisoData ? JSON.stringify(nuevoAvisoData) : 'null' %>, uniprofile = '<%= user.uniprofile %>';
+            let selectedAvisoId = null, modal = null, page = <%- JSON.stringify(page) %>, role = <%- user.role %>, popover = null;
+            const nuevoAvisoData = <%- typeof nuevoAvisoData !== 'undefined' && nuevoAvisoData ? JSON.stringify(nuevoAvisoData) : 'null' %>, uniprofile = '<%= user.uniprofile %>', userId = <%- user.id %>;
             const tiposAviso = ["Sugerencia", "Incidencia", "Felicitación"];
             const roles = ["Usuario", "Técnico"];
             window.onload = () => {//evento que se llama cuando la página termina de cargar en el navegador.
@@ -52,11 +52,11 @@
                 textareaObservaciones.value = data.texto;
                 textareaObservaciones.readOnly = true;
 
-                if(data.comentario && data.comentario.length > 0) {
+                if(data.comentario && data.comentario.length > 0 || (role === 1 && (page === 'avisos' || page === 'entrantes'))) {
                     document.getElementById("divModalComentario").classList.remove("hide");
                     const textareaComentario = document.getElementById("modalComentario");
                     textareaComentario.value = data.comentario;
-                    textareaComentario.readOnly = true;
+                    if(page === 'historico') textareaComentario.readOnly = true;
                 } else {
                     document.getElementById("divModalComentario").classList.add("hide");
                 }
@@ -65,7 +65,15 @@
                 else if(divtecnicos) divtecnicos.classList.add("hide");
 
                 const botonResolverAviso = document.getElementById("botonResolverAviso");
-                if(botonResolverAviso) botonResolverAviso.classList.remove("hide");
+                if(botonResolverAviso) {
+                    botonResolverAviso.classList.remove("hide");
+                    if(page === 'entrantes') {
+                        botonResolverAviso.innerText = `Eliminar aviso`;
+                        console.log("openModal tecnicoId", data.tecnicoId, userId);
+                        if(data.tecnicoId && data.tecnicoId !== userId) botonResolverAviso.disabled = true;
+                    }
+                    else if(page === 'avisos') botonResolverAviso.innerText = `Resolver aviso`;
+                }
 
                 document.getElementById(`modal-body-usuario`).classList.add("hide");
                 const modalNuevoAviso = document.getElementById(`modal-body-nuevo`);
@@ -158,6 +166,19 @@
                 functionSelect.innerHTML = `<option selected disabled value="">Elige...</option>`;
                 if(nuevoAvisoData.sugerenciasIncidencias[categoria] && nuevoAvisoData.sugerenciasIncidencias[categoria][uniprofile]) {
                     nuevoAvisoData.sugerenciasIncidencias[categoria][uniprofile].forEach(f => functionSelect.innerHTML += `<option value="${f}">${f}</option>`);
+                }
+            }
+
+            function resolverAviso() {
+                //console.log("resolverAviso", selectedAvisoId);
+                const textarea = document.getElementById("modalComentario");
+                const comentario = textarea.value;
+                if(!comentario || comentario.length === 0) {
+                    //console.log("resolverAviso comentario vacio");
+                    if(!popover) popover = new bootstrap.Popover(textarea, {content: "Debes especificar una razón para resolverlo."});
+                    popover.show();
+                } else {
+                    window.location.href = `/resolverAviso/${selectedAvisoId}?comment=${comentario}&eliminado=${page === 'entrantes' ? true : false}`;
                 }
             }
 
