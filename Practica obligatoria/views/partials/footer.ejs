@@ -60,6 +60,10 @@
                 const divtecnicos = document.getElementById("divTecnicos");
                 if(showTecnicos) divtecnicos.classList.remove("hide");
                 else if(divtecnicos) divtecnicos.classList.add("hide");
+
+                const botonResolverAviso = document.getElementById("botonResolverAviso");
+                if(botonResolverAviso) botonResolverAviso.classList.remove("hide");
+
                 document.getElementById(`modal-body-usuario`).classList.add("hide");
                 document.getElementById(`modal-body-aviso`).classList.remove("hide");
                 modal.show();
@@ -69,7 +73,8 @@
                 document.getElementById(`modal-body-aviso`).classList.add("hide");
 
                 document.getElementById("exampleModalLabel").innerText = `Perfil de usuario`;
-
+                const botonResolverAviso = document.getElementById("botonResolverAviso");
+                if(botonResolverAviso) botonResolverAviso.classList.add("hide");
                 const modalElement = document.getElementById('exampleModal');
                 const modal = new bootstrap.Modal(modalElement);
                 modal.show();

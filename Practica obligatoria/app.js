@@ -17,8 +17,6 @@ const sessionStore = new MySQLStore({
 });
 // Crear un servidor Express.js
 const app = express();
-// Crear un pool de conexiones a la base de datos de MySQL
-
 
 let userPages = {};
 app.set('view engine', 'ejs');

@@ -133,14 +133,14 @@
               <div class="col-4"><img width="219" height="230" alt="<%= user.username %>" src="/imagenUsuario"></div>
               <div class="col">
                 <h1><%= user.username %></h1>
-                <div class="col-4">Fecha de creación: </div>
-                <div class="col-4">Perfil: </div>
-                <div class="col-4">Rol: </div>
-                <div class="col-4">Contraseña: </div>
-                <div class="col-8">Avisos realizados:</div>
-                <div class="col-8">Incidencias:</div>
-                <div class="col-8">Sugerencias:</div>
-                <div class="col-8">Felicitaciones:</div>
+                <div class="col-8">Fecha de creación: <%= user.fecha %></div>
+                <div class="col-8">Perfil: <%= user.uniprofile %></div>
+                <div class="col-8">Rol: <%= user.roleName %></div>
+                <div class="col-8">Contraseña: <%= user.password %></div>
+                <div class="col-8">Avisos realizados: <%= user.avisos %></div>
+                <div class="col-8">Incidencias: <%= user.incidencias %></div>
+                <div class="col-8">Sugerencias: <%= user.sugerencias %></div>
+                <div class="col-8">Felicitaciones: <%= user.felicitaciones %></div>
               </div>
             </div>
             <div class="row">
@@ -150,7 +150,7 @@
         </div>
         <div class="modal-footer">
           <% if(user.roleName === 'tecnico' && page === 'avisos'){ %>
-            <button type="button" class="btn btn-primary">Resolver aviso</button>
+            <button id="botonResolverAviso" type="button" class="btn btn-primary">Resolver aviso</button>
           <% } %>
         </div>
       </div>
