@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 11-12-2022 a las 23:05:12
+-- Tiempo de generación: 12-12-2022 a las 01:07:20
 -- Versión del servidor: 10.4.13-MariaDB
 -- Versión de PHP: 7.4.7
 
@@ -38,7 +38,7 @@ CREATE TABLE `sessions` (
 --
 
 INSERT INTO `sessions` (`session_id`, `expires`, `data`) VALUES
-('ge5e9NC8YYBtKg6e366S7GyVTMBJfs2t', 1670882597, '{\"cookie\":{\"originalMaxAge\":null,\"expires\":null,\"httpOnly\":true,\"path\":\"/\"},\"userId\":2,\"email\":\"test@ucm.es\",\"role\":1,\"username\":\"Felipe Ferras Gómez\"}');
+('w_IlQNOkIOdvGjXM4Jxxl9zY0T8vlSAq', 1670890021, '{\"cookie\":{\"originalMaxAge\":null,\"expires\":null,\"httpOnly\":true,\"path\":\"/\"},\"userId\":1,\"email\":\"inivelas@ucm.es\",\"role\":0,\"username\":\"Íñigo\"}');
 
 -- --------------------------------------------------------
 
@@ -63,7 +63,8 @@ CREATE TABLE `UCM_AW_CAU_AVI_Avisos` (
 
 INSERT INTO `UCM_AW_CAU_AVI_Avisos` (`id`, `creador`, `fecha`, `texto`, `comentario`, `tipo`, `tecnico`, `resuelto`) VALUES
 (1, 1, '2022-12-10 17:26:55', 'cgaeggadddddddddddddddddddddddddddcgaeggadddddddddddddddddddddddddddcgaeggadddddddddddddddddddddddddddcgaeggadddddddddddddddddddddddddddcgaeggadddddddddddddddddddddddddddcgaeggadddddddddddddddddddddddddddcgaeggadddddddddddddddddddddddddddcgaeggadddddddddddddddddddddddddddcgaeggadddddddddddddddddddddddddddcgaeggadddddddddddddddddddddddddddcgaeggadddddddddddddddddddddddddddcgaeggadddddddddddddddddddddddddddcgaeggadddddddddddddddddddddddddddcgaeggadddddddddddddddddddddddddddcgaeggadddddddddddddddddddddddddddcgaeggadddddddddddddddddddddddddddcgaeggadddddddddddddddddddddddddddcgaeggadddddddddddddddddddddddddddcgaeggadddddddddddddddddddddddddddcgaeggadddddddddddddddddddddddddddcgaeggadddddddddddddddddddddddddddcgaeggaddddddddddddddddddddddddddd', 'cgaeggadddddddddddddddddddddddddddcgaeggadddddddddddddddddddddddddddcgaeggadddddddddddddddddddddddddddcgaeggadddddddddddddddddddddddddddcgaeggadddddddddddddddddddddddddddcgaeggadddddddddddddddddddddddddddcgaeggadddddddddddddddddddddddddddcgaeggadddddddddddddddddddddddddddcgaeggadddddddddddddddddddddddddddcgaeggadddddddddddddddddddddddddddcgaeggadddddddddddddddddddddddddddcgaeggadddddddddddddddddddddddddddcgaeggadddddddddddddddddddddddddddcgaeggadddddddddddddddddddddddddddcgaeggadddddddddddddddddddddddddddcgaeggadddddddddddddddddddddddddddcgaeggadddddddddddddddddddddddddddcgaeggadddddddddddddddddddddddddddcgaeggadddddddddddddddddddddddddddcgaeggadddddddddddddddddddddddddddcgaeggadddddddddddddddddddddddddddcgaeggaddddddddddddddddddddddddddd', 0, NULL, 1),
-(2, 1, '2022-12-11 22:02:40', 'dgsdgdgdgdg', '', 1, 2, 0);
+(2, 1, '2022-12-11 22:02:40', 'dgsdgdgdgdg', 'f', 1, 2, 0),
+(3, 1, '2022-12-11 22:43:38', 'agagagagagadgadgadgadgadgadgad', '', 2, 2, 0);
 
 -- --------------------------------------------------------
 
@@ -91,9 +92,9 @@ CREATE TABLE `UCM_AW_CAU_USU_Usuarios` (
 --
 
 INSERT INTO `UCM_AW_CAU_USU_Usuarios` (`id`, `email`, `password`, `username`, `uniprofile`, `role`, `employeenumber`, `img`, `rep`, `incidence`, `fecha`, `activo`) VALUES
-(1, 'inivelas@ucm.es', 'ojete', 'Íñigo', 'Alumno', 0, '', '', '', '', '2022-12-11 22:04:37', 1),
-(2, 'test@ucm.es', 'ojete', 'Felipe Ferras Gómez', 'PAS', 1, '1234-abc', '', '', '', '2022-12-11 22:04:37', 1),
-(3, 'test1@ucm.es', 'ojete', 'Felipe Ferras Gómez', 'PAS', 0, '', '', '', '', '2022-12-11 22:04:37', 1),
+(1, 'inivelas@ucm.es', 'ojete', 'Íñigo', 'Alumno', 0, '', 'aitor.jpg', '', '', '2022-12-11 22:04:37', 1),
+(2, 'test@ucm.es', 'ojete', 'Felipe Ferras Gómez', 'PAS', 1, '1234-abc', 'felipe.jpg', '', '', '2022-12-11 22:04:37', 1),
+(3, 'test1@ucm.es', 'ojete', 'Felipe Ferras Gómez', 'PAS', 0, '', 'felipe.jpg', '', '', '2022-12-11 22:04:37', 1),
 (4, 'ajajaj@ucm.es', 'ojete', 'Oooooo', 'Alumno', 0, '', '', '', '', '2022-12-11 22:04:37', 1);
 
 --
@@ -128,7 +129,7 @@ ALTER TABLE `UCM_AW_CAU_USU_Usuarios`
 -- AUTO_INCREMENT de la tabla `UCM_AW_CAU_AVI_Avisos`
 --
 ALTER TABLE `UCM_AW_CAU_AVI_Avisos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de la tabla `UCM_AW_CAU_USU_Usuarios`
