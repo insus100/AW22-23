@@ -191,7 +191,9 @@
         <% } %>
         <div class="modal-footer">
           <% if(user.roleName === 'tecnico' && (page === 'avisos' || page === 'entrantes')){ %>
-            <button id="botonResolverAviso" type="button" class="btn btn-primary" onclick="resolverAviso()">Resolver aviso</button>
+            <span class="d-inline-block" id="tooltipEliminarAviso" tabindex="0" data-bs-toggle="tooltip" data-bs-title="No puedes eliminar avisos asignados a otros técnicos">
+              <button id="botonResolverAviso" type="button" class="btn btn-primary" onclick="resolverAviso()">Resolver aviso</button>
+            </span>
           <% } %>
         </div>
       </div>
