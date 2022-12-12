@@ -56,7 +56,7 @@
                     document.getElementById("divModalComentario").classList.remove("hide");
                     const textareaComentario = document.getElementById("modalComentario");
                     textareaComentario.value = data.comentario;
-                    if(page === 'historico') textareaComentario.readOnly = true;
+                    if(page === 'historico' || page === 'avisos' && role === 0) textareaComentario.readOnly = true;
                 } else {
                     document.getElementById("divModalComentario").classList.add("hide");
                 }
