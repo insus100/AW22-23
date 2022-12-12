@@ -260,45 +260,6 @@ class DAOAvisos {
             }
         });
     }
-
-    markTaskDone(idTask, callback){
-        this.pool.getConnection((err, connection) => {
-            if(err) callback(new Error("markTaskDone: Error de conexión a la base de datos"));
-            else{
-                connection.query(`UPDATE aw_tareas_user_tarea SET hecho=1 WHERE idTarea = ${idTask}`, 
-                (err, result) => {
-                    connection.release();
-                    if(err) callback(new Error("markTaskDone: Error de acceso a la base de datos"));
-                    else {
-                        callback(null);
-                    }
-                });
-            }
-        });
-    }
-
-    deleteCompleted(email, callback){
-        this.pool.getConnection((err, connection) => {
-            if(err) callback(new Error("Error de conexión a la base de datos"));
-            else{
-                this.getUserIdFromEmail(email, (err, idUser) => {
-                    if(err) console.log(err);
-                    else {
-                        connection.query(`DELETE FROM aw_tareas_user_tarea WHERE hecho=1 AND idUser=${idUser}`,
-                        (err, result) => {
-                            connection.release();
-                            if(err) callback(new Error("Error de acceso a la base de datos"));
-                            else {
-                                callback(null);
-                            }
-                        });
-                    }
-                });
-            }
-        });
-    }
-
-
 }
 
 module.exports = {

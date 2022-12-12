@@ -159,6 +159,7 @@ app.post("/register", isNotAuthorized, (req, res) => {//cuando el usuario le da 
 app.post("/asignarTecnico", isAuthorized, (req, res) => {
     if(req.body.tecnico && req.body.idAviso && req.session.role > 0) {
         daoA.asignarTecnico(req.body.idAviso, req.body.tecnico, (err, result) => {
+            if(err) console.log(err);
             res.redirect("/entrantes");
         });
     } else {
