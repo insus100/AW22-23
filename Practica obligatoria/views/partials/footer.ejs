@@ -44,6 +44,7 @@
                 selectedAvisoId = data.id;
                 document.getElementById("exampleModalLabel").innerText = `Aviso ${data.id}: ${tiposAviso[data.tipo]}`;
                 document.getElementById("modalFecha").innerText = `Fecha: ${data.fecha}`;
+                document.getElementById("modalTipo").innerText = `${data.categoria}: ${data.tipo !== 2 ? data.funcion : 'felicitación'}`
                 document.getElementById("modalCreador").innerText = `Creador: ${data.creador}`;
                 document.getElementById("modalPerfil").innerText = `Perfil: ${data.uniprofile}`;
                 
@@ -67,14 +68,16 @@
                 if(botonResolverAviso) botonResolverAviso.classList.remove("hide");
 
                 document.getElementById(`modal-body-usuario`).classList.add("hide");
-                document.getElementById(`modal-body-nuevo`).classList.add("hide");
+                const modalNuevoAviso = document.getElementById(`modal-body-nuevo`);
+                if(modalNuevoAviso) modalNuevoAviso.classList.add("hide");
                 document.getElementById(`modal-body-aviso`).classList.remove("hide");
                 modal.show();
             }
             function openModalUsuario() {
                 document.getElementById(`modal-body-usuario`).classList.remove("hide");
                 document.getElementById(`modal-body-aviso`).classList.add("hide");
-                document.getElementById(`modal-body-nuevo`).classList.add("hide");
+                const modalNuevoAviso = document.getElementById(`modal-body-nuevo`);
+                if(modalNuevoAviso) modalNuevoAviso.classList.add("hide");
 
                 document.getElementById("exampleModalLabel").innerText = `Perfil de usuario`;
                 const botonResolverAviso = document.getElementById("botonResolverAviso");

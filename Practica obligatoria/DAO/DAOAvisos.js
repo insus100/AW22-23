@@ -25,8 +25,8 @@ class DAOAvisos {
             if(err) callback(new Error("getMisAvisos Error de conexión a la base de datos"));
             else {
                 let query;
-                if(role === 0) query = `SELECT a.id, u2.username as creador, u2.uniprofile, a.fecha, texto, comentario, tipo, resuelto, u1.username as tecnico FROM UCM_AW_CAU_AVI_Avisos a LEFT OUTER JOIN UCM_AW_CAU_USU_Usuarios u1 ON tecnico = u1.id JOIN UCM_AW_CAU_USU_Usuarios u2 on creador = u2.id WHERE creador = ${userId} AND resuelto = 0`;//query para el usuario
-                else if(role === 1) query = `SELECT a.id, u2.username as creador, u2.uniprofile, a.fecha, texto, comentario, tipo, resuelto, u1.username as tecnico FROM UCM_AW_CAU_AVI_Avisos a LEFT OUTER JOIN UCM_AW_CAU_USU_Usuarios u1 ON tecnico = u1.id JOIN UCM_AW_CAU_USU_Usuarios u2 on creador = u2.id WHERE tecnico = ${userId} AND resuelto = 0`;//query para el tecnico
+                if(role === 0) query = `SELECT a.id, u2.username as creador, u2.uniprofile, a.fecha, texto, comentario, tipo, categoria, funcion, resuelto, u1.username as tecnico FROM UCM_AW_CAU_AVI_Avisos a LEFT OUTER JOIN UCM_AW_CAU_USU_Usuarios u1 ON tecnico = u1.id JOIN UCM_AW_CAU_USU_Usuarios u2 on creador = u2.id WHERE creador = ${userId} AND resuelto = 0`;//query para el usuario
+                else if(role === 1) query = `SELECT a.id, u2.username as creador, u2.uniprofile, a.fecha, texto, comentario, tipo, categoria, funcion, resuelto, u1.username as tecnico FROM UCM_AW_CAU_AVI_Avisos a LEFT OUTER JOIN UCM_AW_CAU_USU_Usuarios u1 ON tecnico = u1.id JOIN UCM_AW_CAU_USU_Usuarios u2 on creador = u2.id WHERE tecnico = ${userId} AND resuelto = 0`;//query para el tecnico
                 connection.query(query, (err, rows) => {
                     connection.release();
                     if(err) callback(err);
@@ -43,8 +43,8 @@ class DAOAvisos {
             if(err) callback(new Error("getHistorico Error de conexión a la base de datos"));
             else {
                 let query;
-                if(role === 0) query = `SELECT a.id, u2.username as creador, u2.uniprofile, a.fecha, texto, comentario, tipo, resuelto, u1.username as tecnico FROM UCM_AW_CAU_AVI_Avisos a LEFT OUTER JOIN UCM_AW_CAU_USU_Usuarios u1 ON tecnico = u1.id JOIN UCM_AW_CAU_USU_Usuarios u2 on creador = u2.id WHERE creador = ${userId} AND resuelto = 1`;//query para el usuario
-                else if(role === 1) query = `SELECT a.id, u2.username as creador, u2.uniprofile, a.fecha, texto, comentario, tipo, resuelto, u1.username as tecnico FROM UCM_AW_CAU_AVI_Avisos a LEFT OUTER JOIN UCM_AW_CAU_USU_Usuarios u1 ON tecnico = u1.id JOIN UCM_AW_CAU_USU_Usuarios u2 on creador = u2.id WHERE tecnico = ${userId} AND resuelto = 1`;//query para el tecnico
+                if(role === 0) query = `SELECT a.id, u2.username as creador, u2.uniprofile, a.fecha, texto, comentario, tipo, categoria, funcion, resuelto, u1.username as tecnico FROM UCM_AW_CAU_AVI_Avisos a LEFT OUTER JOIN UCM_AW_CAU_USU_Usuarios u1 ON tecnico = u1.id JOIN UCM_AW_CAU_USU_Usuarios u2 on creador = u2.id WHERE creador = ${userId} AND resuelto = 1`;//query para el usuario
+                else if(role === 1) query = `SELECT a.id, u2.username as creador, u2.uniprofile, a.fecha, texto, comentario, tipo, categoria, funcion, resuelto, u1.username as tecnico FROM UCM_AW_CAU_AVI_Avisos a LEFT OUTER JOIN UCM_AW_CAU_USU_Usuarios u1 ON tecnico = u1.id JOIN UCM_AW_CAU_USU_Usuarios u2 on creador = u2.id WHERE tecnico = ${userId} AND resuelto = 1`;//query para el tecnico
                 connection.query(query, (err, rows) => {
                     connection.release();
                     if(err) callback(err);
@@ -60,7 +60,7 @@ class DAOAvisos {
         this.pool.getConnection((err, connection) => {
             if(err) callback(new Error("getEntrantes Error de conexión a la base de datos"));
             else {
-                let query = `SELECT a.id, u2.username as creador, u2.uniprofile, a.fecha, texto, comentario, tipo, resuelto, u1.username as tecnico, u1.id as tecnicoId FROM UCM_AW_CAU_AVI_Avisos a LEFT OUTER JOIN UCM_AW_CAU_USU_Usuarios u1 ON tecnico = u1.id JOIN UCM_AW_CAU_USU_Usuarios u2 on creador = u2.id WHERE resuelto = 0`;
+                let query = `SELECT a.id, u2.username as creador, u2.uniprofile, a.fecha, texto, comentario, tipo, categoria, funcion, resuelto, u1.username as tecnico, u1.id as tecnicoId FROM UCM_AW_CAU_AVI_Avisos a LEFT OUTER JOIN UCM_AW_CAU_USU_Usuarios u1 ON tecnico = u1.id JOIN UCM_AW_CAU_USU_Usuarios u2 on creador = u2.id WHERE resuelto = 0`;
                 connection.query(query, (err, rows) => {
                     connection.release();
                     if(err) callback(err);
