@@ -51,12 +51,12 @@ module.exports = {
                 name: "Técnico",//nombre que saldrá en la cabeza de la tabla
                 roles: [0],
             },
-            /*{//se hace al abrir la chingadera
+            {//se hace al abrir la chingadera
                 data: "acciones",//nombre de la columna en la base de datos
                 name: "Acciones",//nombre que saldrá en la cabeza de la tabla
                 roles: [1],
                 render: "accionesTecnico",
-            },*/
+            },
           ]
       },
       historico: {//historico de avisos

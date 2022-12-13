@@ -1,13 +1,15 @@
         <!-- JavaScript Bundle with Popper -->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
         <script>
-            let selectedAvisoId = null, modal = null, page = <%- JSON.stringify(page) %>, role = <%- user.role %>, popover = null, tooltipList = null;
+            let selectedAvisoId = null, modal = null, confirmationModal = null, page = <%- JSON.stringify(page) %>, role = <%- user.role %>, popover = null, tooltipList = null;
             const nuevoAvisoData = <%- typeof nuevoAvisoData !== 'undefined' && nuevoAvisoData ? JSON.stringify(nuevoAvisoData) : 'null' %>, uniprofile = '<%= user.uniprofile %>', userId = <%- user.id %>;
             const tiposAviso = ["Sugerencia", "Incidencia", "Felicitación"];
             const roles = ["Usuario", "Técnico"];
             window.onload = () => {//evento que se llama cuando la página termina de cargar en el navegador.
                 const modalElement = document.getElementById('exampleModal');
                 modal = new bootstrap.Modal(modalElement);
+                const confirmationModalElement = document.getElementById("confirmationModal");
+                confirmationModal = new bootstrap.Modal(confirmationModalElement);
 
                 //la página se genera con tipo aviso numerico (0, 1, 2...) este evento se llama cuando termina de cargar, y modificamos la tabla convenientemente con el array tiposAviso
                 const tipoAvisoElems = document.getElementsByClassName("tipoAviso");
@@ -56,7 +58,7 @@
                 textareaObservaciones.value = data.texto;
                 textareaObservaciones.readOnly = true;
 
-                if(data.comentario && data.comentario.length > 0 || (role === 1 && (page === 'avisos' || page === 'entrantes'))) {
+                if(!showTecnicos && data.comentario && data.comentario.length > 0 || (role === 1 && (page === 'avisos' || page === 'entrantes'))) {
                     document.getElementById("divModalComentario").classList.remove("hide");
                     const textareaComentario = document.getElementById("modalComentario");
                     textareaComentario.value = data.comentario;
@@ -65,12 +67,15 @@
                     document.getElementById("divModalComentario").classList.add("hide");
                 }
                 const divtecnicos = document.getElementById("divTecnicos");
-                if(showTecnicos) divtecnicos.classList.remove("hide");
+                if(showTecnicos) {
+                    divtecnicos.classList.remove("hide");
+                    document.getElementById("divModalComentario").classList.add("hide");
+                } 
                 else if(divtecnicos) divtecnicos.classList.add("hide");
 
                 const botonResolverAviso = document.getElementById("botonResolverAviso");
                 if(botonResolverAviso) {
-                    botonResolverAviso.classList.remove("hide");
+                    showTecnicos ? botonResolverAviso.classList.add("hide") : botonResolverAviso.classList.remove("hide");
                     if(page === 'entrantes') {
                         botonResolverAviso.innerText = `Eliminar aviso`;
                         //console.log("openModal tecnicoId", data.tecnicoId, userId);
@@ -83,7 +88,10 @@
                             tooltipList[0]._isEnabled = false;
                         } 
                     }
-                    else if(page === 'avisos') botonResolverAviso.innerText = `Resolver aviso`;
+                    else if(page === 'avisos') {
+                        botonResolverAviso.innerText = `Resolver aviso`;
+                        tooltipList[0]._isEnabled = false;
+                    }
                 }
 
                 document.getElementById(`modal-body-usuario`).classList.add("hide");
@@ -111,10 +119,6 @@
                 document.getElementById("exampleModalLabel").innerText = `Crear nuevo aviso`;
 
                 modal.show();
-            }
-
-            function stopEventPropagation(event) {
-                event.stopPropagation();
             }
 
             function asignarTecnico(event, idAviso, data) {
@@ -191,6 +195,20 @@
                 } else {
                     window.location.href = `/resolverAviso/${selectedAvisoId}?comment=${comentario}&eliminado=${page === 'entrantes' ? true : false}`;
                 }
+            }
+
+            function eliminarAviso(event, idAviso) {//esta funcion se llama al pulsar el icono de la papelera y hace un delete en la base de datos
+                event.stopPropagation();
+                const confirmationEl = document.getElementById("confirmationElement");
+                confirmationEl.href = `/deleteAviso/${idAviso}`;
+                confirmationModal.show();
+            }
+
+            function eliminarUsuario(event, idUser) {
+                event.stopPropagation();
+                const confirmationEl = document.getElementById("confirmationElement");
+                confirmationEl.href = `/disableUser/${idUser}`;
+                confirmationModal.show();
             }
 
             function busqueda() {

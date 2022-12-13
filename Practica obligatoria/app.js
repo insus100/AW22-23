@@ -45,22 +45,21 @@ app.listen(config.port, function(err) {
 });
 
 app.get("/imagenUsuario", function(req, res) {
-daoU.getUserImageName(req.session.email, (err, img) => {
-    if(err)console.log(err);
-    else{
-        if(img && img.length > 0){
-            const imgpath = path.join(__dirname,  'profile_imgs/' + img);
-            if(fs.existsSync(imgpath)) res.sendFile(imgpath);
+    daoU.getUserImageName(req.session.email, (err, img) => {
+        if(err)console.log(err);
+        else{
+            if(img && img.length > 0){
+                const imgpath = path.join(__dirname,  'profile_imgs/' + img);
+                if(fs.existsSync(imgpath)) res.sendFile(imgpath);
+                else{
+                    res.sendFile(path.join(__dirname, 'public/img/descarga.png'));
+                }
+            }
             else{
                 res.sendFile(path.join(__dirname, 'public/img/descarga.png'));
             }
         }
-        else{
-            res.sendFile(path.join(__dirname, 'public/img/descarga.png'));
-        }
-    }
-});
-
+    });
 });
 
 app.get('/', isAuthorized, (req, res) => {
@@ -186,7 +185,7 @@ app.post("/nuevoAviso", isAuthorized, (req, res) => {
                         res.redirect("/avisos");
                     });
                 }
-            } else {
+            } else {//felicitacion
                 if(req.body.tipoAvisoFelicitacion && req.body.observaciones) {
                     const aviso = {//las keys en este objeto tienen que tener el mismo nombre que las columnas en la tabla de la base de datos
                         creador: req.session.userId,

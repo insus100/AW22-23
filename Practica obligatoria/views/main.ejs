@@ -27,13 +27,19 @@
                 <td>
                   <div class="btn-group" role="group" aria-label=" ">
                     <button type="button" class="btn btn-success" title="Asignar técnico" onclick="asignarTecnico(event, <%= d.id %>, <%= JSON.stringify(d) %>)" <%= d.tecnicoId ? 'disabled' : '' %>><i class="bi bi-person-plus-fill"></i></button>
-                    <!--<a onclick="stopEventPropagation(event)" title="Eliminar aviso" class="btn btn-danger <%= //d.tecnicoId && d.tecnicoId !== user.id ? 'disabled' : '' %>" href="<%= //d.tecnicoId && d.tecnicoId !== user.id ? '#' : '/deleteAviso/' + d.id %>"><i class="bi bi-trash3"></i></a>-->
+                    <button type="button" class="btn btn-danger" title="Eliminar aviso" onclick="eliminarAviso(event, <%= d.id %>)" <%= d.tecnicoId && d.tecnicoId !== user.id ? 'disabled' : '' %>><i class="bi bi-trash3"></i></button>
+                  </div>
+                </td>
+              <% } else if(c.render === 'accionesTecnico'){ %>
+                <td>
+                  <div class="btn-group" role="group" aria-label=" ">
+                    <button type="button" class="btn btn-danger" title="Eliminar aviso" onclick="eliminarAviso(event, <%= d.id %>)"><i class="bi bi-trash3"></i></button>
                   </div>
                 </td>
               <% } else if(c.render === 'accionesUsuarios'){ %>
                 <td>
                   <div class="btn-group" role="group" aria-label=" ">
-                    <a onclick="stopEventPropagation(event)" title="Desactivar usuario" class="btn btn-danger" href="/disableUser/<%= d.id %>"><i class="bi bi-trash3"></i></a>
+                    <button type="button" class="btn btn-danger" title="Desactivar usuario" onclick="eliminarUsuario(event,<%= d.id %>)"><i class="bi bi-trash3"></i></button>
                   </div>
                 </td>
               <% } else if(c.render === 'role'){ %>
@@ -198,5 +204,23 @@
         </div>
       </div>
     </div>
+</div>
+
+<div class="modal fade" id="confirmationModal" tabindex="-1" aria-labelledby="ConfimationModal" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content bg-dark text-white">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        ¿Seguro que deseas realizar la operación? (La operación no es reversible)
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+        <a id="confirmationElement" href="#" class="btn btn-danger" type="button">Sí</a>
+      </div>
+    </div>
+  </div>
 </div>
 <%- include('partials/footer') -%>
