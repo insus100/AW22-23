@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 12-12-2022 a las 19:35:55
+-- Tiempo de generación: 13-12-2022 a las 19:05:46
 -- Versión del servidor: 10.4.13-MariaDB
 -- Versión de PHP: 7.4.7
 
@@ -33,13 +33,6 @@ CREATE TABLE `sessions` (
   `data` mediumtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
---
--- Volcado de datos para la tabla `sessions`
---
-
-INSERT INTO `sessions` (`session_id`, `expires`, `data`) VALUES
-('n-igILctKRwz37pUrZfCW89h3iYmSjdu', 1670956541, '{\"cookie\":{\"originalMaxAge\":null,\"expires\":null,\"httpOnly\":true,\"path\":\"/\"},\"userId\":2,\"email\":\"test@ucm.es\",\"role\":1,\"username\":\"Felipe Ferras Gómez\"}');
-
 -- --------------------------------------------------------
 
 --
@@ -64,9 +57,11 @@ CREATE TABLE `UCM_AW_CAU_AVI_Avisos` (
 --
 
 INSERT INTO `UCM_AW_CAU_AVI_Avisos` (`id`, `creador`, `fecha`, `texto`, `comentario`, `tipo`, `categoria`, `funcion`, `tecnico`, `resuelto`) VALUES
-(1, 1, '2022-12-12 17:21:08', 'aaisbnb<unsfbINbunBUNIbWSnp`bN=QB=NB(=N)qB=N(3QB=N)bQ·', '', 0, 'Comunicaciones', 'Correo electrónico', 2, 0),
-(2, 5, '2022-12-12 17:21:32', 'aAuaiujbn<m<mbNMBMBMNBNBNnBmBmvAJkaBVkAVBkmAVaAuaiujbn<m<mbNMBMBMNBNBNnBmBmvAJkaBVkAVBkmAVaAuaiujbn<m<mbNMBMBMNBNBNnBmBmvAJkaBVkAVBkmAVaAuaiujbn<m<mbNMBMBMNBNBNnBmBmvAJkaBVkAVBkmAVaAuaiujbn<m<mbNMBMBMNBNBNnBmBmvAJkaBVkAVBkmAVaAuaiujbn<m<mbNMBMBMNBNBNnBmBmvAJkaBVkAVBkmAVaAuaiujbn<m<mbNMBMBMNBNBNnBmBmvAJkaBVkAVBkmAVaAuaiujbn<m<mbNMBMBMNBNBNnBmBmvAJkaBVkAVBkmAVaAuaiujbn<m<mbNMBMBMNBNBNnBmBmvAJkaBVkAVBkmAVaAuaiujbn<m<mbNMBMBMNBNBNnBmBmvAJkaBVkAVBkmAVaAuaiujbn<m<mbNMBMBMNBNBNnBmBmvAJkaBVkAVBkmAVaAuaiujbn<m<mbNMBMBMNBNBNnBmBmvAJkaBVkAVBkmAVaAuaiujbn<m<mbNMBMBMNBNBNnBmBmvAJkaBVkAVBkmAVaAuaiujbn<m<mbNMBMBMNBNBNnBmBmvAJkaBVkAVBkmAVaAuaiujbn<m<mbNMBMBMNBNBNnBmBmvAJkaBVkAVBkmAV', '', 2, 'Servicio de Administración', '', NULL, 0),
-(3, 1, '2022-12-12 17:22:12', 'kkKMBNSSNBSnbsnbjn cn lj dJVNSOÑ VNSON SD npon ponvopnvPOVNOVSNÔ NSFn', '', 1, 'Web', 'Portal de eventos', NULL, 0);
+(2, 5, '2022-12-12 17:21:32', 'aAuaiujbn<m<mbNMBMBMNBNBNnBmBmvAJkaBVkAVBkmAVaAuaiujbn<m<mbNMBMBMNBNBNnBmBmvAJkaBVkAVBkmAVaAuaiujbn<m<mbNMBMBMNBNBNnBmBmvAJkaBVkAVBkmAVaAuaiujbn<m<mbNMBMBMNBNBNnBmBmvAJkaBVkAVBkmAVaAuaiujbn<m<mbNMBMBMNBNBNnBmBmvAJkaBVkAVBkmAVaAuaiujbn<m<mbNMBMBMNBNBNnBmBmvAJkaBVkAVBkmAVaAuaiujbn<m<mbNMBMBMNBNBNnBmBmvAJkaBVkAVBkmAVaAuaiujbn<m<mbNMBMBMNBNBNnBmBmvAJkaBVkAVBkmAVaAuaiujbn<m<mbNMBMBMNBNBNnBmBmvAJkaBVkAVBkmAVaAuaiujbn<m<mbNMBMBMNBNBNnBmBmvAJkaBVkAVBkmAVaAuaiujbn<m<mbNMBMBMNBNBNnBmBmvAJkaBVkAVBkmAVaAuaiujbn<m<mbNMBMBMNBNBNnBmBmvAJkaBVkAVBkmAVaAuaiujbn<m<mbNMBMBMNBNBNnBmBmvAJkaBVkAVBkmAVaAuaiujbn<m<mbNMBMBMNBNBNnBmBmvAJkaBVkAVBkmAVaAuaiujbn<m<mbNMBMBMNBNBNnBmBmvAJkaBVkAVBkmAV', 'adggadadghsdsdGHhSHSDHSdhgsdhdsH', 2, 'Servicio de Administración', '', 2, 0),
+(4, 1, '2022-12-13 17:02:24', 'fbsasgsrgagrshasgrdasgbabbadsabed', 'B<FSZB<NSDFGN <NFNNF<SDN<SFNSF<NFS<NFS<', 0, 'Conectividad', 'Cortafuegos corporativo', 2, 0),
+(5, 1, '2022-12-13 17:05:19', 'jnakglkalsfbkjbsf', '', 2, 'Oficina de Gestión de Infraestructuras y Mantenimiento', '', NULL, 0),
+(6, 6, '2022-12-13 17:54:26', 'AJhhjleAJKNIGlkjniklAJhhjleAJKNIGlkjniklAJhhjleAJKNIGlkjniklAJhhjleAJKNIGlkjniklAJhhjleAJKNIGlkjniklAJhhjleAJKNIGlkjniklAJhhjleAJKNIGlkjniklAJhhjleAJKNIGlkjniklAJhhjleAJKNIGlkjniklAJhhjleAJKNIGlkjniklAJhhjleAJKNIGlkjniklAJhhjleAJKNIGlkjniklAJhhjleAJKNIGlkjniklAJhhjleAJKNIGlkjniklAJhhjleAJKNIGlkjniklAJhhjleAJKNIGlkjniklAJhhjleAJKNIGlkjniklAJhhjleAJKNIGlkjniklAJhhjleAJKNIGlkjniklAJhhjleAJKNIGlkjniklAJhhjleAJKNIGlkjniklAJhhjleAJKNIGlkjniklAJhhjleAJKNIGlkjniklAJhhjleAJKNIGlkjniklAJhhjleAJKNIGlkjniklAJhhjleAJKNIGlkjniklAJhhjleAJKNIGlkjniklAJhhjleAJKNIGlkjniklAJhhjleAJKNIGlkjniklAJhhjleAJKNIGlkjniklAJhhjleAJKNIGlkjniklAJhhjleAJKNIGlkjniklAJhhjleAJKNIGlkjniklAJhhjleAJKNIGlkjniklAJhhjleAJKNIGlkjniklAJhhjleAJKNIGlkjniklAJhhjleAJKNIGlkjniklAJhhjleAJKNIGlkjniklAJhhjleAJKNIGlkjniklAJhhjleAJKNIGlkjnikl', '', 1, 'Conectividad', 'Wifi para visitantes (ssid: UCM-Visitantes)', NULL, 0),
+(7, 6, '2022-12-13 17:55:24', 'GARhrraaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaGARhrraaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaGARhrraaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaGARhrraaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaGARhrraaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaGARhrraaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaGARhrraaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaGARhrraaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaGARhrraaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', '', 2, 'Oficina de Gestión de Infraestructuras y Mantenimiento', '', NULL, 0);
 
 -- --------------------------------------------------------
 
@@ -94,11 +89,11 @@ CREATE TABLE `UCM_AW_CAU_USU_Usuarios` (
 --
 
 INSERT INTO `UCM_AW_CAU_USU_Usuarios` (`id`, `email`, `password`, `username`, `uniprofile`, `role`, `employeenumber`, `img`, `rep`, `incidence`, `fecha`, `activo`) VALUES
-(1, 'inivelas@ucm.es', 'ojete', 'Íñigo', 'Alumno', 0, '', 'aitor.jpg', '', '', '2022-12-11 22:04:37', 1),
-(2, 'test@ucm.es', 'ojete', 'Felipe Ferras Gómez', 'PAS', 1, '1234-abc', 'felipe.jpg', '', '', '2022-12-11 22:04:37', 1),
-(3, 'test1@ucm.es', 'ojete', 'Felipe Ferras Gómez II', 'PAS', 0, '', 'felipe.jpg', '', '', '2022-12-11 22:04:37', 1),
-(4, 'ajajaj@ucm.es', 'ojete', 'Oooooo', 'Alumno', 0, '', '', '', '', '2022-12-11 22:04:37', 1),
-(5, 'antiguo@ucm.es', 'ojete', 'Antiguo Alumno 1', 'Antiguo alumno', 0, '', '', '', '', '2022-12-12 12:42:15', 1);
+(1, 'inivelas@ucm.es', '1234', 'Íñigo', 'Alumno', 0, '', 'aitor.jpg', '', '', '2022-12-11 22:04:37', 1),
+(2, 'test@ucm.es', '1234', 'Felipe Ferras Gómez', 'PAS', 1, '1234-abc', 'felipe.jpg', '', '', '2022-12-11 22:04:37', 1),
+(4, 'ajajaj@ucm.es', '1234', 'Oooooo', 'Alumno', 0, '', '', '', '', '2022-12-11 22:04:37', 1),
+(5, 'antiguo@ucm.es', '1234', 'Antiguo Alumno 1', 'Antiguo alumno', 0, '', '', '', '', '2022-12-12 12:42:15', 1),
+(6, 'pdi@ucm.es', '1234', 'P D I', 'PDI', 0, '', 'steve.jpg', '', '', '2022-12-13 17:48:42', 1);
 
 --
 -- Índices para tablas volcadas
@@ -132,13 +127,13 @@ ALTER TABLE `UCM_AW_CAU_USU_Usuarios`
 -- AUTO_INCREMENT de la tabla `UCM_AW_CAU_AVI_Avisos`
 --
 ALTER TABLE `UCM_AW_CAU_AVI_Avisos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT de la tabla `UCM_AW_CAU_USU_Usuarios`
 --
 ALTER TABLE `UCM_AW_CAU_USU_Usuarios`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- Restricciones para tablas volcadas

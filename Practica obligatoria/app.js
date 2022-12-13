@@ -111,7 +111,7 @@ app.post("/login", isNotAuthorized, function(req, res) {//cuando el usuario le d
 });
 
 app.post("/register", isNotAuthorized, (req, res) => {//cuando el usuario le da click a registrarse en la view register, manda los datos aquí
-    console.log("/register " + JSON.stringify(req.body));
+    //console.log("/register " + JSON.stringify(req.body));
     if(req.body.email && req.body.password && req.body.email.length > 0 && req.body.password.length > 0 
         && req.body.nombreUsuario && req.body.nombreUsuario.length > 0) {
         if(req.body.password !== req.body.confirmPassword){

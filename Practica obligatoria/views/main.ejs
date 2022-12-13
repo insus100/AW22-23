@@ -134,7 +134,7 @@
                 <h1><%= user.username %></h1>
                 <div class="col-8">Fecha de creación: <%= user.fecha %></div>
                 <div class="col-8">Perfil: <%= user.uniprofile %></div>
-                <div class="col-8">Rol: <%= user.roleName %></div>
+                <div class="col-8">Rol: <%= user.roleName.charAt(0).toUpperCase() + user.roleName.slice(1); %></div>
                 <div class="col-8">Contraseña: <%= user.password %></div>
                 <div class="col-8">Avisos realizados: <%= user.avisos %></div>
                 <div class="col-8">Incidencias: <%= user.incidencias %></div>
@@ -169,7 +169,7 @@
                     <% //});%>
                   </select>
                 </div>
-                <div class="col-8">
+                <div class="col-8 pt-3">
                   <label for="functionSelect" class="form-label">Función:</label>
                   <select id="functionSelect" name="funcion" class="form-select bg-dark text-white tipoAvisoSelectIS">
                     <option selected disabled value="">Elige...</option>
