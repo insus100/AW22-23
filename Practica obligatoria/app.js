@@ -3,6 +3,7 @@ const config = require("./config");
 const {daoA, daoU} = require("./DAO/DAO");
 const path = require("path");
 const express = require("express");
+const multer = require("multer");
 const bodyParser = require("body-parser");
 const fs = require("fs");
 const session = require("express-session");
@@ -33,6 +34,17 @@ const middlewareSession = session({
 });
 
 app.use(middlewareSession);
+
+const storage = multer.diskStorage({
+	destination: (req, file, cb) => {
+		cb(null, path.join(__dirname, 'profile_imgs'));
+	},
+	filename: (req, file, cb) => {
+		console.log("Uploading file: " + file.originalname);
+		cb(null, file.originalname);
+	},
+});
+const upload = multer({storage: storage});
 
 // Arrancar el servidor
 app.listen(config.port, function(err) {
@@ -110,7 +122,7 @@ app.post("/login", isNotAuthorized, function(req, res) {//cuando el usuario le d
     }
 });
 
-app.post("/register", isNotAuthorized, (req, res) => {//cuando el usuario le da click a registrarse en la view register, manda los datos aquí
+app.post("/register", isNotAuthorized, upload.single("foto_perfil"), (req, res) => {//cuando el usuario le da click a registrarse en la view register, manda los datos aquí
     //console.log("/register " + JSON.stringify(req.body));
     if(req.body.email && req.body.password && req.body.email.length > 0 && req.body.password.length > 0 
         && req.body.nombreUsuario && req.body.nombreUsuario.length > 0) {
