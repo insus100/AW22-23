@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 13-12-2022 a las 19:05:46
+-- Tiempo de generación: 14-12-2022 a las 20:29:23
 -- Versión del servidor: 10.4.13-MariaDB
 -- Versión de PHP: 7.4.7
 
@@ -33,6 +33,13 @@ CREATE TABLE `sessions` (
   `data` mediumtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Volcado de datos para la tabla `sessions`
+--
+
+INSERT INTO `sessions` (`session_id`, `expires`, `data`) VALUES
+('aSrijo1pguj-g_XKjmAKT9qd3mios5Nk', 1671041478, '{\"cookie\":{\"originalMaxAge\":null,\"expires\":null,\"httpOnly\":true,\"path\":\"/\"},\"userId\":2,\"email\":\"test@ucm.es\",\"role\":1,\"username\":\"Felipe Ferras Gómez\"}');
+
 -- --------------------------------------------------------
 
 --
@@ -57,8 +64,8 @@ CREATE TABLE `UCM_AW_CAU_AVI_Avisos` (
 --
 
 INSERT INTO `UCM_AW_CAU_AVI_Avisos` (`id`, `creador`, `fecha`, `texto`, `comentario`, `tipo`, `categoria`, `funcion`, `tecnico`, `resuelto`) VALUES
-(2, 5, '2022-12-12 17:21:32', 'aAuaiujbn<m<mbNMBMBMNBNBNnBmBmvAJkaBVkAVBkmAVaAuaiujbn<m<mbNMBMBMNBNBNnBmBmvAJkaBVkAVBkmAVaAuaiujbn<m<mbNMBMBMNBNBNnBmBmvAJkaBVkAVBkmAVaAuaiujbn<m<mbNMBMBMNBNBNnBmBmvAJkaBVkAVBkmAVaAuaiujbn<m<mbNMBMBMNBNBNnBmBmvAJkaBVkAVBkmAVaAuaiujbn<m<mbNMBMBMNBNBNnBmBmvAJkaBVkAVBkmAVaAuaiujbn<m<mbNMBMBMNBNBNnBmBmvAJkaBVkAVBkmAVaAuaiujbn<m<mbNMBMBMNBNBNnBmBmvAJkaBVkAVBkmAVaAuaiujbn<m<mbNMBMBMNBNBNnBmBmvAJkaBVkAVBkmAVaAuaiujbn<m<mbNMBMBMNBNBNnBmBmvAJkaBVkAVBkmAVaAuaiujbn<m<mbNMBMBMNBNBNnBmBmvAJkaBVkAVBkmAVaAuaiujbn<m<mbNMBMBMNBNBNnBmBmvAJkaBVkAVBkmAVaAuaiujbn<m<mbNMBMBMNBNBNnBmBmvAJkaBVkAVBkmAVaAuaiujbn<m<mbNMBMBMNBNBNnBmBmvAJkaBVkAVBkmAVaAuaiujbn<m<mbNMBMBMNBNBNnBmBmvAJkaBVkAVBkmAV', 'adggadadghsdsdGHhSHSDHSdhgsdhdsH', 2, 'Servicio de Administración', '', 2, 0),
-(4, 1, '2022-12-13 17:02:24', 'fbsasgsrgagrshasgrdasgbabbadsabed', 'B<FSZB<NSDFGN <NFNNF<SDN<SFNSF<NFS<NFS<', 0, 'Conectividad', 'Cortafuegos corporativo', 2, 0),
+(2, 5, '2022-12-12 17:21:32', 'aAuaiujbn<m<mbNMBMBMNBNBNnBmBmvAJkaBVkAVBkmAVaAuaiujbn<m<mbNMBMBMNBNBNnBmBmvAJkaBVkAVBkmAVaAuaiujbn<m<mbNMBMBMNBNBNnBmBmvAJkaBVkAVBkmAVaAuaiujbn<m<mbNMBMBMNBNBNnBmBmvAJkaBVkAVBkmAVaAuaiujbn<m<mbNMBMBMNBNBNnBmBmvAJkaBVkAVBkmAVaAuaiujbn<m<mbNMBMBMNBNBNnBmBmvAJkaBVkAVBkmAVaAuaiujbn<m<mbNMBMBMNBNBNnBmBmvAJkaBVkAVBkmAVaAuaiujbn<m<mbNMBMBMNBNBNnBmBmvAJkaBVkAVBkmAVaAuaiujbn<m<mbNMBMBMNBNBNnBmBmvAJkaBVkAVBkmAVaAuaiujbn<m<mbNMBMBMNBNBNnBmBmvAJkaBVkAVBkmAVaAuaiujbn<m<mbNMBMBMNBNBNnBmBmvAJkaBVkAVBkmAVaAuaiujbn<m<mbNMBMBMNBNBNnBmBmvAJkaBVkAVBkmAVaAuaiujbn<m<mbNMBMBMNBNBNnBmBmvAJkaBVkAVBkmAVaAuaiujbn<m<mbNMBMBMNBNBNnBmBmvAJkaBVkAVBkmAVaAuaiujbn<m<mbNMBMBMNBNBNnBmBmvAJkaBVkAVBkmAV', '', 2, 'Servicio de Administración', '', 2, 0),
+(4, 1, '2022-12-13 17:02:24', 'fbsasgsrgagrshasgrdasgbabbadsabed', '', 0, 'Conectividad', 'Cortafuegos corporativo', 2, 0),
 (5, 1, '2022-12-13 17:05:19', 'jnakglkalsfbkjbsf', '', 2, 'Oficina de Gestión de Infraestructuras y Mantenimiento', '', NULL, 0),
 (6, 6, '2022-12-13 17:54:26', 'AJhhjleAJKNIGlkjniklAJhhjleAJKNIGlkjniklAJhhjleAJKNIGlkjniklAJhhjleAJKNIGlkjniklAJhhjleAJKNIGlkjniklAJhhjleAJKNIGlkjniklAJhhjleAJKNIGlkjniklAJhhjleAJKNIGlkjniklAJhhjleAJKNIGlkjniklAJhhjleAJKNIGlkjniklAJhhjleAJKNIGlkjniklAJhhjleAJKNIGlkjniklAJhhjleAJKNIGlkjniklAJhhjleAJKNIGlkjniklAJhhjleAJKNIGlkjniklAJhhjleAJKNIGlkjniklAJhhjleAJKNIGlkjniklAJhhjleAJKNIGlkjniklAJhhjleAJKNIGlkjniklAJhhjleAJKNIGlkjniklAJhhjleAJKNIGlkjniklAJhhjleAJKNIGlkjniklAJhhjleAJKNIGlkjniklAJhhjleAJKNIGlkjniklAJhhjleAJKNIGlkjniklAJhhjleAJKNIGlkjniklAJhhjleAJKNIGlkjniklAJhhjleAJKNIGlkjniklAJhhjleAJKNIGlkjniklAJhhjleAJKNIGlkjniklAJhhjleAJKNIGlkjniklAJhhjleAJKNIGlkjniklAJhhjleAJKNIGlkjniklAJhhjleAJKNIGlkjniklAJhhjleAJKNIGlkjniklAJhhjleAJKNIGlkjniklAJhhjleAJKNIGlkjniklAJhhjleAJKNIGlkjniklAJhhjleAJKNIGlkjniklAJhhjleAJKNIGlkjnikl', '', 1, 'Conectividad', 'Wifi para visitantes (ssid: UCM-Visitantes)', NULL, 0),
 (7, 6, '2022-12-13 17:55:24', 'GARhrraaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaGARhrraaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaGARhrraaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaGARhrraaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaGARhrraaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaGARhrraaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaGARhrraaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaGARhrraaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaGARhrraaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', '', 2, 'Oficina de Gestión de Infraestructuras y Mantenimiento', '', NULL, 0);
