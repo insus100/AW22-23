@@ -137,7 +137,7 @@ app.post("/register", isNotAuthorized, upload.single("img"), (req, res) => {//cu
                         password: req.body.password,
                         username: req.body.nombreUsuario,
                         uniprofile: req.body.perfil,
-                        img: req.file.originalname ? req.file.originalname : "",
+                        img: req.file && req.file.originalname ? req.file.originalname : "",
                         role: req.body.role ? 1 : 0,
                         employeenumber: req.body.employeenumber.length > 0 ? req.body.employeenumber : -1
                     }
