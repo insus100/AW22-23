@@ -4,6 +4,7 @@
             let selectedAvisoId = null, modal = null, confirmationModal = null, page = <%- JSON.stringify(page) %>, role = <%- user.role %>, popover = null, tooltipList = null;
             const nuevoAvisoData = <%- typeof nuevoAvisoData !== 'undefined' && nuevoAvisoData ? JSON.stringify(nuevoAvisoData) : 'null' %>, uniprofile = '<%= user.uniprofile %>', userId = <%- user.id %>;
             const tiposAviso = ["Sugerencia", "Incidencia", "Felicitación"];
+            const iconosAviso = ["/img/sugerencia.png", "/img/incidencia.png", "/img/felicitacion.png"];
             const roles = ["Usuario", "Técnico"];
             window.onload = () => {//evento que se llama cuando la página termina de cargar en el navegador.
                 const modalElement = document.getElementById('exampleModal');
@@ -15,7 +16,8 @@
                 const tipoAvisoElems = document.getElementsByClassName("tipoAviso");
                 if(tipoAvisoElems) {
                     for(let i = 0; i < tipoAvisoElems.length; i++) {
-                        tipoAvisoElems[i].innerText = tiposAviso[tipoAvisoElems[i].innerText];
+                        //tipoAvisoElems[i].innerText = tiposAviso[tipoAvisoElems[i].innerText];
+                        tipoAvisoElems[i].innerHTML = `<img width="29" height="41" src="${iconosAviso[tipoAvisoElems[i].innerText]}" alt="${tiposAviso[tipoAvisoElems[i].innerText]}">`;
                     }
                 }
 
