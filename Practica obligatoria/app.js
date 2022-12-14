@@ -37,7 +37,7 @@ app.use(middlewareSession);
 
 const storage = multer.diskStorage({
 	destination: (req, file, cb) => {
-		cb(null, path.join(__dirname, 'profile_imgs'));
+		cb(null, path.join(__dirname, './profile_imgs'));
 	},
 	filename: (req, file, cb) => {
 		console.log("Uploading file: " + file.originalname);
@@ -122,7 +122,7 @@ app.post("/login", isNotAuthorized, function(req, res) {//cuando el usuario le d
     }
 });
 
-app.post("/register", isNotAuthorized, upload.single("foto_perfil"), (req, res) => {//cuando el usuario le da click a registrarse en la view register, manda los datos aquí
+app.post("/register", isNotAuthorized, upload.single("img"), (req, res) => {//cuando el usuario le da click a registrarse en la view register, manda los datos aquí
     //console.log("/register " + JSON.stringify(req.body));
     if(req.body.email && req.body.password && req.body.email.length > 0 && req.body.password.length > 0 
         && req.body.nombreUsuario && req.body.nombreUsuario.length > 0) {
@@ -137,7 +137,7 @@ app.post("/register", isNotAuthorized, upload.single("foto_perfil"), (req, res) 
                         password: req.body.password,
                         username: req.body.nombreUsuario,
                         uniprofile: req.body.perfil,
-                        img: req.body.img,
+                        img: req.file.originalname,
                         role: req.body.role ? 1 : 0,
                         employeenumber: req.body.employeenumber.length > 0 ? req.body.employeenumber : -1
                     }
